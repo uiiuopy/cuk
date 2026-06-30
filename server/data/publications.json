@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pub_001",
+    "title": "Cortical Desynchronization and Autonomic Reactivity under Acute Cognitive Stress",
+    "authors": "Dr. Sarah Lin, Dr. Marcus Vance, Elena Rostova",
+    "journal": "Journal of Psychophysiology",
+    "year": 2025,
+    "abstract": "We investigated the temporal coupling between EEG frequency shifts (alpha/beta ratio) and electrodermal responses (GSR) in 45 participants subjected to the Stroop task. Results show a significant correlation between prefrontal beta power increases and skin conductance response amplitude, indicating coupled central and autonomic nervous system mobilization under acute stressors.",
+    "tags": ["EEG", "GSR", "Cognitive Stress", "Autonomic Nervous System"],
+    "doi": "10.1027/0269-8803/a000341"
+  },
+  {
+    "id": "pub_002",
+    "title": "Heart Rate Variability (HRV) as a Predictor of Emotional Regulation Capacity in Virtual Reality",
+    "authors": "Dr. Marcus Vance, David K. Park",
+    "journal": "Frontiers in Human Neuroscience",
+    "year": 2024,
+    "abstract": "This study evaluated high-frequency HRV (HF-HRV) in immersive virtual environments designed to elicit fear or relaxation. Participants with higher baseline RMSSD (root mean square of successive differences) exhibited faster physiological recovery rates when transitioning from stress-inducing virtual environments to soothing natural settings.",
+    "tags": ["ECG", "HRV", "Virtual Reality", "Emotion Regulation"],
+    "doi": "10.3389/fnhum.2024.981034"
+  },
+  {
+    "id": "pub_003",
+    "title": "Visual Attention and Pupil Dilatory Dynamics in Adaptive User Interfaces",
+    "authors": "Elena Rostova, Dr. Sarah Lin",
+    "journal": "International Journal of Human-Computer Studies",
+    "year": 2025,
+    "abstract": "Using a Tobii Pro Spectrum 1200Hz eye tracker, we monitored gaze fixation and pupil dilation in designers performing complex layout optimization. Pupil dilation rate accurately indexed cognitive overload points, presenting a viable metric for adaptive UI interfaces that dynamically scale information density.",
+    "tags": ["Eye Tracking", "Cognitive Load", "Pupillometry", "HCI"],
+    "doi": "10.1016/j.ijhcs.2025.103120"
+  },
+  {
+    "id": "pub_004",
+    "title": "Prefrontal Hemodynamic Activity and Alpha Power Coherence During Mindful Breathing Practices",
+    "authors": "Prof. T. Takahashi, Dr. Sarah Lin, Kenji Sato",
+    "journal": "Cognitive Neuroscience & Biofeedback",
+    "year": 2023,
+    "abstract": "We utilized a combined EEG-fNIRS configuration to measure neural correlates of focused attention meditation. Mindful breathing led to increased prefrontal oxygenated hemoglobin concentration alongside enhanced parieto-occipital alpha band coherence, validating biofeedback training efficacy for attention control.",
+    "tags": ["EEG", "fNIRS", "Meditation", "Biofeedback"],
+    "doi": "10.1007/s10484-023-09511-y"
+  },
+  {
+    "id": "pub_005",
+    "title": "Sympathetic Nervous Arousal and Visual Gaze Patterns in High-Arousal Phobic Stimuli",
+    "authors": "David K. Park, Elena Rostova, Dr. Marcus Vance",
+    "journal": "Psychophysiology Reports",
+    "year": 2024,
+    "abstract": "By exposing arachnophobic individuals to virtual spiders, we tracked the temporal sequence of visual avoidance and skin conductance spikes. Eye-tracking fixation duration on phobic objects preceded GSR rises by 1.2 seconds, supporting the hypothesis of hyper-vigilant cognitive processing prior to autonomic output.",
+    "tags": ["GSR", "Eye Tracking", "Phobia", "Arousal"],
+    "doi": "10.1111/psyp.14329"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "name": "psychophysiology-lab-3d",
+  "version": "1.0.0",
+  "description": "3D Website for Psychophysiology Lab using React, Node.js, and Three.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production builds
+client/dist/
+client/build/
+server/dist/
+server/build/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Cloned reference repos
+3dbrain/
+BrainNet-Viewer/
+
+# Env config
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

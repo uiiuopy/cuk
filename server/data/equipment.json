@@ -1,0 +1,86 @@
+[
+  {
+    "id": "eeg_cap",
+    "name": "High-Density EEG System (128-Channel)",
+    "category": "Neuroimaging",
+    "description": "State-of-the-art electroencephalography cap utilizing active wet gel electrodes to record electrical brain activity with millisecond temporal resolution.",
+    "utility": "Measures cortical event-related potentials (ERPs), frequency bands (alpha, beta, theta, delta), and neural oscillations during cognitive tasks.",
+    "specs": {
+      "channels": 128,
+      "samplingRate": "Up to 2048 Hz",
+      "impedanceControl": "Active shielding, live visual indicators",
+      "connection": "Fiber-optic to isolation amplifier"
+    },
+    "status": "Available"
+  },
+  {
+    "id": "ecg_respiration",
+    "name": "Biopac ECG & Respiration Module",
+    "category": "Cardiorespiratory",
+    "description": "Multi-lead electrocardiogram coupled with a piezoelectric chest band to capture cardiac electrical activity and respiration rate simultaneously.",
+    "utility": "Extracts heart rate variability (HRV), sympathetic-parasympathetic balance indices, and respiration-locked cardiac arrythmia (RSA).",
+    "specs": {
+      "leadConfigurations": "Lead I, II, III (3-lead / 5-lead)",
+      "samplingRate": "1000 Hz",
+      "respirationSensor": "Piezoelectric transducer belt",
+      "filtering": "Built-in 0.05Hz highpass and 35Hz notch filters"
+    },
+    "status": "Available"
+  },
+  {
+    "id": "gsr_eda",
+    "name": "Galvanic Skin Response (GSR/EDA) Sensor",
+    "category": "Autonomic Nervous System",
+    "description": "Fingertip skin conductance sensor measuring electrodermal activity (EDA), specifically sweat gland activation triggered by the sympathetic nervous system.",
+    "utility": "Acts as a primary indicator of emotional arousal, stress, cognitive effort, and orienting reflexes.",
+    "specs": {
+      "sensorType": "Ag/AgCl dry finger electrodes",
+      "measurementRange": "0 - 100 microSiemens (µS)",
+      "samplingRate": "250 Hz",
+      "resolution": "0.001 µS"
+    },
+    "status": "Available"
+  },
+  {
+    "id": "eye_tracker",
+    "name": "Tobii Pro Spectrum Eye Tracker",
+    "category": "Oculomotor",
+    "description": "High-speed, dual-camera screen-based eye tracker tracking gaze points, fixations, saccades, and pupil diameters with extreme accuracy.",
+    "utility": "Measures visual attention, cognitive load (via pupil dilation), reading patterns, and emotional reactions to visual stimuli.",
+    "specs": {
+      "samplingRate": "1200 Hz",
+      "accuracy": "0.3° visual angle",
+      "pupilDilationPrecision": "0.02 mm",
+      "trackingDistance": "55 - 75 cm"
+    },
+    "status": "Maintenance"
+  },
+  {
+    "id": "fnirs",
+    "name": "Prefrontal fNIRS Explorer",
+    "category": "Neuroimaging",
+    "description": "Functional Near-Infrared Spectroscopy headband mapping hemodynamic responses (oxygenated and deoxygenated hemoglobin) in the prefrontal cortex.",
+    "utility": "Provides spatial localization of prefrontal executive control, decision making, and cognitive workload.",
+    "specs": {
+      "wavelengths": "760 nm and 850 nm",
+      "channels": "16 channels across frontal lobe",
+      "samplingRate": "10 Hz",
+      "weight": "250g (wireless headband)"
+    },
+    "status": "Available"
+  },
+  {
+    "id": "eyeloop_system",
+    "name": "EyeLoop Closed-Loop Eye Tracker",
+    "category": "Oculomotor",
+    "description": "An open-source, high-speed Python 3 eye-tracking system designed for dynamic, closed-loop neuroscience and behavioral experiments.",
+    "utility": "Supports real-time gaze estimation, pupil contour tracking, and custom experimental loops with high-speed video capture and OBS virtual camera integration.",
+    "specs": {
+      "language": "Python 3 / OpenCV / MediaPipe",
+      "features": "Kalman & KDE smoothing filters, online calibration, virtual camera",
+      "platform": "Cross-platform (Windows, macOS, Linux)",
+      "latency": "Sub-millisecond processing overhead"
+    },
+    "status": "Available"
+  }
+]

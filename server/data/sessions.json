@@ -1,0 +1,12 @@
+[
+  {
+    "id": "session_1782824846782",
+    "participantName": "Subject_Alpha_24",
+    "stimulusTriggered": "Acoustic White Noise Startle",
+    "durationSeconds": 6,
+    "averageHeartRate": 91.9659090909617,
+    "maxGsr": 11.248621355184884,
+    "signalSamplesCount": 1500,
+    "timestamp": "2026-06-30T13:07:26.727Z"
+  }
+]

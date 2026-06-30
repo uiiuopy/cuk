@@ -1,0 +1,17 @@
+{
+  "name": "psychophysiology-lab-server",
+  "version": "1.0.0",
+  "description": "Express server for Psychophysiology Lab simulator and data",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
