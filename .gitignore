@@ -24,6 +24,11 @@ Thumbs.db
 3dbrain/
 BrainNet-Viewer/
 
+# Large Binary Model Weights
+*.dat
+*.bin
+*.task
+
 # Env config
 .env
 .env.local
