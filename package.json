@@ -4,7 +4,7 @@
   "description": "3D Website for Psychophysiology Lab using React, Node.js, and Three.js",
   "scripts": {
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
-    "build": "npm install --prefix client && npm run build --prefix client",
+    "build": "npm install --include=dev --prefix client && npm run build --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "npm start --prefix server",
     "client": "npm run dev --prefix client"
