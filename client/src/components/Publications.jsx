@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Search, Filter, Hash, ExternalLink } from 'lucide-react';
+import { fetchSheetData } from '../utils/googleSheets';
 
 export default function Publications() {
   const [papers, setPapers] = useState([]);
@@ -10,11 +11,19 @@ export default function Publications() {
   useEffect(() => {
     const fetchPapers = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/publications');
-        if (res.ok) {
-          const data = await res.json();
-          setPapers(data);
-        }
+        const data = await fetchSheetData('Publications');
+        // Normalize: split Tags string into an array, map field names
+        const normalized = data.map((row, idx) => ({
+          id: `pub_${idx}`,
+          title: row.Title || '',
+          authors: row.Authors || '',
+          journal: row.Journal || '',
+          year: parseInt(row.Year) || 0,
+          abstract: row.Abstract || '',
+          tags: (row.Tags || '').split(',').map(t => t.trim()).filter(Boolean),
+          doi: row.DOI || ''
+        }));
+        setPapers(normalized);
       } catch (err) {
         console.error("Failed to fetch publications:", err);
       } finally {

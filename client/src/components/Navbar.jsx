@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Sun, Moon } from 'lucide-react';
+import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Sun, Moon, Users } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) {
   const [apiStatus, setApiStatus] = useState('connecting');
@@ -25,6 +25,7 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'team', label: 'Our Team', icon: Users },
     { id: 'brain', label: '3D Brain Explorer', icon: Brain },
     { id: 'simulator', label: 'Biosignal Simulator', icon: Activity },
     { id: 'gaze', label: 'Eye Tracking', icon: Eye },

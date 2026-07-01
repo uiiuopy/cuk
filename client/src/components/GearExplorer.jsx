@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings } from 'lucide-react';
+import { fetchSheetData } from '../utils/googleSheets';
 
 export default function GearExplorer() {
   const [equipment, setEquipment] = useState([]);
@@ -9,11 +10,18 @@ export default function GearExplorer() {
   useEffect(() => {
     const fetchEquipment = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/equipment');
-        if (res.ok) {
-          const data = await res.json();
-          setEquipment(data);
-        }
+        const data = await fetchSheetData('Equipment');
+        const normalized = data.map((row, idx) => ({
+          id: `equip_${idx}`,
+          name: row.Name || '',
+          category: row.Category || '',
+          manufacturer: row.Manufacturer || '',
+          model: row.Model || '',
+          specs: row.Specs || '',
+          status: row.Status || 'Active',
+          description: row.Description || ''
+        }));
+        setEquipment(normalized);
       } catch (err) {
         console.error("Failed to load equipment:", err);
       } finally {

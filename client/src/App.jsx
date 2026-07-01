@@ -7,6 +7,7 @@ import GearExplorer from './components/GearExplorer';
 import Publications from './components/Publications';
 import GazeVisualizer from './components/GazeVisualizer';
 import InteractiveGrid from './components/InteractiveGrid';
+import TeamPage from './components/TeamPage';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -31,6 +32,8 @@ export default function App() {
     switch (activeTab) {
       case 'brain':
         return <ThreeBrain gaze={currentGaze} isGazeConnected={isGazeActive && isGazeConnected} />;
+      case 'team':
+        return <TeamPage />;
       case 'simulator':
         return (
           <VirtualSimulator 
