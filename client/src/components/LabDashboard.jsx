@@ -129,7 +129,7 @@ export default function LabDashboard() {
         </div>
         <div className="about-visual">
           <div className="academic-emblem">
-            <Brain size={56} className="emblem-icon" />
+            <Brain size={88} strokeWidth={2.5} className="emblem-icon" />
             <div className="emblem-ring-1"></div>
             <div className="emblem-ring-2"></div>
           </div>
@@ -139,8 +139,8 @@ export default function LabDashboard() {
       {/* Vision, Mission, Objectives */}
       <div className="vision-mission-grid">
         <div className="vision-card glass-panel text-center-card">
-          <div className="card-icon-wrapper">
-            <Eye size={32} className="glow-text-cyan" />
+          <div className="card-icon-wrapper vision-icon-wrap">
+            <Eye size={32} strokeWidth={2.5} className="vision-icon" />
           </div>
           <h2>Vision</h2>
           <p>
@@ -149,8 +149,8 @@ export default function LabDashboard() {
         </div>
 
         <div className="mission-card glass-panel text-center-card">
-          <div className="card-icon-wrapper">
-            <Target size={32} className="glow-text-pink" />
+          <div className="card-icon-wrapper mission-icon-wrap">
+            <Target size={32} strokeWidth={2.5} className="mission-icon" />
           </div>
           <h2>Mission</h2>
           <p>
@@ -159,8 +159,8 @@ export default function LabDashboard() {
         </div>
 
         <div className="objectives-card glass-panel text-center-card">
-          <div className="card-icon-wrapper">
-            <BookOpen size={32} className="glow-text-cyan" />
+          <div className="card-icon-wrapper objectives-icon-wrap">
+            <BookOpen size={32} strokeWidth={2.5} className="objectives-icon" />
           </div>
           <h2>Objectives</h2>
           <p>
@@ -363,38 +363,76 @@ export default function LabDashboard() {
         /* Academic Emblem */
         .academic-emblem {
           position: relative;
-          width: 150px;
-          height: 150px;
+          width: 180px;
+          height: 180px;
           display: flex;
           justify-content: center;
           align-items: center;
-          border: 1px solid rgba(182, 146, 96, 0.3);
+          border: 1.5px solid rgba(87, 197, 182, 0.4);
           border-radius: 50%;
-          background: rgba(182, 146, 96, 0.05);
-          box-shadow: 0 4px 12px rgba(11, 34, 64, 0.03);
+          background: rgba(87, 197, 182, 0.06);
+          box-shadow: 0 8px 32px rgba(26, 95, 122, 0.05);
         }
 
         .emblem-icon {
           color: var(--accent-cyan);
           z-index: 2;
+          filter: drop-shadow(0 4px 12px rgba(26, 95, 122, 0.15));
         }
 
         .emblem-ring-1 {
           position: absolute;
-          width: 132px;
-          height: 132px;
+          width: 160px;
+          height: 160px;
           border-radius: 50%;
-          border: 1px dashed rgba(182, 146, 96, 0.3);
+          border: 1px dashed rgba(87, 197, 182, 0.35);
           animation: spin-emblem 45s linear infinite;
         }
 
         .emblem-ring-2 {
           position: absolute;
-          width: 114px;
-          height: 114px;
+          width: 140px;
+          height: 140px;
           border-radius: 50%;
-          border: 1px double rgba(11, 34, 64, 0.1);
+          border: 1px double rgba(26, 95, 122, 0.15);
         }
+
+        /* Distinct Scannable Card Icon Wrappers */
+        .vision-icon-wrap {
+          background: rgba(26, 95, 122, 0.08) !important;
+          border: 1px solid rgba(26, 95, 122, 0.2) !important;
+        }
+        .vision-icon {
+          color: #1a5f7a !important;
+        }
+
+        .mission-icon-wrap {
+          background: rgba(45, 138, 107, 0.08) !important;
+          border: 1px solid rgba(45, 138, 107, 0.2) !important;
+        }
+        .mission-icon {
+          color: #2d8a6b !important;
+        }
+
+        .objectives-icon-wrap {
+          background: rgba(87, 197, 182, 0.08) !important;
+          border: 1px solid rgba(87, 197, 182, 0.2) !important;
+        }
+        .objectives-icon {
+          color: #57c5b6 !important;
+        }
+
+        /* Dark Theme overrides for scannable icons */
+        [data-theme="dark"] .vision-icon {
+          color: #4fa0c0 !important;
+        }
+        [data-theme="dark"] .mission-icon {
+          color: #5eead4 !important;
+        }
+        [data-theme="dark"] .objectives-icon {
+          color: #7dd3fc !important;
+        }
+
 
         @keyframes spin-emblem {
           from { transform: rotate(0deg); }
