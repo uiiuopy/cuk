@@ -94,9 +94,9 @@ p {
   background: var(--accent-pink);
 }
 
-/* Layout Utilities */
-.sidebar-layout {
+.app-container.sidebar-layout {
   display: flex;
+  flex-direction: row;
   height: 100vh;
   overflow: hidden;
 }
