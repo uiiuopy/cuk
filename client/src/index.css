@@ -6,6 +6,9 @@
   --bg-dark: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #f8fafc;
+  --bg-glass: rgba(255, 255, 255, 0.5);
+  --bg-glass-hover: rgba(255, 255, 255, 0.7);
+  --border-glass: rgba(226, 232, 240, 0.8);
   
   --accent-cyan: #0b2240; /* Oxford Navy Blue */
   --accent-pink: #b69260; /* Warm Academic Gold */
@@ -34,6 +37,9 @@
   --bg-dark: #0f172a; /* Slate dark background */
   --bg-card: #0f172a;
   --bg-card-hover: #1e293b;
+  --bg-glass: rgba(15, 23, 42, 0.5);
+  --bg-glass-hover: rgba(30, 41, 59, 0.7);
+  --border-glass: rgba(30, 41, 59, 0.8);
   
   --accent-cyan: #38bdf8; /* Vibrant Sky Blue for high contrast */
   --accent-pink: #dfb271; /* Brighter gold accent */
@@ -51,6 +57,7 @@
   --glow-pink: 0 4px 12px rgba(223, 178, 113, 0.08);
   --glow-green: 0 4px 12px rgba(74, 222, 128, 0.08);
 }
+
 
 /* Reset */
 * {
@@ -115,18 +122,20 @@ p {
   width: 100%;
 }
 .glass-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.03);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-color-hover);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  background: var(--bg-glass-hover);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.07);
 }
 
 .glow-text-cyan {
