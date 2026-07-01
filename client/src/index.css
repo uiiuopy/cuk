@@ -2,29 +2,29 @@
 
 :root {
   /* Colors */
-  --bg-darker: #fcfcfd;
+  --bg-darker: #f0f6f4; /* Calming Mint/Sage White */
   --bg-dark: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-hover: #f8fafc;
-  --bg-glass: rgba(255, 255, 255, 0.5);
-  --bg-glass-hover: rgba(255, 255, 255, 0.7);
-  --border-glass: rgba(226, 232, 240, 0.8);
+  --bg-card-hover: #f7faf9;
+  --bg-glass: rgba(255, 255, 255, 0.45);
+  --bg-glass-hover: rgba(255, 255, 255, 0.65);
+  --border-glass: rgba(200, 220, 215, 0.6);
   
-  --accent-cyan: #0b2240; /* Oxford Navy Blue */
-  --accent-pink: #b69260; /* Warm Academic Gold */
-  --accent-green: #2a5a3b; /* Dark Forest Green */
-  --accent-yellow: #d97706; /* Amber */
+  --accent-cyan: #1a5f7a; /* Serene Sea Blue */
+  --accent-pink: #57c5b6; /* Calming Seafoam Teal */
+  --accent-green: #2d8a6b; /* Balanced Forest Green */
+  --accent-yellow: #8bbccc; /* Calming Sky Blue */
   
-  --text-main: #1e293b; /* Dark charcoal */
-  --text-muted: #64748b; /* Slate gray */
-  --border-color: #e2e8f0; /* Soft borders */
-  --border-color-hover: #cbd5e1;
+  --text-main: #1a2e29; /* Deep Pine Charcoal */
+  --text-muted: #4e6b62; /* Muted Sage Gray */
+  --border-color: #d1dfdb; /* Soft Sage border */
+  --border-color-hover: #b8cfc9;
   
   /* Academic Shadows & Highlights */
-  --glow-cyan: 0 4px 12px rgba(11, 34, 64, 0.04);
-  --glow-cyan-intense: 0 8px 24px rgba(11, 34, 64, 0.08);
-  --glow-pink: 0 4px 12px rgba(182, 146, 96, 0.04);
-  --glow-green: 0 4px 12px rgba(42, 90, 59, 0.04);
+  --glow-cyan: 0 4px 12px rgba(26, 95, 122, 0.04);
+  --glow-cyan-intense: 0 8px 24px rgba(26, 95, 122, 0.08);
+  --glow-pink: 0 4px 12px rgba(87, 197, 182, 0.04);
+  --glow-green: 0 4px 12px rgba(45, 138, 107, 0.04);
   
   /* Academic Typography */
   --font-tech: 'Lora', 'Georgia', serif;
@@ -33,30 +33,31 @@
 
 [data-theme="dark"] {
   /* Colors */
-  --bg-darker: #070d19; /* Deep Oxford Navy shadow */
-  --bg-dark: #0f172a; /* Slate dark background */
-  --bg-card: #0f172a;
-  --bg-card-hover: #1e293b;
-  --bg-glass: rgba(15, 23, 42, 0.5);
-  --bg-glass-hover: rgba(30, 41, 59, 0.7);
-  --border-glass: rgba(30, 41, 59, 0.8);
+  --bg-darker: #0c1a18; /* Deep Abyssal Forest shadow */
+  --bg-dark: #0e2421; /* Dark Teal background */
+  --bg-card: #0e2421;
+  --bg-card-hover: #153531;
+  --bg-glass: rgba(14, 36, 33, 0.5);
+  --bg-glass-hover: rgba(21, 53, 49, 0.7);
+  --border-glass: rgba(32, 69, 64, 0.7);
   
-  --accent-cyan: #38bdf8; /* Vibrant Sky Blue for high contrast */
-  --accent-pink: #dfb271; /* Brighter gold accent */
-  --accent-green: #4ade80; /* Soft emerald */
-  --accent-yellow: #fbbf24; /* Soft amber */
+  --accent-cyan: #4fa0c0; /* Soft Ocean Blue */
+  --accent-pink: #5eead4; /* Bright Mint / Turquoise */
+  --accent-green: #7dd3fc; /* Soft Sky Blue */
+  --accent-yellow: #a7f3d0; /* Soft Sage Green */
   
-  --text-main: #f8fafc; /* Crisp off-white text */
-  --text-muted: #94a3b8; /* Muted slate gray */
-  --border-color: #1e293b; /* Deep slate borders */
-  --border-color-hover: #334155;
+  --text-main: #e8f5f2; /* Crisp Ocean Ice text */
+  --text-muted: #8ea8a1; /* Muted Sea Sage */
+  --border-color: #1e3834; /* Deep teal borders */
+  --border-color-hover: #294c47;
   
   /* Dark Contrast Shadows */
-  --glow-cyan: 0 4px 12px rgba(56, 189, 248, 0.08);
-  --glow-cyan-intense: 0 8px 24px rgba(56, 189, 248, 0.15);
-  --glow-pink: 0 4px 12px rgba(223, 178, 113, 0.08);
-  --glow-green: 0 4px 12px rgba(74, 222, 128, 0.08);
+  --glow-cyan: 0 4px 12px rgba(79, 160, 192, 0.08);
+  --glow-cyan-intense: 0 8px 24px rgba(79, 160, 192, 0.15);
+  --glow-pink: 0 4px 12px rgba(94, 234, 212, 0.08);
+  --glow-green: 0 4px 12px rgba(125, 211, 252, 0.08);
 }
+
 
 
 /* Reset */
