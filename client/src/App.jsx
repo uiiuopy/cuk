@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import LabDashboard from './components/LabDashboard';
 import ThreeBrain from './components/ThreeBrain';
@@ -18,6 +19,7 @@ export default function App() {
   const [currentGaze, setCurrentGaze] = useState(null);
   const [isGazeActive, setIsGazeActive] = useState(false);
   const [isGazeConnected, setIsGazeConnected] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('cuk-lab-theme');
@@ -83,9 +85,29 @@ export default function App() {
         hoverColor={theme === 'dark' ? '#dfb271' : '#b69260'}
         trailColor={theme === 'dark' ? '#dfb271' : '#b69260'}
       />
+
+      {/* Floating Sidebar Toggle Button */}
+      <button 
+        className={`sidebar-toggle-btn glass-panel ${isSidebarOpen ? 'active' : ''}`}
+        onClick={() => setIsSidebarOpen(prev => !prev)}
+        aria-label="Toggle navigation menu"
+      >
+        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Click-away Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="sidebar-backdrop" 
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
       />
       
       <div className="main-content-wrapper">

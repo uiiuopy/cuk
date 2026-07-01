@@ -259,3 +259,74 @@ p {
 .animate-pulse-pink {
   animation: pulse-gold-subtle 2s infinite alternate;
 }
+
+/* Collapsible Sidebar Styles */
+.sidebar-toggle-btn {
+  position: fixed;
+  left: 24px;
+  top: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10000; /* Floating above fixed sidebar (9999) */
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  color: var(--accent-cyan);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-toggle-btn.active {
+  left: 304px; /* Align beautifully right next to the opened sidebar (280px + 24px) */
+  border-color: var(--accent-cyan);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(12, 26, 24, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998; /* Below the sidebar drawer but above everything else */
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Offset the main content padding so it doesn't overlap the floating button */
+.main-content-wrapper {
+  padding-top: 80px; /* Space for the floating toggle button */
+}
+
+@media (max-width: 600px) {
+  .sidebar-toggle-btn {
+    left: 16px;
+    top: 16px;
+  }
+  .sidebar-toggle-btn.active {
+    left: calc(100vw - 60px); /* Keep it accessible on mobile screens */
+  }
+  .main-content-wrapper {
+    padding-top: 76px;
+  }
+}
+

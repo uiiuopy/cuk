@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Users, Award, MapPin, ClipboardList, Compass } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab }) {
+export default function Sidebar({ activeTab, setActiveTab, isOpen, setIsOpen }) {
   const [apiStatus, setApiStatus] = useState('connecting');
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
   ];
 
   return (
-    <aside className="sidebar-container glass-panel">
+    <aside className={`sidebar-container glass-panel ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-brand">
         <div className="brand-logo-wrapper">
           <Brain className="brand-logo" size={28} />
@@ -54,7 +54,10 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                setIsOpen(false);
+              }}
               className={`sidebar-item-btn ${activeTab === item.id ? 'active' : ''}`}
             >
               <Icon size={18} className="sidebar-icon" />
@@ -82,10 +85,17 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           flex-direction: column;
           border-right: 1px solid var(--border-color);
           background: var(--bg-card);
-          position: sticky;
+          position: fixed;
+          left: 0;
           top: 0;
-          flex-shrink: 0;
-          z-index: 100;
+          z-index: 9999;
+          transform: translateX(-100%);
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar-container.open {
+          transform: translateX(0);
+          box-shadow: 12px 0 40px rgba(0, 0, 0, 0.15);
         }
 
         .sidebar-brand {
@@ -223,28 +233,6 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
         .status-dot.offline, .status-dot.error {
           background: #ef4444;
-        }
-
-        @media (max-width: 900px) {
-          .sidebar-container {
-            width: 100%;
-            height: auto;
-            position: relative;
-            border-right: none;
-            border-bottom: 1px solid var(--border-color);
-          }
-          .sidebar-brand {
-            justify-content: center;
-          }
-          .sidebar-links {
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 16px;
-          }
-          .sidebar-footer {
-            display: none; /* Hide on mobile to save space */
-          }
         }
       `}</style>
     </aside>
