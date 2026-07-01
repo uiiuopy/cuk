@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings, Brain, Activity, Waves, Eye } from 'lucide-react';
 import { fetchSheetData } from '../utils/googleSheets';
+import fallbackEquipment from '../data/equipment.json';
 
 const getCategoryIcon = (category) => {
   const cat = category.toLowerCase();
@@ -30,9 +31,10 @@ export default function GearExplorer() {
           status: row.Status || 'Active',
           description: row.Description || ''
         }));
-        setEquipment(normalized);
+        setEquipment(normalized && normalized.length > 0 ? normalized : fallbackEquipment);
       } catch (err) {
-        console.error("Failed to load equipment:", err);
+        console.warn("Failed to load equipment from Google Sheets, falling back to local data:", err);
+        setEquipment(fallbackEquipment);
       } finally {
         setLoading(false);
       }

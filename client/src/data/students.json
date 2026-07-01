@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "Elena Rostova",
+    "Role": "PhD Candidate",
+    "Research Area": "Visual Attention & Pupil Dynamics",
+    "Email": "elena.r@cuk.ac.in",
+    "Photo URL": "",
+    "Year": "2023"
+  },
+  {
+    "Name": "David K. Park",
+    "Role": "PhD Candidate",
+    "Research Area": "Autonomic Stress Markers in VR",
+    "Email": "david.park@cuk.ac.in",
+    "Photo URL": "",
+    "Year": "2024"
+  },
+  {
+    "Name": "Arjun Mehta",
+    "Role": "Research Assistant",
+    "Research Area": "Closed-Loop BCI & Signal Processing",
+    "Email": "arjun.mehta@cuk.ac.in",
+    "Photo URL": "",
+    "Year": "2025"
+  }
+]

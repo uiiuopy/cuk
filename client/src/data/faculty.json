@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "Dr. Sarah Lin",
+    "Designation": "Professor & Lab Director",
+    "Specialization": "Cognitive Neurodynamics & BCI",
+    "Email": "sarah.lin@cuk.ac.in",
+    "Photo URL": "",
+    "Bio": "Dr. Lin is a leading researcher in brain-computer interfaces (BCI) and affective computing. She directs the Psychophysiology Lab at CUK, focusing on multi-modal biosignal integration, EEG oscillations, and prefrontal executive control mapping."
+  },
+  {
+    "Name": "Dr. Marcus Vance",
+    "Designation": "Associate Professor",
+    "Specialization": "Cardiovascular Psychophysiology & HRV",
+    "Email": "marcus.vance@cuk.ac.in",
+    "Photo URL": "",
+    "Bio": "Dr. Vance specializes in autonomic regulation, virtual reality stress paradigms, and heart rate variability (HRV) biofeedback systems. His research explores the coupling between cardiac rhythms and emotional regulation."
+  }
+]

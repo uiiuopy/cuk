@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Users, GraduationCap, Mail, BookOpen, Award, ChevronRight } from 'lucide-react';
 import { fetchSheetData } from '../utils/googleSheets';
+import fallbackFaculty from '../data/faculty.json';
+import fallbackStudents from '../data/students.json';
 
 function getInitials(name) {
   return name
@@ -25,11 +27,12 @@ export default function TeamPage() {
           fetchSheetData('Faculty'),
           fetchSheetData('Students')
         ]);
-        setFaculty(facultyData);
-        setStudents(studentData);
+        setFaculty(facultyData && facultyData.length > 0 ? facultyData : fallbackFaculty);
+        setStudents(studentData && studentData.length > 0 ? studentData : fallbackStudents);
       } catch (err) {
-        console.error('Failed to load team data:', err);
-        setError('Unable to load team data. Please check the Google Sheet configuration.');
+        console.warn('Failed to load team data from Google Sheets, falling back to local data:', err);
+        setFaculty(fallbackFaculty);
+        setStudents(fallbackStudents);
       } finally {
         setLoading(false);
       }

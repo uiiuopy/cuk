@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Search, Filter, Hash, ExternalLink } from 'lucide-react';
 import { fetchSheetData } from '../utils/googleSheets';
+import fallbackPublications from '../data/publications.json';
 
 export default function Publications() {
   const [papers, setPapers] = useState([]);
@@ -23,9 +24,10 @@ export default function Publications() {
           tags: (row.Tags || '').split(',').map(t => t.trim()).filter(Boolean),
           doi: row.DOI || ''
         }));
-        setPapers(normalized);
+        setPapers(normalized && normalized.length > 0 ? normalized : fallbackPublications);
       } catch (err) {
-        console.error("Failed to fetch publications:", err);
+        console.warn("Failed to fetch publications from Google Sheets, falling back to local data:", err);
+        setPapers(fallbackPublications);
       } finally {
         setLoading(false);
       }
