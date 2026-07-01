@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen, Cpu, Activity, CheckCircle, MessageSquare, MapPin, Phone, Mail } from 'lucide-react';
 import InfiniteCanvas from './InfiniteCanvas';
 
@@ -89,7 +90,7 @@ export default function LabDashboard() {
 
   // Helper component to display a stylish fallback if the image is missing
   const ImageWithFallback = ({ src, alt, label }) => {
-    const [hasError, setHasError] = React.useState(false);
+    const [hasError, setHasError] = useState(false);
 
     return (
       <div className="gallery-item-wrapper glass-panel">
