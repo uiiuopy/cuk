@@ -1,0 +1,23 @@
+[
+  {
+    "Title": "Closed-Loop EEG Biofeedback for Attention Enhancement",
+    "PI": "Dr. Sarah Lin",
+    "Status": "Active",
+    "Description": "Developing an adaptive closed-loop system using active wet gel EEG electrodes to identify individual alpha peak frequencies (iAPF) and deliver real-time neurofeedback to enhance selective attention and working memory.",
+    "Funding": "University Grants Commission (UGC)"
+  },
+  {
+    "Title": "Biosignal Markers of Cognitive Load in Virtual Reality Environments",
+    "PI": "Dr. Marcus Vance",
+    "Status": "Active",
+    "Description": "Investigating how high-frequency heart rate variability (HF-HRV) and respiration-locked arrythmias index cognitive strain and emotional regulation capacity during complex flight simulation tasks in VR.",
+    "Funding": "National Science Foundation (NSF)"
+  },
+  {
+    "Title": "High-Resolution Pupillometry during Adaptive Interface Interaction",
+    "PI": "Dr. Sarah Lin",
+    "Status": "Completed",
+    "Description": "Used a Tobii Pro Spectrum 1200Hz eye tracker to analyze pupil dilatory dynamics as a proxy for transient cognitive overload in designers performing layout optimization tasks.",
+    "Funding": "CUK Institutional Research Grant"
+  }
+]

@@ -3,11 +3,15 @@ import Sidebar from './components/Sidebar';
 import LabDashboard from './components/LabDashboard';
 import ThreeBrain from './components/ThreeBrain';
 import VirtualSimulator from './components/VirtualSimulator';
-import GearExplorer from './components/GearExplorer';
+import Facilities from './components/Facilities';
 import Publications from './components/Publications';
 import GazeVisualizer from './components/GazeVisualizer';
 import InteractiveGrid from './components/InteractiveGrid';
-import TeamPage from './components/TeamPage';
+import Coordinator from './components/Coordinator';
+import Students from './components/Students';
+import Research from './components/Research';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -32,8 +36,18 @@ export default function App() {
     switch (activeTab) {
       case 'brain':
         return <ThreeBrain gaze={currentGaze} isGazeConnected={isGazeActive && isGazeConnected} />;
-      case 'team':
-        return <TeamPage />;
+      case 'coordinator':
+        return <Coordinator />;
+      case 'students':
+        return <Students />;
+      case 'facilities':
+        return <Facilities />;
+      case 'research':
+        return <Research />;
+      case 'projects':
+        return <Projects />;
+      case 'contact':
+        return <Contact />;
       case 'simulator':
         return (
           <VirtualSimulator 
@@ -53,8 +67,6 @@ export default function App() {
             setIsGazeActive={setIsGazeActive}
           />
         );
-      case 'equipment':
-        return <GearExplorer />;
       case 'publications':
         return <Publications />;
       case 'dashboard':

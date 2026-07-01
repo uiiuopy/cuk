@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Users } from 'lucide-react';
+import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Users, Award, MapPin, ClipboardList, Compass } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
   const [apiStatus, setApiStatus] = useState('connecting');
@@ -25,12 +25,16 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
   const navItems = [
     { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
-    { id: 'team', label: 'Lab Coordinator & Students', icon: Users },
-    { id: 'equipment', label: 'Facilities', icon: Cpu },
-    { id: 'publications', label: 'Publications & Research', icon: BookOpen },
+    { id: 'coordinator', label: 'Coordinator', icon: Award },
+    { id: 'students', label: 'Students', icon: Users },
+    { id: 'facilities', label: 'Facilities', icon: Cpu },
+    { id: 'research', label: 'Research Themes', icon: Compass },
+    { id: 'projects', label: 'Projects', icon: ClipboardList },
+    { id: 'publications', label: 'Publications', icon: BookOpen },
     { id: 'brain', label: '3D Brain Explorer', icon: Brain },
     { id: 'simulator', label: 'Biosignal Simulator', icon: Activity },
-    { id: 'gaze', label: 'Eye Tracking', icon: Eye }
+    { id: 'gaze', label: 'Eye Tracking', icon: Eye },
+    { id: 'contact', label: 'Contact Us', icon: MapPin }
   ];
 
   return (
