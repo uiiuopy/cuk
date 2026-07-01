@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen, Cpu, Activity, CheckCircle, MessageSquare, MapPin, Phone, Mail } from 'lucide-react';
 import InfiniteCanvas from './InfiniteCanvas';
+import InteractiveBrainSVG from './InteractiveBrainSVG';
 
 export default function LabDashboard() {
   const researchGlimpses = [
@@ -128,11 +129,7 @@ export default function LabDashboard() {
           </p>
         </div>
         <div className="about-visual">
-          <div className="academic-emblem">
-            <Brain size={88} strokeWidth={2.5} className="emblem-icon" />
-            <div className="emblem-ring-1"></div>
-            <div className="emblem-ring-2"></div>
-          </div>
+          <InteractiveBrainSVG />
         </div>
       </section>
 
