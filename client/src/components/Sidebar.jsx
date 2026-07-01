@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Sun, Moon, Users } from 'lucide-react';
+import { Brain, Activity, Cpu, BookOpen, LayoutDashboard, Radio, Eye, Users } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) {
+export default function Sidebar({ activeTab, setActiveTab }) {
   const [apiStatus, setApiStatus] = useState('connecting');
 
   useEffect(() => {
@@ -24,42 +24,43 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
   }, []);
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'team', label: 'Our Team', icon: Users },
+    { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
+    { id: 'team', label: 'Lab Coordinator & Students', icon: Users },
+    { id: 'equipment', label: 'Facilities', icon: Cpu },
+    { id: 'publications', label: 'Publications & Research', icon: BookOpen },
     { id: 'brain', label: '3D Brain Explorer', icon: Brain },
     { id: 'simulator', label: 'Biosignal Simulator', icon: Activity },
-    { id: 'gaze', label: 'Eye Tracking', icon: Eye },
-    { id: 'equipment', label: 'Equipment Room', icon: Cpu },
-    { id: 'publications', label: 'Research Portal', icon: BookOpen }
+    { id: 'gaze', label: 'Eye Tracking', icon: Eye }
   ];
 
   return (
-    <header className="navbar-container">
-      <div className="nav-brand">
-        <Brain className="brand-logo" />
+    <aside className="sidebar-container glass-panel">
+      <div className="sidebar-brand">
+        <div className="brand-logo-wrapper">
+          <Brain className="brand-logo" size={28} />
+        </div>
         <div className="brand-text">
-          <span className="brand-title">CUK</span>
-          <span className="brand-subtitle">PSYCHOPHYSIOLOGY LAB</span>
+          <span className="brand-title">BCNL</span>
         </div>
       </div>
 
-      <nav className="nav-links">
+      <nav className="sidebar-links">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`nav-item-btn ${activeTab === item.id ? 'active' : ''}`}
+              className={`sidebar-item-btn ${activeTab === item.id ? 'active' : ''}`}
             >
-              <Icon size={16} className="nav-icon" />
+              <Icon size={18} className="sidebar-icon" />
               <span>{item.label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div className="navbar-controls">
+      <div className="sidebar-footer">
         <div className="nav-status-panel">
           <Radio size={14} className={`status-signal-icon ${apiStatus}`} />
           <span className="status-text">
@@ -67,42 +68,39 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
           </span>
           <span className={`status-dot ${apiStatus}`} />
         </div>
-
-        <button 
-          onClick={toggleTheme} 
-          className="theme-toggle-btn"
-          title={`Switch to ${theme === 'light' ? 'Dark' : 'Bright'} Contrast`}
-          aria-label="Toggle theme contrast"
-        >
-          {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-        </button>
       </div>
 
       <style>{`
-        .navbar-container {
+        .sidebar-container {
+          width: 280px;
+          height: 100vh;
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 16px 32px;
-          background: var(--bg-dark);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border-bottom: 1px solid var(--border-color);
+          flex-direction: column;
+          border-right: 1px solid var(--border-color);
+          background: var(--bg-card);
           position: sticky;
           top: 0;
+          flex-shrink: 0;
           z-index: 100;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
         }
 
-        .nav-brand {
+        .sidebar-brand {
           display: flex;
           align-items: center;
           gap: 12px;
+          padding: 24px;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo-wrapper {
+          background: rgba(11, 34, 64, 0.05);
+          padding: 8px;
+          border-radius: 8px;
+          border: 1px solid rgba(11, 34, 64, 0.1);
         }
 
         .brand-logo {
           color: var(--accent-cyan);
-          transition: transform 0.3s ease;
         }
 
         .brand-text {
@@ -112,95 +110,70 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
 
         .brand-title {
           font-family: var(--font-tech);
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: var(--accent-cyan);
-          letter-spacing: 1px;
-        }
-
-        .brand-subtitle {
-          font-family: var(--font-body);
-          font-size: 0.68rem;
-          font-weight: 600;
-          color: var(--accent-pink);
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: var(--text-main);
           letter-spacing: 0.5px;
-          text-transform: uppercase;
         }
 
-        .nav-links {
+        .sidebar-links {
           display: flex;
+          flex-direction: column;
           gap: 4px;
+          padding: 24px 16px;
+          flex-grow: 1;
+          overflow-y: auto;
         }
 
-        .nav-item-btn {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          background: transparent;
-          border: 1px solid transparent;
-          color: var(--text-muted);
-          padding: 8px 14px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-family: var(--font-body);
-          font-weight: 500;
-          font-size: 0.85rem;
-          transition: all 0.2s ease-in-out;
-        }
-
-        .nav-item-btn:hover {
-          color: var(--accent-cyan);
-          background: rgba(11, 34, 64, 0.04);
-        }
-
-        .nav-item-btn.active {
-          color: var(--accent-cyan);
-          border-color: rgba(11, 34, 64, 0.1);
-          background: rgba(11, 34, 64, 0.05);
-        }
-
-        .nav-icon {
-          transition: transform 0.2s ease;
-        }
-
-        .nav-item-btn:hover .nav-icon {
-          transform: translateY(-1px);
-        }
-
-        .navbar-controls {
+        .sidebar-item-btn {
           display: flex;
           align-items: center;
           gap: 12px;
-        }
-
-        .theme-toggle-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 32px;
-          height: 32px;
           background: transparent;
-          border: 1px solid var(--border-color);
-          color: var(--accent-cyan);
-          border-radius: 4px;
+          border: none;
+          color: var(--text-muted);
+          padding: 12px 16px;
+          border-radius: 6px;
           cursor: pointer;
-          transition: all 0.2s ease;
+          font-family: var(--font-body);
+          font-weight: 500;
+          font-size: 0.95rem;
+          text-align: left;
+          transition: all 0.2s ease-in-out;
         }
 
-        .theme-toggle-btn:hover {
-          background: rgba(182, 146, 96, 0.08);
-          border-color: var(--accent-pink);
-          color: var(--accent-pink);
+        .sidebar-item-btn:hover {
+          color: var(--text-main);
+          background: rgba(11, 34, 64, 0.04);
+        }
+
+        .sidebar-item-btn.active {
+          color: var(--accent-cyan);
+          background: rgba(11, 34, 64, 0.08);
+          font-weight: 600;
+        }
+
+        .sidebar-icon {
+          transition: transform 0.2s ease;
+        }
+
+        .sidebar-item-btn:hover .sidebar-icon {
+          transform: scale(1.1);
+        }
+
+        .sidebar-footer {
+          padding: 24px;
+          border-top: 1px solid var(--border-color);
         }
 
         .nav-status-panel {
           display: flex;
           align-items: center;
-          gap: 8px;
+          justify-content: space-between;
           background: var(--bg-darker);
           border: 1px solid var(--border-color);
-          padding: 6px 12px;
-          border-radius: 4px;
+          padding: 8px 12px;
+          border-radius: 6px;
         }
 
         .status-signal-icon {
@@ -223,15 +196,15 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
         }
 
         .status-text {
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           font-family: var(--font-body);
           font-weight: 600;
           color: var(--text-muted);
         }
 
         .status-dot {
-          width: 6px;
-          height: 6px;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
           background: #94a3b8;
         }
@@ -249,17 +222,27 @@ export default function Navbar({ activeTab, setActiveTab, theme, toggleTheme }) 
         }
 
         @media (max-width: 900px) {
-          .navbar-container {
-            flex-direction: column;
-            gap: 16px;
-            padding: 16px;
+          .sidebar-container {
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-right: none;
+            border-bottom: 1px solid var(--border-color);
           }
-          .nav-links {
+          .sidebar-brand {
+            justify-content: center;
+          }
+          .sidebar-links {
+            flex-direction: row;
             flex-wrap: wrap;
             justify-content: center;
+            padding: 16px;
+          }
+          .sidebar-footer {
+            display: none; /* Hide on mobile to save space */
           }
         }
       `}</style>
-    </header>
+    </aside>
   );
 }

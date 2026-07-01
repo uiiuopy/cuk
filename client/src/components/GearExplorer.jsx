@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings, Brain, Activity, Waves, Eye } from 'lucide-react';
 import { fetchSheetData } from '../utils/googleSheets';
+
+const getCategoryIcon = (category) => {
+  const cat = category.toLowerCase();
+  if (cat.includes('eeg')) return <Brain size={48} className="gear-main-icon" />;
+  if (cat.includes('hrv') || cat.includes('cardio') || cat.includes('ecg')) return <Activity size={48} className="gear-main-icon" />;
+  if (cat.includes('gsr') || cat.includes('skin')) return <Waves size={48} className="gear-main-icon" />;
+  if (cat.includes('eye') || cat.includes('gaze')) return <Eye size={48} className="gear-main-icon" />;
+  return <Cpu size={48} className="gear-main-icon" />;
+};
 
 export default function GearExplorer() {
   const [equipment, setEquipment] = useState([]);
@@ -62,38 +71,37 @@ export default function GearExplorer() {
         <div className="gear-grid">
           {filteredGear.map((item) => (
             <div key={item.id} className="gear-card glass-panel flex-col">
-              <div className="card-top-row">
-                <span className="category-badge">
-                  <Tag size={10} /> {item.category}
-                </span>
-                <span className={`status-badge ${item.status.toLowerCase()}`}>
-                  {item.status === 'Available' ? (
-                    <><ShieldCheck size={12} /> {item.status}</>
-                  ) : (
-                    <><AlertTriangle size={12} /> {item.status}</>
-                  )}
-                </span>
+              <div className="gear-card-header">
+                {getCategoryIcon(item.category)}
               </div>
 
               <h3 className="gear-name">{item.name}</h3>
-              <p className="gear-desc">{item.description}</p>
-              
-              <div className="gear-utility-box">
-                <span className="utility-label">Research Utility:</span>
-                <p className="utility-text">{item.utility}</p>
+              <p className="gear-category">{item.category}</p>
+
+              <div className="gear-meta">
+                <div className="meta-col">
+                  <span className="meta-label">MANUFACTURER</span>
+                  <span className="meta-value">{item.manufacturer}</span>
+                </div>
+                <div className="meta-col">
+                  <span className="meta-label">MODEL</span>
+                  <span className="meta-value">{item.model}</span>
+                </div>
               </div>
 
               <div className="divider" />
 
-              <div className="specs-list flex-col">
-                <span className="specs-title"><Settings size={12} /> Technical Specifications</span>
-                {Object.entries(item.specs).map(([key, val]) => (
-                  <div key={key} className="spec-row">
-                    <span className="spec-key">{key.replace(/([A-Z])/g, ' $1')}</span>
-                    <span className="spec-val">{val}</span>
-                  </div>
-                ))}
+              <div className="specs-section">
+                <span className="specs-title">TECHNICAL SPECIFICATIONS</span>
+                <p className="specs-text">{item.specs}</p>
               </div>
+
+              {item.description && (
+                <div className="specs-section">
+                  <span className="specs-title">APPLICATIONS</span>
+                  <p className="specs-text">{item.description}</p>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -209,57 +217,57 @@ export default function GearExplorer() {
           border-radius: 6px;
         }
 
-        .utility-label {
-          font-family: var(--font-tech);
-          font-size: 0.62rem;
-          text-transform: uppercase;
-          color: var(--accent-pink);
-          display: block;
-          margin-bottom: 4px;
+          border: 1px solid var(--border-color);
         }
 
-        .utility-text {
+        .meta-col {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .meta-label {
+          font-family: var(--font-body);
+          font-size: 0.65rem;
+          font-weight: 600;
+          color: var(--text-muted);
+          letter-spacing: 0.5px;
+        }
+
+        .meta-value {
+          font-family: var(--font-body);
           font-size: 0.8rem;
-          line-height: 1.4;
           color: var(--text-main);
+          font-weight: 500;
         }
 
         .divider {
           height: 1px;
           background: var(--border-color);
+          width: 100%;
+          margin: 4px 0;
         }
 
-        .specs-list {
+        .specs-section {
+          display: flex;
+          flex-direction: column;
           gap: 8px;
         }
 
         .specs-title {
-          font-family: var(--font-tech);
-          font-size: 0.65rem;
-          text-transform: uppercase;
+          font-family: var(--font-body);
+          font-size: 0.7rem;
+          font-weight: 700;
+          color: var(--accent-cyan);
+          letter-spacing: 0.5px;
+        }
+
+        .specs-text {
+          font-family: var(--font-body);
+          font-size: 0.82rem;
           color: var(--text-muted);
-          margin-bottom: 4px;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-        }
-
-        .spec-row {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.78rem;
-          border-bottom: 1px dashed var(--border-color);
-          padding-bottom: 4px;
-        }
-
-        .spec-key {
-          color: var(--text-muted);
-          text-transform: capitalize;
-        }
-
-        .spec-val {
-          color: var(--text-main);
-          font-weight: 500;
+          line-height: 1.6;
+          white-space: pre-line;
         }
 
         @media (max-width: 600px) {

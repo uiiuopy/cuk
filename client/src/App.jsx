@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import LabDashboard from './components/LabDashboard';
 import ThreeBrain from './components/ThreeBrain';
 import VirtualSimulator from './components/VirtualSimulator';
@@ -64,40 +64,40 @@ export default function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container sidebar-layout">
       <InteractiveGrid 
         gridColor={theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(11, 34, 64, 0.04)'}
         dotColor={theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(11, 34, 64, 0.07)'}
         hoverColor={theme === 'dark' ? '#dfb271' : '#b69260'}
         trailColor={theme === 'dark' ? '#dfb271' : '#b69260'}
       />
-      <Navbar 
+      <Sidebar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        theme={theme}
-        toggleTheme={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
       />
       
-      <main className="content-body">
-        {renderContent()}
-      </main>
+      <div className="main-content-wrapper">
+        <main className="content-body">
+          {renderContent()}
+        </main>
 
-      {activeTab !== 'gaze' && (
-        <GazeVisualizer 
-          onGazeUpdate={setCurrentGaze} 
-          isActive={isGazeActive} 
-          setIsGazeConnected={setIsGazeConnected} 
-          showOverlayOnly={true}
-          setIsGazeActive={setIsGazeActive}
-        />
-      )}
+        {activeTab !== 'gaze' && (
+          <GazeVisualizer 
+            onGazeUpdate={setCurrentGaze} 
+            isActive={isGazeActive} 
+            setIsGazeConnected={setIsGazeConnected} 
+            showOverlayOnly={true}
+            setIsGazeActive={setIsGazeActive}
+          />
+        )}
 
-      <footer className="footer-panel">
-        <div className="footer-content">
-          <span className="footer-brand">CUK PSYCHOPHYSIOLOGY RESEARCH LABORATORY</span>
-          <span className="footer-copyright">© {new Date().getFullYear()} CUK. All systems operational.</span>
-        </div>
-      </footer>
+        <footer className="footer-panel">
+          <div className="footer-content">
+            <span className="footer-brand">BIOFEEDBACK AND COGNITIVE NEUROSCIENCE LABORATORY</span>
+            <span className="footer-copyright">© {new Date().getFullYear()} CUK. All rights reserved.</span>
+          </div>
+        </footer>
+      </div>
 
       <style>{`
         .footer-panel {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon } from 'lucide-react';
+import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen } from 'lucide-react';
 import InfiniteCanvas from './InfiniteCanvas';
 
 export default function LabDashboard() {
@@ -67,9 +67,9 @@ export default function LabDashboard() {
       <section className="about-hero glass-panel pulse-card">
         <div className="about-content">
           <div className="tag-badge">Research Center</div>
-          <h1 className="about-title glow-text-cyan">CUK PSYCHOPHYSIOLOGY RESEARCH LABORATORY</h1>
+          <h1 className="about-title glow-text-cyan">Biofeedback and Cognitive Neuroscience Laboratory</h1>
           <p className="about-text">
-            The CUK Psychophysiology Research Laboratory is a state-of-the-art facility dedicated to unraveling the intricate connections between psychological processes and physiological responses. By leveraging high-density electroencephalography (EEG), electrocardiography (ECG), galvanic skin response (GSR), and eye-tracking interfaces, we observe the human mind and body in real-time. Our interdisciplinary team integrates neuroscience, cognitive psychology, and computer science to pioneer new pathways in human performance, emotional regulation, and neuro-engineering.
+            The Biofeedback and Cognitive Neuroscience Laboratory is dedicated to research, teaching, and training in cognitive neuroscience, psychophysiology, and biofeedback. The laboratory supports interdisciplinary research using state-of-the-art physiological recording systems for understanding human cognition, emotion, and behaviour.
           </p>
         </div>
         <div className="about-visual">
@@ -81,25 +81,35 @@ export default function LabDashboard() {
         </div>
       </section>
 
-      {/* Vision and Mission */}
+      {/* Vision, Mission, Objectives */}
       <div className="vision-mission-grid">
-        <div className="vision-card glass-panel">
-          <div className="card-header">
-            <Eye size={24} className="glow-text-cyan" />
-            <h2>Laboratory Vision</h2>
+        <div className="vision-card glass-panel text-center-card">
+          <div className="card-icon-wrapper">
+            <Eye size={32} className="glow-text-cyan" />
           </div>
+          <h2>Vision</h2>
           <p>
-            To become a global beacon of neuro-cognitive research, bridging the gap between physiological signals and mental states to create intelligent, empathetic human-machine interfaces that improve human well-being and unlock hidden cognitive potentials.
+            To become a leading centre for translational cognitive neuroscience and biofeedback research in India.
           </p>
         </div>
 
-        <div className="mission-card glass-panel">
-          <div className="card-header">
-            <Target size={24} className="glow-text-pink" />
-            <h2>Laboratory Mission</h2>
+        <div className="mission-card glass-panel text-center-card">
+          <div className="card-icon-wrapper">
+            <Target size={32} className="glow-text-pink" />
           </div>
+          <h2>Mission</h2>
           <p>
-            To conduct rigorous empirical research on central and autonomic nervous system dynamics; to train the next generation of psychophysiologists using modern sensing tools; and to engineer translation-ready technologies that optimize mental health, attention, and cognitive efficiency.
+            Advance scientific understanding of cognition, emotion and behaviour through rigorous psychophysiological research and training.
+          </p>
+        </div>
+
+        <div className="objectives-card glass-panel text-center-card">
+          <div className="card-icon-wrapper">
+            <BookOpen size={32} className="glow-text-cyan" />
+          </div>
+          <h2>Objectives</h2>
+          <p>
+            Foster interdisciplinary research, train next-generation scientists, and produce open, reproducible findings.
           </p>
         </div>
       </div>
@@ -257,35 +267,44 @@ export default function LabDashboard() {
           to { transform: rotate(360deg); }
         }
 
-        /* Vision & Mission Grid */
+        /* Vision, Mission, Objectives Grid */
         .vision-mission-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, 1fr);
           gap: 24px;
         }
 
-        .vision-card, .mission-card {
+        .text-center-card {
           display: flex;
           flex-direction: column;
+          align-items: center;
+          text-align: center;
           gap: 16px;
-          padding: 28px;
+          padding: 32px 24px;
         }
 
-        .card-header {
+        .card-icon-wrapper {
           display: flex;
           align-items: center;
-          gap: 12px;
+          justify-content: center;
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: rgba(11, 34, 64, 0.05);
+          margin-bottom: 8px;
         }
 
-        .card-header h2 {
+        .text-center-card h2 {
           font-size: 1.3rem;
           color: var(--text-main);
+          margin: 0;
         }
 
-        .vision-card p, .mission-card p {
+        .text-center-card p {
           font-size: 0.95rem;
           line-height: 1.65;
           color: var(--text-muted);
+          margin: 0;
         }
 
         /* Sections headers */
