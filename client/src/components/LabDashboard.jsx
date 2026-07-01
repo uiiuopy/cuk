@@ -123,7 +123,7 @@ export default function LabDashboard() {
         <div className="about-content">
           <div className="tag-badge">Research Center</div>
           <h1 className="about-title glow-text-cyan">Biofeedback and Cognitive Neuroscience Laboratory</h1>
-          <p className="about-text">
+          <p className="about-text lead-text">
             The Biofeedback and Cognitive Neuroscience Laboratory is dedicated to research, teaching, and training in cognitive neuroscience, psychophysiology, and biofeedback. The laboratory supports interdisciplinary research using state-of-the-art physiological recording systems for understanding human cognition, emotion, and behaviour.
           </p>
         </div>

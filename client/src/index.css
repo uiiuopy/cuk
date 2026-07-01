@@ -78,13 +78,58 @@ body {
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-tech);
-  letter-spacing: 1px;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em; /* Sharper tight headings */
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2.3rem;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.2rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+}
+
+h4 {
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 p {
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.65;
   color: var(--text-muted);
+  margin-bottom: 1rem;
 }
+
+/* Contrast enhancement for bold text */
+strong, b {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.lead-text {
+  font-family: var(--font-tech);
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  font-style: italic;
+}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
