@@ -255,18 +255,17 @@ export default function InteractiveBrainSVG() {
 
         .signal-hud {
           position: absolute;
-          bottom: 12px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: calc(100% - 40px);
-          max-width: 250px;
-          padding: 10px 14px;
+          top: 12px;
+          right: 12px;
+          width: 170px;
+          padding: 8px 12px;
           z-index: 5;
           text-align: center;
           border-radius: 8px;
           background: var(--bg-glass);
           border: 1px solid var(--border-glass);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          pointer-events: none; /* Allows pointer hover to pass through to underlying elements */
         }
 
         .hud-title {
