@@ -239,6 +239,7 @@ export default function InteractiveBrainSVG() {
         .interactive-svg-container {
           position: relative;
           width: 100%;
+          max-width: 320px; /* Prevents visual stretching */
           height: 100%;
           display: flex;
           align-items: center;
@@ -249,7 +250,7 @@ export default function InteractiveBrainSVG() {
         .brain-svg {
           width: 100%;
           height: 100%;
-          max-height: 290px;
+          max-height: 280px;
           filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.05));
         }
 
@@ -257,8 +258,8 @@ export default function InteractiveBrainSVG() {
           position: absolute;
           top: 12px;
           right: 12px;
-          width: 170px;
-          padding: 8px 12px;
+          width: 160px;
+          padding: 8px 10px;
           z-index: 5;
           text-align: center;
           border-radius: 8px;
@@ -270,31 +271,60 @@ export default function InteractiveBrainSVG() {
 
         .hud-title {
           font-family: var(--font-body);
-          font-size: 0.7rem;
+          font-size: 0.68rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.8px;
           color: var(--text-muted);
-          margin-bottom: 4px;
+          margin-bottom: 2px;
         }
 
         .hud-metric {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 2px;
+          gap: 1px;
         }
 
         .hud-label {
-          font-size: 0.78rem;
+          font-size: 0.74rem;
           font-weight: 600;
           color: var(--text-main);
         }
 
         .hud-value {
           font-family: var(--font-body);
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+          .interactive-svg-container {
+            max-width: 280px;
+            padding: 10px;
+          }
+          .brain-svg {
+            max-height: 230px;
+          }
+          .signal-hud {
+            top: auto;
+            right: auto;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 16px);
+            max-width: 220px;
+            padding: 6px 8px;
+          }
+          .hud-title {
+            font-size: 0.62rem;
+          }
+          .hud-label {
+            font-size: 0.7rem;
+          }
+          .hud-value {
+            font-size: 0.74rem;
+          }
         }
       `}</style>
     </div>
