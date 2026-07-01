@@ -1,5 +1,4 @@
-import React from 'react';
-import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen } from 'lucide-react';
+import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen, Cpu, Activity, CheckCircle, MessageSquare, MapPin, Phone, Mail } from 'lucide-react';
 import InfiniteCanvas from './InfiniteCanvas';
 
 export default function LabDashboard() {
@@ -31,6 +30,61 @@ export default function LabDashboard() {
     { id: 4, path: '/src/assets/photo4.jpg', label: 'EEG Preparation Room', left: '520px', top: '290px' },
     { id: 5, path: '/src/assets/photo5.jpg', label: 'Eye-Tracking Calibration Bay', left: '850px', top: '50px' },
     { id: 6, path: '/src/assets/photo6.jpg', label: 'Autonomic Sensor Bay', left: '900px', top: '260px' }
+  ];
+
+  const equipmentList = [
+    {
+      name: 'Brain Products 64-Channel EEG',
+      desc: 'High-density electroencephalography system featuring active wet gel electrodes to record electrical brain activity with millisecond temporal resolution.',
+      icon: Brain
+    },
+    {
+      name: 'EMG (Electromyography)',
+      desc: 'Muscle electrical potential sensors measuring muscle contraction dynamics, motor unit recruitment, and physiological stress responses.',
+      icon: Activity
+    },
+    {
+      name: 'HRV (Heart Rate Variability)',
+      desc: 'Autonomic cardiac regulation index extracted from high-resolution electrocardiograms to evaluate sympathetic-parasympathetic balance.',
+      icon: Target
+    },
+    {
+      name: 'GSR (Galvanic Skin Response)',
+      desc: 'Electrodermal activity measurement reflecting sympathetic nervous system arousal and sweat gland activation during emotional response.',
+      icon: Cpu
+    },
+    {
+      name: 'EOG (Electrooculography)',
+      desc: 'Electrode system measuring the resting potential of the retina to track vertical/horizontal eye movements and blink rates.',
+      icon: Eye
+    },
+    {
+      name: 'BVP (Blood Volume Pulse)',
+      desc: 'Photoplethysmography sensor capturing vascular blood flow fluctuations to determine heart rate and peripheral vasoconstriction.',
+      icon: Shield
+    }
+  ];
+
+  const inquiryAreas = [
+    'Cognitive Neuroscience',
+    'Psychophysiology',
+    'Biofeedback',
+    'Neuropsychology',
+    'Emotion Regulation',
+    'Attention & Memory',
+    'Executive Functions',
+    'Stress & Resilience',
+    'EEG & ERP Research',
+    'Brain-Behaviour Relationships'
+  ];
+
+  const collaborations = [
+    'EEG recording services',
+    'HRV and psychophysiological assessments',
+    'Research collaborations',
+    'Student training',
+    'Workshops',
+    'Consultancy (if applicable)'
   ];
 
   // Helper component to display a stylish fallback if the image is missing
@@ -136,6 +190,56 @@ export default function LabDashboard() {
         </div>
       </section>
 
+      {/* State of the Art Equipment */}
+      <section className="equipment-showcase-section">
+        <h2 className="section-header-title glow-text-pink">State-of-the-Art Equipment</h2>
+        <p className="section-subtitle">High-fidelity physiological acquisition systems deployed in our experiments.</p>
+        <div className="equipments-grid">
+          {equipmentList.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div key={idx} className="equip-item-card glass-panel">
+                <div className="equip-icon-wrapper">
+                  <Icon size={20} className="glow-text-cyan" />
+                </div>
+                <div>
+                  <h3 className="equip-title">{item.name}</h3>
+                  <p className="equip-desc">{item.desc}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Areas of Inquiry */}
+      <section className="inquiry-section">
+        <h2 className="section-header-title glow-text-cyan">Areas of Inquiry</h2>
+        <p className="section-subtitle">Key scientific domains and clinical questions investigated by our scholars.</p>
+        <div className="inquiry-badges-container">
+          {inquiryAreas.map((area, idx) => (
+            <span key={idx} className="inquiry-badge glass-panel">
+              <Compass size={12} className="badge-bullet" />
+              {area}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Collaborate with Us */}
+      <section className="collaborate-section">
+        <h2 className="section-header-title glow-text-pink">Collaborate with Us</h2>
+        <p className="section-subtitle">Avenues for partnership, student development, and consultancy services.</p>
+        <div className="collab-grid">
+          {collaborations.map((collab, idx) => (
+            <div key={idx} className="collab-card glass-panel">
+              <CheckCircle size={18} className="collab-check-icon" />
+              <span className="collab-text">{collab}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Photos / Gallery */}
       <section className="gallery-section">
         <div className="gallery-header-row">
@@ -167,6 +271,35 @@ export default function LabDashboard() {
           </div>
         </div>
       </section>
+
+      {/* Contact Info Footer Card */}
+      <footer className="lab-contact-footer glass-panel">
+        <div className="footer-cols">
+          <div className="footer-col brand-col">
+            <Brain className="footer-logo" size={32} />
+            <h3 className="footer-title">BCNL CUK</h3>
+            <p className="footer-desc">Biofeedback and Cognitive Neuroscience Laboratory at the Central University of Karnataka.</p>
+          </div>
+          <div className="footer-col">
+            <h4 className="footer-heading">Address</h4>
+            <div className="footer-item">
+              <MapPin size={14} className="footer-icon" />
+              <span>Aland Road, Kadaganchi, Kalaburagi, Karnataka 585311</span>
+            </div>
+          </div>
+          <div className="footer-col">
+            <h4 className="footer-heading">Contact</h4>
+            <div className="footer-item">
+              <Mail size={14} className="footer-icon" />
+              <a href="mailto:sarah.lin@cuk.ac.in">sarah.lin@cuk.ac.in</a>
+            </div>
+            <div className="footer-item">
+              <Phone size={14} className="footer-icon" />
+              <span>+91 (08477) 226707 (Ext 432)</span>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       <style>{`
         .dashboard-container {
@@ -516,6 +649,187 @@ export default function LabDashboard() {
           }
           .vision-mission-grid {
             grid-template-columns: 1fr;
+          }
+        }
+
+        /* State of the Art Equipment Showcase */
+        .equipments-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 20px;
+        }
+
+        .equip-item-card {
+          display: flex;
+          gap: 16px;
+          padding: 20px;
+          align-items: flex-start;
+          transition: border-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .equip-item-card:hover {
+          border-color: var(--accent-pink);
+          transform: translateY(-2px);
+        }
+
+        .equip-icon-wrapper {
+          flex-shrink: 0;
+          background: rgba(11, 34, 64, 0.04);
+          padding: 8px;
+          border-radius: 6px;
+          border: 1px solid rgba(11, 34, 64, 0.08);
+        }
+
+        .equip-title {
+          font-family: var(--font-tech);
+          font-size: 0.95rem;
+          font-weight: 700;
+          margin: 0 0 6px 0;
+          color: var(--text-main);
+        }
+
+        .equip-desc {
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          line-height: 1.45;
+          margin: 0;
+        }
+
+        /* Areas of Inquiry Tag Cloud */
+        .inquiry-badges-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .inquiry-badge {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 14px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: var(--text-main);
+          border-radius: 6px;
+          transition: border-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .inquiry-badge:hover {
+          border-color: var(--accent-cyan);
+          transform: translateY(-1px);
+        }
+
+        .badge-bullet {
+          color: var(--accent-cyan);
+        }
+
+        /* Collaborate with Us Section */
+        .collab-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 16px;
+        }
+
+        .collab-card {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 18px 20px;
+          transition: border-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .collab-card:hover {
+          border-color: var(--accent-pink);
+          transform: translateY(-1px);
+        }
+
+        .collab-check-icon {
+          color: var(--accent-pink);
+          flex-shrink: 0;
+        }
+
+        .collab-text {
+          font-size: 0.82rem;
+          font-weight: 500;
+          color: var(--text-main);
+        }
+
+        /* Front Page Contact Footer */
+        .lab-contact-footer {
+          margin-top: 20px;
+          padding: 32px;
+          border-top: 1px solid var(--border-color);
+        }
+
+        .footer-cols {
+          display: grid;
+          grid-template-columns: 2fr 1.5fr 1.5fr;
+          gap: 40px;
+        }
+
+        .brand-col {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .footer-logo {
+          color: var(--accent-cyan);
+        }
+
+        .footer-title {
+          font-family: var(--font-tech);
+          font-size: 1.1rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .footer-desc {
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          line-height: 1.5;
+        }
+
+        .footer-heading {
+          font-family: var(--font-body);
+          font-size: 0.78rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: var(--accent-pink);
+          margin-bottom: 12px;
+        }
+
+        .footer-item {
+          display: flex;
+          gap: 10px;
+          align-items: flex-start;
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          line-height: 1.4;
+          margin-bottom: 8px;
+        }
+
+        .footer-item a {
+          color: var(--text-muted);
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .footer-item a:hover {
+          color: var(--accent-cyan);
+        }
+
+        .footer-icon {
+          color: var(--accent-cyan);
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        @media (max-width: 768px) {
+          .footer-cols {
+            grid-template-columns: 1fr;
+            gap: 24px;
           }
         }
       `}</style>
