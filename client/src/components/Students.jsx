@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GraduationCap, Mail, ChevronRight } from 'lucide-react';
-import { fetchSheetData } from '../utils/googleSheets';
+import { fetchSheetData, getDirectDriveUrl } from '../utils/googleSheets';
 import fallbackStudents from '../data/students.json';
 
 function getInitials(name) {
@@ -47,7 +47,7 @@ export default function Students() {
             <div key={idx} className="student-card glass-panel">
               <div className="student-header">
                 {student['Photo URL'] ? (
-                  <img src={student['Photo URL']} alt={student.Name} className="student-photo" />
+                  <img src={getDirectDriveUrl(student['Photo URL'])} alt={student.Name} className="student-photo" />
                 ) : (
                   <div className="avatar-initials student-avatar">
                     {getInitials(student.Name || 'N A')}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen, Cpu, Activity, CheckCircle, MessageSquare, MapPin, Phone, Mail } from 'lucide-react';
-import { fetchSheetData } from '../utils/googleSheets';
+import { fetchSheetData, getDirectDriveUrl } from '../utils/googleSheets';
 import InfiniteCanvas from './InfiniteCanvas';
 import InteractiveBrainSVG from './InteractiveBrainSVG';
 
@@ -115,6 +115,7 @@ export default function LabDashboard() {
   // Helper component to display a stylish fallback if the image is missing
   const ImageWithFallback = ({ src, alt, label }) => {
     const [hasError, setHasError] = useState(false);
+    const directUrl = getDirectDriveUrl(src);
 
     return (
       <div className="gallery-item-wrapper glass-panel">
@@ -127,7 +128,7 @@ export default function LabDashboard() {
           </div>
         ) : (
           <img
-            src={src}
+            src={directUrl}
             alt={alt}
             className="gallery-image"
             onError={() => setHasError(true)}

@@ -104,4 +104,34 @@ export function setSheetId(id) {
   Object.defineProperty(module, 'SHEET_ID', { value: id });
 }
 
+/**
+ * Automatically converts Google Drive share URLs into direct raw image links.
+ * Supports /file/d/ID/view, open?id=ID, and direct document downloads.
+ */
+export function getDirectDriveUrl(url) {
+  if (!url) return '';
+  
+  if (url.includes('drive.google.com') || url.includes('docs.google.com')) {
+    let fileId = '';
+    
+    // Pattern 1: /file/d/FILE_ID/view
+    const fileDMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (fileDMatch && fileDMatch[1]) {
+      fileId = fileDMatch[1];
+    } else {
+      // Pattern 2: ?id=FILE_ID
+      const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (idMatch && idMatch[1]) {
+        fileId = idMatch[1];
+      }
+    }
+    
+    if (fileId) {
+      return `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+  }
+  
+  return url;
+}
+
 export default fetchSheetData;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, BookOpen, Award } from 'lucide-react';
-import { fetchSheetData } from '../utils/googleSheets';
+import { fetchSheetData, getDirectDriveUrl } from '../utils/googleSheets';
 import fallbackFaculty from '../data/faculty.json';
 
 function getInitials(name) {
@@ -47,7 +47,7 @@ export default function Coordinator() {
             <div key={idx} className="coordinator-card glass-panel flex-row">
               <div className="photo-col">
                 {person['Photo URL'] ? (
-                  <img src={person['Photo URL']} alt={person.Name} className="faculty-photo" />
+                  <img src={getDirectDriveUrl(person['Photo URL'])} alt={person.Name} className="faculty-photo" />
                 ) : (
                   <div className="avatar-initials faculty-avatar">
                     {getInitials(person.Name || 'N A')}
