@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Target, Eye, Compass, Shield, Award, Users, Brain, Move, Image as ImageIcon, BookOpen, Cpu, Activity, CheckCircle, MessageSquare, MapPin, Phone, Mail } from 'lucide-react';
+import { fetchSheetData } from '../utils/googleSheets';
 import InfiniteCanvas from './InfiniteCanvas';
 import InteractiveBrainSVG from './InteractiveBrainSVG';
 
@@ -25,7 +26,7 @@ export default function LabDashboard() {
     }
   ];
 
-  const galleryImages = [
+  const defaultGalleryImages = [
     { id: 1, path: '/src/assets/photo1.jpg', label: 'Primary EEG Biosensing Bay', left: '50px', top: '40px' },
     { id: 2, path: '/src/assets/photo2.jpg', label: 'Virtual Reality Suite', left: '440px', top: '100px' },
     { id: 3, path: '/src/assets/photo3.jpg', label: 'Computing Cluster', left: '120px', top: '270px' },
@@ -33,6 +34,28 @@ export default function LabDashboard() {
     { id: 5, path: '/src/assets/photo5.jpg', label: 'Eye-Tracking Calibration Bay', left: '850px', top: '50px' },
     { id: 6, path: '/src/assets/photo6.jpg', label: 'Autonomic Sensor Bay', left: '900px', top: '260px' }
   ];
+
+  const [gallery, setGallery] = useState([]);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const data = await fetchSheetData('Gallery');
+        const normalized = data.map((row, idx) => ({
+          id: `gallery_${idx}`,
+          path: row.Path || row.URL || '',
+          label: row.Label || '',
+          left: row.Left || `${50 + (idx % 3) * 390}px`,
+          top: row.Top || `${40 + Math.floor(idx / 3) * 250}px`
+        }));
+        setGallery(normalized.length > 0 ? normalized : defaultGalleryImages);
+      } catch (err) {
+        console.warn("Failed to fetch gallery from Google Sheets, using fallback:", err);
+        setGallery(defaultGalleryImages);
+      }
+    };
+    fetchGallery();
+  }, []);
 
   const equipmentList = [
     {
@@ -251,7 +274,7 @@ export default function LabDashboard() {
         </div>
 
         <div className="infinite-gallery-viewport">
-          {galleryImages.map((image) => (
+          {gallery.map((image) => (
             <div 
               key={image.id} 
               className="gallery-canvas-card" 
