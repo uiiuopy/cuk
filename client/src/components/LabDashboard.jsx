@@ -275,22 +275,26 @@ export default function LabDashboard() {
         </div>
 
         <div className="infinite-gallery-viewport">
-          {gallery.map((image) => (
-            <div 
-              key={image.id} 
-              className="gallery-canvas-card" 
-              style={{ position: 'absolute', left: image.left, top: image.top, width: '320px', height: '210px' }}
-            >
-              <ImageWithFallback
-                src={image.path}
-                alt={image.label}
-                label={image.label}
-              />
-            </div>
-          ))}
-          <div className="canvas-control-overlay">
-            <InfiniteCanvas />
-          </div>
+          {gallery.length > 0 && (
+            <>
+              {gallery.map((image) => (
+                <div 
+                  key={image.id} 
+                  className="gallery-canvas-card" 
+                  style={{ position: 'absolute', left: image.left, top: image.top, width: '320px', height: '210px' }}
+                >
+                  <ImageWithFallback
+                    src={image.path}
+                    alt={image.label}
+                    label={image.label}
+                  />
+                </div>
+              ))}
+              <div className="canvas-control-overlay">
+                <InfiniteCanvas />
+              </div>
+            </>
+          )}
         </div>
       </section>
 
