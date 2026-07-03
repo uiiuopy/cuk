@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { Brain, Activity, Info, Zap, Upload, FileText, Sliders, Check } from 'lucide-react';
 
 interface LobeInfo {
