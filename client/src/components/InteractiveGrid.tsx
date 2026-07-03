@@ -1,5 +1,65 @@
 import React, { useEffect, useRef, useState } from "react";
 
+interface InteractiveGridProps {
+  clickInteraction?: boolean;
+  clickForce?: number;
+  motionSpeed?: number;
+  cursorTrail?: boolean;
+  trailMode?: "hover" | "click";
+  trailLength?: number;
+  trailColor?: string;
+  backgroundColor?: string;
+  gridColor?: string;
+  dotColor?: string;
+  hoverColor?: string;
+  gridSize?: number;
+  repulsionStrength?: number;
+  radius?: number;
+  dotSize?: number;
+  gridThickness?: number;
+  baseOpacity?: number;
+  style?: React.CSSProperties;
+}
+
+interface GridDot {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  targetSize: number;
+  brightness: number;
+}
+
+interface ParsedColor {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+interface TrailPoint {
+  x: number;
+  y: number;
+  time: number;
+}
+
+function mapLinear(value: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
+  if (inMax === inMin) return outMin;
+  const t = (value - inMin) / (inMax - inMin);
+  return outMin + t * (outMax - outMin);
+}
+
+function mapSpeedUiToInternal(ui: number): number {
+  const clamped = Math.max(0.1, Math.min(1, ui));
+  return mapLinear(clamped, 0.1, 1, 0.1, 2);
+}
+
+function mapEaseUiToInternal(ui: number): number {
+  const clamped = Math.max(0, Math.min(1, ui));
+  return mapLinear(clamped, 0, 1, 0.01, 0.2);
+}
+
 export default function InteractiveGrid({
   clickInteraction = true,
   clickForce = 0.5,
@@ -7,11 +67,11 @@ export default function InteractiveGrid({
   cursorTrail = true,
   trailMode = "hover",
   trailLength = 0.1,
-  trailColor = "#b69260",
+  trailColor = "#0f2d59",
   backgroundColor = "transparent",
-  gridColor = "rgba(11, 34, 64, 0.04)",
-  dotColor = "rgba(11, 34, 64, 0.07)",
-  hoverColor = "#b69260",
+  gridColor = "rgba(15, 45, 89, 0.05)",
+  dotColor = "rgba(15, 45, 89, 0.08)",
+  hoverColor = "#0f2d59",
   gridSize = 60,
   repulsionStrength = -0.3,
   radius = 220,
@@ -19,12 +79,12 @@ export default function InteractiveGrid({
   gridThickness = 0.4,
   baseOpacity = 0.06,
   style = {}
-}) {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const dotsRef = useRef(new Map());
-  const mousePosRef = useRef(null);
-  const trailPointsRef = useRef([]);
+}: InteractiveGridProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const dotsRef = useRef<Map<string, GridDot>>(new Map());
+  const mousePosRef = useRef<{ x: number; y: number } | null>(null);
+  const trailPointsRef = useRef<TrailPoint[]>([]);
   const isMouseDownRef = useRef(false);
   const [mounted, setMounted] = useState(false);
 
@@ -114,7 +174,7 @@ export default function InteractiveGrid({
     trailColor
   ]);
 
-  const parseColor = color => {
+  const parseColor = (color: string): ParsedColor => {
     if (!color || color === "transparent") return { r: 0, g: 0, b: 0, a: 0 };
     const rgbaMatch = color.match(/rgba\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)/i);
     if (rgbaMatch)
@@ -146,9 +206,9 @@ export default function InteractiveGrid({
       g = parseInt(hex.substring(2, 4), 16),
       b = parseInt(hex.substring(4, 6), 16);
     return {
-      r: isNaN(r) ? 0 : r,
-      g: isNaN(g) ? 240 : g,
-      b: isNaN(b) ? 255 : b,
+      r: isNaN(r) ? 15 : r,
+      g: isNaN(g) ? 45 : g,
+      b: isNaN(b) ? 89 : b,
       a: 1
     };
   };
@@ -203,7 +263,7 @@ export default function InteractiveGrid({
     initDots();
     let lastTime = performance.now();
 
-    const getHoverIntensity = (x, y) => {
+    const getHoverIntensity = (x: number, y: number) => {
       const mouse = mousePosRef.current;
       if (!mouse) return 0;
       const hoverRadius = colorsRef.current.radius;
@@ -214,11 +274,11 @@ export default function InteractiveGrid({
       return Math.pow(1 - dist / hoverRadius, 3.5);
     };
 
-    const mapRepulsion = value => {
+    const mapRepulsion = (value: number) => {
       return value <= 0 ? value * 25 : value * 90;
     };
 
-    const getCursorPush = (baseX, baseY) => {
+    const getCursorPush = (baseX: number, baseY: number) => {
       const mouse = mousePosRef.current;
       const currentRepulsion = colorsRef.current.repulsionStrength;
       const mappedRepulsion = mapRepulsion(currentRepulsion);
@@ -232,7 +292,7 @@ export default function InteractiveGrid({
       return { x: (dx / dist) * pushAmount, y: (dy / dist) * pushAmount };
     };
 
-    const getClickPush = (baseX, baseY) => {
+    const getClickPush = (baseX: number, baseY: number) => {
       if (!colorsRef.current.clickInteraction || !isMouseDownRef.current) return { x: 0, y: 0 };
       const mouse = mousePosRef.current;
       const force = colorsRef.current.clickForce;
@@ -369,7 +429,7 @@ export default function InteractiveGrid({
 
     animationRef.current = requestAnimationFrame(animate);
 
-    const handleMouseMove = e => {
+    const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const canvasWidth = canvas.clientWidth || canvas.offsetWidth || 1;
       const canvasHeight = canvas.clientHeight || canvas.offsetHeight || 1;
@@ -402,9 +462,61 @@ export default function InteractiveGrid({
       isMouseDownRef.current = false;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const canvasWidth = canvas.clientWidth || canvas.offsetWidth || 1;
+      const canvasHeight = canvas.clientHeight || canvas.offsetHeight || 1;
+      const scaleX = canvasWidth / rect.width;
+      const scaleY = canvasHeight / rect.height;
+      const x = (touch.clientX - rect.left) * scaleX;
+      const y = (touch.clientY - rect.top) * scaleY;
+
+      if (x >= 0 && y >= 0 && x <= canvasWidth && y <= canvasHeight) {
+        mousePosRef.current = { x, y };
+        const { cursorTrail: ct, trailMode: tm, trailLength: tlen } = colorsRef.current;
+        const effectiveLength = Math.max(1, Math.round(tlen * 100));
+        if (ct && effectiveLength > 0 && (tm === "hover" || isMouseDownRef.current)) {
+          const now = performance.now();
+          const trail = trailPointsRef.current;
+          trail.push({ x, y, time: now });
+          if (trail.length > effectiveLength) trail.splice(0, trail.length - effectiveLength);
+        }
+      } else {
+        mousePosRef.current = null;
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      isMouseDownRef.current = true;
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const canvasWidth = canvas.clientWidth || canvas.offsetWidth || 1;
+        const canvasHeight = canvas.clientHeight || canvas.offsetHeight || 1;
+        const scaleX = canvasWidth / rect.width;
+        const scaleY = canvasHeight / rect.height;
+        const x = (touch.clientX - rect.left) * scaleX;
+        const y = (touch.clientY - rect.top) * scaleY;
+        if (x >= 0 && y >= 0 && x <= canvasWidth && y <= canvasHeight) {
+          mousePosRef.current = { x, y };
+        }
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (colorsRef.current.trailMode === "click") trailPointsRef.current = [];
+      isMouseDownRef.current = false;
+      mousePosRef.current = null;
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     const handleResize = () => {
       const newSize = getCanvasSize();
@@ -422,6 +534,9 @@ export default function InteractiveGrid({
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
       resizeObserver.disconnect();
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };

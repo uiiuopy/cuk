@@ -2,23 +2,15 @@
  * Google Sheets CSV Fetch Utility
  * 
  * Fetches data from a published Google Sheet tab and parses it into JSON.
- * 
- * SETUP:
- * 1. Create a Google Sheet with tabs: Faculty, Students, Publications, Equipment
- * 2. File → Share → Publish to web → Entire Document → CSV → Publish
- * 3. Replace SHEET_ID below with your sheet's ID from the URL
  */
 
-// ⚠️ REPLACE THIS with your actual Google Sheet ID
-// The Sheet ID is the long string between /d/ and /edit in your Google Sheets URL
-// Example URL: https://docs.google.com/spreadsheets/d/1ABC...XYZ/edit
 const SHEET_ID = '1dOgmPgMHho9ifo85FPbmiWrNotLM18YnaquUo7V1-dU';
 
 /**
  * Parse a CSV string into an array of objects using the header row as keys.
  */
-function parseCSV(csvText) {
-  const lines = [];
+function parseCSV(csvText: string): Record<string, string>[] {
+  const lines: string[] = [];
   let current = '';
   let inQuotes = false;
 
@@ -42,8 +34,8 @@ function parseCSV(csvText) {
   if (lines.length < 2) return [];
 
   // Parse a single CSV line into fields
-  const parseLine = (line) => {
-    const fields = [];
+  const parseLine = (line: string): string[] => {
+    const fields: string[] = [];
     let field = '';
     let insideQuotes = false;
 
@@ -71,7 +63,7 @@ function parseCSV(csvText) {
 
   return lines.slice(1).map(line => {
     const values = parseLine(line);
-    const obj = {};
+    const obj: Record<string, string> = {};
     headers.forEach((header, idx) => {
       obj[header] = (values[idx] || '').replace(/^"|"$/g, '').trim();
     });
@@ -81,10 +73,10 @@ function parseCSV(csvText) {
 
 /**
  * Fetch data from a specific tab in the published Google Sheet.
- * @param {string} tabName - The name of the sheet tab (e.g., 'Faculty', 'Students')
- * @returns {Promise<Array<Object>>} - Parsed array of row objects
+ * @param tabName - The name of the sheet tab (e.g., 'Faculty', 'Students')
+ * @returns Parsed array of row objects
  */
-export async function fetchSheetData(tabName) {
+export async function fetchSheetData(tabName: string): Promise<Record<string, string>[]> {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
 
   const response = await fetch(url);
@@ -97,18 +89,10 @@ export async function fetchSheetData(tabName) {
 }
 
 /**
- * Update the Sheet ID at runtime (useful for configuration).
- */
-export function setSheetId(id) {
-  // This is a module-level reassignment workaround
-  Object.defineProperty(module, 'SHEET_ID', { value: id });
-}
-
-/**
  * Automatically converts Google Drive share URLs into direct raw image links.
  * Supports /file/d/ID/view, open?id=ID, and direct document downloads.
  */
-export function getDirectDriveUrl(url) {
+export function getDirectDriveUrl(url: string): string {
   if (!url) return '';
   
   if (url.includes('drive.google.com') || url.includes('docs.google.com')) {

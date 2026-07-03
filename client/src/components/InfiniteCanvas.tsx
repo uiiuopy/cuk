@@ -1,17 +1,60 @@
 import React, { useEffect, useRef } from "react";
 
-function mapLinear(value, inMin, inMax, outMin, outMax) {
+interface ParallaxConfig {
+  enabled: boolean;
+  general?: number;
+  child?: number;
+}
+
+interface InfiniteCanvasProps {
+  scrollSpeed?: number;
+  dragSpeed?: number;
+  ease?: number;
+  parallax?: ParallaxConfig;
+  enableDrag?: boolean;
+  style?: React.CSSProperties;
+}
+
+interface PositionItem {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  extraX: number;
+  extraY: number;
+  ease: number;
+  baseElement: HTMLElement;
+}
+
+interface ElementGroup {
+  baseElement: HTMLElement;
+  realElement: HTMLElement;
+  clones: HTMLElement[];
+  positions: PositionItem[];
+  lastActiveIndex: number;
+  originalStyles: {
+    position: string;
+    left: string;
+    top: string;
+    width: string;
+    height: string;
+    margin: string;
+    transform: string;
+  };
+}
+
+function mapLinear(value: number, inMin: number, inMax: number, outMin: number, outMax: number) {
   if (inMax === inMin) return outMin;
   const t = (value - inMin) / (inMax - inMin);
   return outMin + t * (outMax - outMin);
 }
 
-function mapSpeedUiToInternal(ui) {
+function mapSpeedUiToInternal(ui: number) {
   const clamped = Math.max(0.1, Math.min(1, ui));
   return mapLinear(clamped, 0.1, 1, 0.1, 2);
 }
 
-function mapEaseUiToInternal(ui) {
+function mapEaseUiToInternal(ui: number) {
   const clamped = Math.max(0, Math.min(1, ui));
   return mapLinear(clamped, 0, 1, 0.01, 0.2);
 }
@@ -23,14 +66,14 @@ export default function InfiniteCanvas({
   parallax = { enabled: true, general: 1, child: 1 },
   enableDrag = true,
   style = {}
-}) {
+}: InfiniteCanvasProps) {
   const internalScrollSpeed = mapSpeedUiToInternal(scrollSpeed);
   const internalDragSpeed = mapSpeedUiToInternal(dragSpeed);
   const internalEase = mapEaseUiToInternal(ease);
 
-  const containerRef = useRef(null);
-  const parentElementRef = useRef(null);
-  const elementGroupsRef = useRef([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const parentElementRef = useRef<HTMLElement | null>(null);
+  const elementGroupsRef = useRef<ElementGroup[]>([]);
   const isVisible = useRef(false);
 
   const scroll = useRef({
@@ -53,10 +96,10 @@ export default function InfiniteCanvas({
   const winH = useRef(typeof window !== "undefined" ? window.innerHeight : 1080);
   const parentDimensions = useRef({ width: 0, height: 0, tileSizeW: 0, tileSizeH: 0 });
 
-  const rafId = useRef(null);
-  const resizeTimeoutId = useRef(null);
+  const rafId = useRef<number | null>(null);
+  const resizeTimeoutId = useRef<number | null>(null);
 
-  const initializeInfiniteCanvas = parentElement => {
+  const initializeInfiniteCanvas = (parentElement: HTMLElement) => {
     if (typeof window !== "undefined") {
       winW.current = window.innerWidth;
       winH.current = window.innerHeight;
@@ -68,7 +111,7 @@ export default function InfiniteCanvas({
     // Filter out our own wrapper div from the children list
     const baseChildren = Array.from(parentElement.children).filter(
       child => child !== containerRef.current?.parentElement
-    );
+    ) as HTMLElement[];
 
     const repsX = [0, parentWidth];
     const repsY = [0, parentHeight];
@@ -81,21 +124,21 @@ export default function InfiniteCanvas({
       const width = rect.width;
       const height = rect.height;
       const elementEase = Math.random() * 0.5 + 0.5;
-      const clones = [];
-      const positions = [];
+      const clones: HTMLElement[] = [];
+      const positions: PositionItem[] = [];
 
       const originalStyles = {
-        position: baseChild.style.position,
-        left: baseChild.style.left,
-        top: baseChild.style.top,
-        width: baseChild.style.width,
-        height: baseChild.style.height,
-        margin: baseChild.style.margin,
-        transform: baseChild.style.transform
+        position: baseChild.style.position || "",
+        left: baseChild.style.left || "",
+        top: baseChild.style.top || "",
+        width: baseChild.style.width || "",
+        height: baseChild.style.height || "",
+        margin: baseChild.style.margin || "",
+        transform: baseChild.style.transform || ""
       };
 
       for (let i = 0; i < 3; i++) {
-        const clone = baseChild.cloneNode(true);
+        const clone = baseChild.cloneNode(true) as HTMLElement;
         parentElement.appendChild(clone);
         clone.style.position = "absolute";
         clone.style.left = "0";
@@ -166,7 +209,7 @@ export default function InfiniteCanvas({
       el.style.willChange = "";
       el.style.opacity = "";
       el.style.pointerEvents = "";
-      const firstChild = el.firstElementChild;
+      const firstChild = el.firstElementChild as HTMLElement | null;
       if (firstChild) firstChild.style.transform = "";
     });
     elementGroupsRef.current = [];
@@ -198,7 +241,7 @@ export default function InfiniteCanvas({
     };
 
     const handleParentResize = () => {
-      if (resizeTimeoutId.current !== null) clearTimeout(resizeTimeoutId.current);
+      if (resizeTimeoutId.current !== null) window.clearTimeout(resizeTimeoutId.current);
       resizeTimeoutId.current = window.setTimeout(() => {
         if (parentElement) {
           cleanupInfiniteCanvas();
@@ -208,7 +251,7 @@ export default function InfiniteCanvas({
       }, 100);
     };
 
-    let resizeObserver = null;
+    let resizeObserver: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(handleParentResize);
       resizeObserver.observe(parentElement);
@@ -219,7 +262,7 @@ export default function InfiniteCanvas({
       window.removeEventListener("resize", handleWindowResize);
       if (resizeObserver) resizeObserver.disconnect();
       if (intersectionObserver) intersectionObserver.disconnect();
-      if (resizeTimeoutId.current !== null) clearTimeout(resizeTimeoutId.current);
+      if (resizeTimeoutId.current !== null) window.clearTimeout(resizeTimeoutId.current);
       cleanupInfiniteCanvas();
     };
   }, []);
@@ -227,7 +270,7 @@ export default function InfiniteCanvas({
   useEffect(() => {
     const parentElement = parentElementRef.current;
     if (!parentElement) return;
-    const handleWheel = e => {
+    const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       scroll.current.target.x -= e.deltaX * internalScrollSpeed;
       scroll.current.target.y -= e.deltaY * internalScrollSpeed;
@@ -240,7 +283,7 @@ export default function InfiniteCanvas({
     const parentElement = parentElementRef.current;
     if (!parentElement || !enableDrag) return;
 
-    const handleMouseDown = e => {
+    const handleMouseDown = (e: MouseEvent) => {
       isDragging.current = true;
       document.documentElement.classList.add("dragging");
       mouse.current.press.t = 1;
@@ -256,7 +299,7 @@ export default function InfiniteCanvas({
       mouse.current.press.t = 0;
     };
 
-    const handleMouseMove = e => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouse.current.x.t = e.clientX / winW.current;
       mouse.current.y.t = e.clientY / winH.current;
       if (isDragging.current) {
@@ -267,7 +310,7 @@ export default function InfiniteCanvas({
       }
     };
 
-    const handleTouchStart = e => {
+    const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
         const touch = e.touches[0];
         isDragging.current = true;
@@ -284,7 +327,7 @@ export default function InfiniteCanvas({
       mouse.current.press.t = 0;
     };
 
-    const handleTouchMove = e => {
+    const handleTouchMove = (e: TouchEvent) => {
       if (isDragging.current && e.touches.length === 1) {
         e.preventDefault();
         const touch = e.touches[0];
@@ -318,7 +361,7 @@ export default function InfiniteCanvas({
     scroll.current.ease = mapEaseUiToInternal(ease);
   }, [ease]);
 
-  const render = () => {
+  const renderCanvas = () => {
     if (!isVisible.current) return;
     scroll.current.current.x +=
       (scroll.current.target.x - scroll.current.current.x) * scroll.current.ease;
@@ -355,7 +398,15 @@ export default function InfiniteCanvas({
     const mouseRelY = mousePY - parentRect.top;
 
     elementGroupsRef.current.forEach(group => {
-      const calculatedPositions = [];
+      const calculatedPositions: {
+        item: PositionItem;
+        fX: number;
+        fY: number;
+        distC: number;
+        distM: number;
+        vis: boolean;
+      }[] = [];
+
       group.positions.forEach(item => {
         const pM = parallax?.enabled ? parallax.general ?? 1 : 0;
         const pX =
@@ -365,8 +416,8 @@ export default function InfiniteCanvas({
           5 * scroll.current.delta.y.c * item.ease +
           (mouse.current.y.c - 0.5) * item.height * 0.6 * pM;
 
-        let posX = item.x + scrollX + item.extraX + pX;
-        let posY = item.y + scrollY + item.extraY + pY;
+        const posX = item.x + scrollX + item.extraX + pX;
+        const posY = item.y + scrollY + item.extraY + pY;
 
         if (dirX === "right" && posX > parentW) item.extraX -= tileW;
         if (dirX === "left" && posX + item.width < 0) item.extraX += tileW;
@@ -444,7 +495,7 @@ export default function InfiniteCanvas({
         const gP = parallax?.general ?? 1;
         const tx = (0.5 - mouse.current.x.c) * calc.item.ease * 20 * gP * inP;
         const ty = (0.5 - mouse.current.y.c) * calc.item.ease * 20 * gP * inP;
-        const firstChild = el.firstElementChild;
+        const firstChild = el.firstElementChild as HTMLElement | null;
         if (firstChild) firstChild.style.transform = inP === 0 ? "none" : `translate(${tx}%, ${ty}%)`;
       });
     });
@@ -455,7 +506,7 @@ export default function InfiniteCanvas({
 
   useEffect(() => {
     const animate = () => {
-      render();
+      renderCanvas();
       rafId.current = requestAnimationFrame(animate);
     };
     rafId.current = requestAnimationFrame(animate);
