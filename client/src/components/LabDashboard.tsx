@@ -26,12 +26,22 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
   const [gallery, setGallery] = useState<GalleryImage[]>([]);
 
   const defaultGalleryImages: GalleryImage[] = [
-    { id: '1', path: '/src/assets/photo1.jpg', label: 'Primary EEG Biosensing Bay', left: '50px', top: '40px' },
-    { id: '2', path: '/src/assets/photo2.jpg', label: 'Virtual Reality Suite', left: '440px', top: '100px' },
-    { id: '3', path: '/src/assets/photo3.jpg', label: 'Computing Cluster', left: '120px', top: '270px' },
-    { id: '4', path: '/src/assets/photo4.jpg', label: 'EEG Preparation Room', left: '520px', top: '290px' },
-    { id: '5', path: '/src/assets/photo5.jpg', label: 'Eye-Tracking Calibration Bay', left: '850px', top: '50px' },
-    { id: '6', path: '/src/assets/photo6.jpg', label: 'Autonomic Sensor Bay', left: '900px', top: '260px' }
+    { id: 'p1', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.33 PM.jpeg', label: 'Photo 1', left: '50px', top: '40px' },
+    { id: 'p2', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.52 PM.jpeg', label: 'Photo 2', left: '440px', top: '100px' },
+    { id: 'p3', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.52 PMn.jpeg', label: 'Photo 3', left: '120px', top: '300px' },
+    { id: 'p4', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.21 PMpp.jpeg', label: 'Photo 4', left: '520px', top: '350px' },
+    { id: 'p5', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PM.jpeg', label: 'Photo 5', left: '850px', top: '50px' },
+    { id: 'p6', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PMnn.jpeg', label: 'Photo 6', left: '900px', top: '260px' },
+    { id: 'p7', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PMnnn.jpeg', label: 'Photo 7', left: '1250px', top: '150px' },
+    { id: 'p8', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.23 PMmmmm.jpeg', label: 'Photo 8', left: '1300px', top: '400px' },
+    { id: 'p9', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.24 PMmmmm.jpeg', label: 'Photo 9', left: '1600px', top: '80px' },
+    { id: 'p10', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.24 PMmmmmmm.jpeg', label: 'Photo 10', left: '1700px', top: '300px' },
+    { id: 'p11', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.25 PM.jpeg', label: 'Photo 11', left: '2000px', top: '150px' },
+    { id: 'p12', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.25 PMmmmmmm.jpeg', label: 'Photo 12', left: '2050px', top: '450px' },
+    { id: 'p13', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PM.jpeg', label: 'Photo 13', left: '2400px', top: '100px' },
+    { id: 'p14', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PMnnnnn.jpeg', label: 'Photo 14', left: '2450px', top: '350px' },
+    { id: 'p15', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PMuu.jpeg', label: 'Photo 15', left: '2800px', top: '200px' },
+    { id: 'p16', path: '/photos/carousel/nnn.jpeg', label: 'Photo 16', left: '2850px', top: '450px' }
   ];
 
   const equipmentList: EquipmentItem[] = [
@@ -90,23 +100,7 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
   ];
 
   useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const data = await fetchSheetData('Gallery');
-        const normalized = data.map((row, idx) => ({
-          id: `gallery_${idx}`,
-          path: row.Path || row.URL || '',
-          label: row.Label || '',
-          left: row.Left || `${50 + (idx % 3) * 390}px`,
-          top: row.Top || `${40 + Math.floor(idx / 3) * 250}px`
-        }));
-        setGallery(normalized.length > 0 ? normalized : defaultGalleryImages);
-      } catch (err) {
-        console.warn("Failed to fetch gallery from Google Sheets, using fallback:", err);
-        setGallery(defaultGalleryImages);
-      }
-    };
-    fetchGallery();
+    setGallery(defaultGalleryImages);
   }, []);
 
   return (
@@ -321,7 +315,7 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
                 >
                   <div className="relative w-full h-full overflow-hidden rounded-lg bg-slate-50 flex items-center justify-center">
                     <img
-                      src={directUrl || '/favicon.svg'}
+                      src={encodeURI(directUrl || '/favicon.svg')}
                       alt={image.label}
                       className="w-full h-full object-cover"
                       onError={(e) => {

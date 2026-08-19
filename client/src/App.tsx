@@ -13,6 +13,8 @@ import Students from './components/Students';
 import Research from './components/Research';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import Gallery from './components/Gallery';
+import AboutCUK from './components/AboutCUK';
 import { Brain, MapPin, Mail, Phone, ChevronRight, ExternalLink } from 'lucide-react';
 
 interface GazeData {
@@ -73,6 +75,10 @@ export default function App() {
         );
       case 'publications':
         return <Publications />;
+      case 'gallery':
+        return <Gallery />;
+      case 'about-cuk':
+        return <AboutCUK />;
       case 'dashboard':
       default:
         return <LabDashboard setActiveTab={setActiveTab} />;

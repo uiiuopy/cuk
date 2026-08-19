@@ -132,7 +132,7 @@ export default function Coordinator() {
                 {/* Designation, Bio */}
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Biography</h4>
-                  <p className="text-sm leading-relaxed text-slate-700 font-sans">
+                  <p className="text-sm leading-relaxed text-slate-700 font-sans whitespace-pre-line">
                     {person.Bio || `${person.Name} is a distinguished faculty coordinator driving advanced cognitive and biofeedback analysis within the laboratory framework.`}
                   </p>
                 </div>

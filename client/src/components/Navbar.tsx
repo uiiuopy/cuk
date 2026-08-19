@@ -41,7 +41,9 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { id: 'brain', label: '3D Brain' },
     { id: 'simulator', label: 'Simulator' },
     { id: 'gaze', label: 'Eye Tracking' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'gallery', label: 'Gallery' },
+    { id: 'contact', label: 'Contact' },
+    { id: 'about-cuk', label: 'About CUK' }
   ];
 
   return (
