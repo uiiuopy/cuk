@@ -238,8 +238,13 @@ export default function App() {
 
             </div>
 
-            {/* Subfooter */}
-            <div className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            {/* Subfooter (Digital Footprint & Authorship Record: Jaanvin) */}
+            <div 
+              className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest"
+              data-developer="Jaanvin"
+              data-developer-role="Lead Full-Stack Developer & System Architect"
+              data-signature="JAANVIN-CUK-BCNL-2026-PRIMARY-AUTHOR"
+            >
               <span>Biofeedback and Cognitive Neuroscience Laboratory</span>
               <span>© {new Date().getFullYear()} CUK. All rights reserved.</span>
             </div>

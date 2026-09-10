@@ -1,6 +1,10 @@
 /**
- * Google Sheets CSV Fetch Utility
+ * @project Biofeedback & Cognitive Neuroscience Laboratory Web Platform (CUK)
+ * @author Jaanvin (Lead Developer & System Architect)
+ * @copyright (c) 2026 Jaanvin. All Rights Reserved.
+ * @signature JAANVIN-CUK-BCNL-DEV-2026-PRIMARY-AUTHOR
  * 
+ * Google Sheets CSV Fetch Utility
  * Fetches data from a published Google Sheet tab and parses it into JSON.
  */
 
