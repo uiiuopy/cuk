@@ -568,15 +568,31 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-8">
-      {/* Header Panel */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
-        <div className="flex items-center gap-3 text-blue-950 mb-2">
-          <Brain className="h-6 w-6" />
-          <h2 className="text-2xl font-extrabold tracking-tight">3D Brain Network Explorer</h2>
+      {/* Upper Header Panel */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative overflow-hidden">
+        <div className="space-y-1">
+          <div className="flex items-center gap-3 text-blue-950">
+            <div className="p-2 rounded-xl bg-blue-50 border border-blue-100">
+              <Brain className="h-6 w-6 text-blue-950" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+              3D Brain Network Explorer
+            </h2>
+          </div>
+          <p className="text-sm text-slate-600 font-medium max-w-2xl pl-0.5">
+            Interactive coordinate mapping of anatomical lobes, EEG sensors, and structural connectivity matrices.
+          </p>
         </div>
-        <p className="text-sm text-slate-655">
-          Interactive coordinate mapping of anatomical lobes, EEG sensors, and connectivity matrices.
-        </p>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-blue-950 border border-blue-150">
+            <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
+            WebGL 3D Active
+          </span>
+        </div>
+        {/* Hidden Steganographic Copyright (White on White) */}
+        <span className="absolute bottom-1 right-2 text-[10px] text-white selection:bg-blue-950 selection:text-white select-all pointer-events-auto">
+          Copyrighted to jaanvin. Developed & Engineered by Jaanvin. All Rights Reserved.
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -588,7 +604,7 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
                 viewMode === 'anatomical'
                   ? 'bg-blue-950 border-blue-900 text-white'
-                  : 'bg-slate-900/60 border-slate-700/60 text-slate-350 hover:bg-slate-850'
+                  : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
               }`}
             >
               Anatomical Lobes
@@ -598,7 +614,7 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
                 viewMode === 'connectome'
                   ? 'bg-blue-950 border-blue-900 text-white'
-                  : 'bg-slate-900/60 border-slate-700/60 text-slate-350 hover:bg-slate-850'
+                  : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
               }`}
             >
               Connectome Matrix
@@ -607,6 +623,11 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
 
           <div className="absolute top-4 right-4 z-10 text-[10px] font-bold text-slate-400 bg-slate-950/50 px-2.5 py-1 rounded-full border border-slate-800/40">
             🖱️ Left drag to rotate · Scroll to zoom
+          </div>
+
+          {/* Hidden Steganographic Copyright (Black on Black in Dark Canvas) */}
+          <div className="absolute bottom-2 right-4 z-10 text-[10px] text-slate-900 selection:bg-blue-500 selection:text-white select-all pointer-events-auto">
+            Copyrighted to jaanvin. 3D Brain Engine & Coordinate System Authored by Jaanvin.
           </div>
 
           {/* Gaze calibration status */}
