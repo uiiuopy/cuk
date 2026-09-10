@@ -61,16 +61,21 @@ export default function Contact() {
               <div className="flex gap-3 pt-2">
                 <Mail className="h-5 w-5 text-blue-950 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-slate-900 block font-semibold">Email Directory</strong>
-                  <span>Lab Director: </span>
-                  <a href="mailto:sarah.lin@cuk.ac.in" className="text-blue-950 hover:underline font-semibold">
-                    sarah.lin@cuk.ac.in
-                  </a>
-                  <br />
-                  <span>General Queries: </span>
-                  <a href="mailto:info@cuk.ac.in" className="text-blue-950 hover:underline font-semibold">
-                    info@cuk.ac.in
-                  </a>
+                  <strong className="text-slate-900 block font-semibold mb-1">Email Directory</strong>
+                  <div className="space-y-1">
+                    <div>
+                      <span className="text-slate-600 font-medium">Lab Coordinator: </span>
+                      <a href="mailto:asthapsychology@cuk.ac.in" className="text-blue-950 hover:underline font-semibold">
+                        asthapsychology@cuk.ac.in
+                      </a>
+                    </div>
+                    <div>
+                      <span className="text-slate-600 font-medium">General Queries: </span>
+                      <a href="mailto:hodpsychology@cuk.ac.in" className="text-blue-950 hover:underline font-semibold">
+                        hodpsychology@cuk.ac.in
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -78,11 +83,10 @@ export default function Contact() {
               <div className="flex gap-3 pt-2">
                 <Phone className="h-5 w-5 text-blue-950 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-slate-900 block font-semibold">Telephone</strong>
-                  <span className="leading-relaxed">
-                    +91 (08477) 226707<br />
-                    <span className="text-xs text-slate-500 font-medium">Extension: 432 (Cognitive Lab)</span>
-                  </span>
+                  <strong className="text-slate-900 block font-semibold">Phone</strong>
+                  <a href="tel:8053873449" className="text-blue-950 hover:underline font-semibold leading-relaxed">
+                    +91 8053873449
+                  </a>
                 </div>
               </div>
             </div>

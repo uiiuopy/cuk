@@ -205,9 +205,22 @@ export default function App() {
                     <MapPin className="h-4 w-4 shrink-0 text-blue-300 mt-0.5" />
                     <span>Psychophysiology Lab, Dept of Psychology, Central University of Karnataka, Aland Road, Kadaganchi, Kalaburagi, 585311</span>
                   </div>
+                  <div className="flex items-start gap-2">
+                    <Mail className="h-4 w-4 shrink-0 text-blue-300 mt-0.5" />
+                    <div className="space-y-0.5">
+                      <div>
+                        <span className="text-slate-400">Lab Coordinator: </span>
+                        <a href="mailto:asthapsychology@cuk.ac.in" className="hover:text-white underline decoration-blue-400 font-semibold">asthapsychology@cuk.ac.in</a>
+                      </div>
+                      <div>
+                        <span className="text-slate-400">General Queries: </span>
+                        <a href="mailto:hodpsychology@cuk.ac.in" className="hover:text-white underline decoration-blue-400 font-semibold">hodpsychology@cuk.ac.in</a>
+                      </div>
+                    </div>
+                  </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 shrink-0 text-blue-300" />
-                    <a href="mailto:sarah.lin@cuk.ac.in" className="hover:text-white">sarah.lin@cuk.ac.in</a>
+                    <Phone className="h-4 w-4 shrink-0 text-blue-300" />
+                    <a href="tel:8053873449" className="hover:text-white font-semibold">+91 8053873449</a>
                   </div>
                 </div>
                 
