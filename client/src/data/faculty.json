@@ -1,26 +1,18 @@
 [
   {
-    "Name": "Dr. Sarah Lin",
-    "Designation": "Professor & Lab Director",
-    "Specialization": "Cognitive Neurodynamics & BCI",
-    "Email": "sarah.lin@cuk.ac.in",
+    "Name": "Prof. Vijyendra Pandey",
+    "Designation": "Professor & Head of Department",
+    "Specialization": "Organizational Psychology",
+    "Email": "Virjup@gmail.com",
     "Photo URL": "",
-    "Bio": "Dr. Lin is a leading researcher in brain-computer interfaces (BCI) and affective computing. She directs the Psychophysiology Lab at CUK, focusing on multi-modal biosignal integration, EEG oscillations, and prefrontal executive control mapping."
+    "Bio": "Prof. Vijyendra Pandey is Professor and Head of the Department of Psychology at the Central University of Karnataka. His vision and sustained leadership were instrumental in establishing the Biofeedback & Cognitive Neuroscience Laboratory within the department. Over nearly a decade of persistent effort, planning, and resource mobilization, he worked to develop a state-of-the-art research facility that supports scientific investigations in psychology and neuroscience."
   },
   {
-    "Name": "Dr. Marcus Vance",
-    "Designation": "Associate Professor",
-    "Specialization": "Cardiovascular Psychophysiology & HRV",
-    "Email": "marcus.vance@cuk.ac.in",
+    "Name": "Dr. Astha Arora",
+    "Designation": "Assistant Professor & Lab Coordinator",
+    "Specialization": "Cognitive Neuropsychology",
+    "Email": "asthapsychology@cuk.ac.in",
     "Photo URL": "",
-    "Bio": "Dr. Vance specializes in autonomic regulation, virtual reality stress paradigms, and heart rate variability (HRV) biofeedback systems. His research explores the coupling between cardiac rhythms and emotional regulation."
-  },
-  {
-    "Name": "Dr. Sayujya",
-    "Designation": "Coordinator",
-    "Specialization": "Psychophysiology & Olfactory Stimulation",
-    "Email": "",
-    "Photo URL": "",
-    "Bio": "Theme: Psychophysiological effects of olfactory stimulation\n\nDescription: Used Physiological parameters such as respiration, pulse rate, oxygen saturation levels under olfactory stimulation during visual psychomotor activity.\n\nTools: respiratory belt, pulse oximeter, driving simulator, other psychometric tools\n\nResults: Olfactory stimulation based on peppermint and Rosemary has a positive effect on Psychophysiological parameters"
+    "Bio": "As the Lab Coordinator of the Biofeedback & Cognitive Neuroscience Laboratory, Dr. Astha leads research initiatives integrating psychology, neuroscience, and psychophysiology. Her work emphasizes understanding the neural and physiological mechanisms underlying cognition, emotion, stress, and behaviour through advanced neurophysiological assessment techniques. She is passionate about developing innovative research, mentoring emerging scholars, and building national and international collaborations in cognitive neuroscience and mental health research."
   }
 ]
