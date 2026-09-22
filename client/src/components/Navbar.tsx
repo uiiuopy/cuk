@@ -94,17 +94,17 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           
           {/* Brand Logo & Academic Identity */}
           <div 
-            className="flex items-center gap-3.5 cursor-pointer select-none group" 
+            className="flex items-center gap-2.5 sm:gap-3.5 cursor-pointer select-none group min-w-0" 
             onClick={() => setActiveTab('dashboard')}
           >
-            <div className="flex items-center justify-center rounded-xl bg-blue-950 p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0">
-              <Brain className="h-6 w-6 text-blue-200" />
+            <div className="flex items-center justify-center rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0">
+              <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-blue-200" />
             </div>
-            <div className="flex flex-col">
-              <h1 className="font-sans text-sm sm:text-base md:text-lg font-black tracking-tight text-slate-900 group-hover:text-blue-950 transition-colors leading-snug">
+            <div className="flex flex-col min-w-0">
+              <h1 className="font-sans text-xs sm:text-base md:text-lg font-black tracking-tight text-slate-900 group-hover:text-blue-950 transition-colors leading-tight sm:leading-snug">
                 Biofeedback and Cognitive Neuroscience Laboratory
               </h1>
-              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wide leading-tight flex items-center gap-1.5 mt-0.5">
+              <p className="text-[9.5px] sm:text-xs font-semibold text-slate-500 tracking-wide leading-tight flex flex-wrap items-center gap-1 sm:gap-1.5 mt-0.5">
                 <span>Department of Psychology</span>
                 <span className="text-slate-300">·</span>
                 <span className="text-blue-950 font-bold">Central University of Karnataka</span>

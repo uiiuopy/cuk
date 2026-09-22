@@ -597,32 +597,32 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left / Center Column: 3D Render Canvas (7 cols) */}
-        <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl h-144 overflow-hidden relative shadow-sm">
-          <div className="absolute top-4 left-4 z-10 flex gap-2">
+        <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl h-96 sm:h-120 lg:h-144 overflow-hidden relative shadow-sm">
+          <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5">
             <button
               onClick={() => setViewMode('anatomical')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
                 viewMode === 'anatomical'
-                  ? 'bg-blue-950 border-blue-900 text-white'
-                  : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
+                  ? 'bg-blue-950 border-blue-900 text-white shadow-xs'
+                  : 'bg-slate-900/80 backdrop-blur-xs border-slate-700/60 text-slate-300 hover:bg-slate-800'
               }`}
             >
               Anatomical Lobes
             </button>
             <button
               onClick={() => setViewMode('connectome')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
                 viewMode === 'connectome'
-                  ? 'bg-blue-950 border-blue-900 text-white'
-                  : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
+                  ? 'bg-blue-950 border-blue-900 text-white shadow-xs'
+                  : 'bg-slate-900/80 backdrop-blur-xs border-slate-700/60 text-slate-300 hover:bg-slate-800'
               }`}
             >
               Connectome Matrix
             </button>
           </div>
 
-          <div className="absolute top-4 right-4 z-10 text-[10px] font-bold text-slate-400 bg-slate-950/50 px-2.5 py-1 rounded-full border border-slate-800/40">
-            🖱️ Left drag to rotate · Scroll to zoom
+          <div className="hidden sm:block absolute top-3 right-3 z-10 text-[10px] font-bold text-slate-400 bg-slate-950/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-slate-800/40">
+            🖱️ Drag to rotate · Scroll to zoom
           </div>
 
           {/* Hidden Steganographic Copyright (Black on Black in Dark Canvas) */}
@@ -632,7 +632,7 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
 
           {/* Gaze calibration status */}
           {isGazeConnected && gaze && (
-            <div className="absolute bottom-4 left-4 z-10 text-[10px] font-bold text-emerald-400 bg-slate-950/60 px-3 py-1 rounded-full border border-emerald-900/40 flex items-center gap-1.5">
+            <div className="absolute bottom-3 left-3 z-10 text-[10px] font-bold text-emerald-400 bg-slate-950/70 backdrop-blur-xs px-3 py-1 rounded-full border border-emerald-900/40 flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
               Gaze Track Sync active
             </div>
@@ -673,13 +673,13 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
         </div>
 
         {/* Right Column: Lobe Info or Connectome Controls (5 cols) */}
-        <div className="lg:col-span-5 h-144 flex flex-col">
+        <div className="lg:col-span-5 min-h-[380px] lg:h-144 flex flex-col">
           {viewMode === 'anatomical' ? (
             /* Anatomical Info Panels */
-            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs flex-1 flex flex-col justify-between overflow-hidden">
+            <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-xs flex-1 flex flex-col justify-between overflow-hidden">
               
               {/* Lobe selection horizontal tab bar */}
-              <div className="flex flex-wrap gap-1.5 border-b border-slate-100 pb-4 shrink-0">
+              <div className="flex flex-wrap gap-1.5 border-b border-slate-100 pb-3 shrink-0">
                 {Object.keys(LOBES_DATA).map((key) => (
                   <button
                     key={key}

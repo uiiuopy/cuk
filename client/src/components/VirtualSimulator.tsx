@@ -217,7 +217,7 @@ export default function VirtualSimulator({
             )}
           </div>
 
-          <div className="h-144 p-4 bg-slate-100">
+          <div className="h-96 sm:h-120 lg:h-144 p-3 sm:p-4 bg-slate-100">
             <LiveSignalChart config={config} isActive={true} pupilSize={isGazeConnected ? gaze?.pupil_size : undefined} />
           </div>
         </div>
