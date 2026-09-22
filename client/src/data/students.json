@@ -1,26 +1,38 @@
 [
   {
-    "Name": "Elena Rostova",
-    "Role": "PhD Candidate",
-    "Research Area": "Visual Attention & Pupil Dynamics",
-    "Email": "elena.r@cuk.ac.in",
+    "Name": "Dr. Astha Arora",
+    "Role": "PhD Researcher",
+    "Research Area": "Decision-Making, Cognitive-Emotional Processing & Social Cognitive Neuroscience",
+    "Email": "asthapsychology@cuk.ac.in",
     "Photo URL": "",
-    "Year": "2023"
+    "Year": "2024",
+    "Theme": "Escalation & De-escalation of Commitment",
+    "Description": "Investigated neuroelectrical responses underlying decisions to escalate or de-escalate commitment across personal-professional and professional relationship contexts, examining the role of cognitive-emotional interplay.",
+    "Tools": "64-Channel EEG, ERP, P300, N200/N260, Behavioural Decision Tasks",
+    "Results": "Demonstrated differences in frontal and parietal ERP responses across decision contexts, highlighting neural differences associated with escalation and de-escalation decisions."
   },
   {
-    "Name": "David K. Park",
-    "Role": "PhD Candidate",
-    "Research Area": "Autonomic Stress Markers in VR",
-    "Email": "david.park@cuk.ac.in",
+    "Name": "Dr. Mona Arthi Efcibha M. S.",
+    "Role": "PhD Researcher",
+    "Research Area": "Consumer Neuroscience, Nostalgia & Socio-Cognitive Neuroscience",
+    "Email": "22dppsy01@cuk.ac.in",
     "Photo URL": "",
-    "Year": "2024"
+    "Year": "2025",
+    "Theme": "Neuroelectrical Responses to Nostalgic Advertisements",
+    "Description": "Examined neuroelectrical responses to nostalgic advertising to understand the cognitive and emotional processes involved in consumer responses to nostalgia-based marketing stimuli.",
+    "Tools": "EEG/ERP, Experimental Stimuli, Behavioural Measures",
+    "Results": "Examined neural responses associated with nostalgic advertising and their relevance to consumer cognition and emotional processing."
   },
   {
-    "Name": "Arjun Mehta",
-    "Role": "Research Assistant",
-    "Research Area": "Closed-Loop BCI & Signal Processing",
-    "Email": "arjun.mehta@cuk.ac.in",
+    "Name": "Dr. Sayujya",
+    "Role": "PhD Candidate",
+    "Research Area": "Olfactory System & Psychophysiological Modulation",
+    "Email": "22dppsy02@cuk.ac.in",
     "Photo URL": "",
-    "Year": "2025"
+    "Year": "2025",
+    "Theme": "Psychophysiological effects of olfactory stimulation",
+    "Description": "Used physiological parameters such as respiration, pulse rate, and oxygen saturation levels under olfactory stimulation during visual psychomotor activity.",
+    "Tools": "Respiratory belt, pulse oximeter, driving simulator, and psychometric tools",
+    "Results": "Olfactory stimulation based on peppermint and rosemary has a positive effect on psychophysiological parameters."
   }
 ]

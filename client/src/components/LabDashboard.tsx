@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Target, Eye, BookOpen, Cpu, Activity, Brain, ArrowRight, ShieldCheck, Settings, Move, Compass, CheckCircle } from 'lucide-react';
+import { Target, Eye, BookOpen, Cpu, Activity, Brain, ArrowRight, ShieldCheck, Settings, Move, Compass, CheckCircle, GraduationCap } from 'lucide-react';
 import { fetchSheetData, getDirectDriveUrl } from '../utils/googleSheets';
 import InfiniteCanvas from './InfiniteCanvas';
 import InteractiveBrainSVG from './InteractiveBrainSVG';
@@ -263,6 +263,28 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
             </span>
           ))}
         </div>
+      </section>
+
+      {/* Departmental Academic Programmes Teaser */}
+      <section className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="space-y-1.5 max-w-3xl">
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-blue-900 bg-blue-100/70 px-2.5 py-0.5 rounded-full border border-blue-200/50">
+            <GraduationCap className="h-3.5 w-3.5" /> Departmental Curricula
+          </div>
+          <h3 className="text-xl font-extrabold tracking-tight text-slate-900">
+            Departmental Programmes & Laboratory Practicums
+          </h3>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Discover our academic pathways from Ph.D. in Psychology and M.Sc. in Psychology to NEP-2020 B.Sc. (Hons.) and specialized hands-on psychophysiology training workshops.
+          </p>
+        </div>
+        <button
+          onClick={() => setActiveTab('programmes')}
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-950 text-white font-bold text-xs uppercase tracking-wider hover:bg-blue-900 transition-colors shrink-0 shadow-xs"
+        >
+          <span>Explore Programmes</span>
+          <ArrowRight className="h-4 w-4" />
+        </button>
       </section>
 
       {/* Global CTA Banner: Collaborate */}

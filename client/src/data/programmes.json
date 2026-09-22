@@ -1,0 +1,70 @@
+[
+  {
+    "id": "phd_psychology",
+    "title": "Ph.D. in Psychology",
+    "level": "Doctoral Programme",
+    "duration": "3–5 Years (Full-Time)",
+    "eligibility": "Master’s Degree in Psychology / Applied Psychology / Cognitive Science with minimum 55% marks (or equivalent grade) and qualifying score in UGC-NET / JRF / CUK Entrance Examination.",
+    "overview": "The doctoral programme in the Department of Psychology offers rigorous training in advanced theoretical frameworks, psychophysiological paradigms, cognitive neuroscience, and quantitative behavioural modeling. Scholars actively utilize the Biofeedback and Cognitive Neuroscience Laboratory facilities for their doctoral dissertations.",
+    "coreAreas": [
+      "Cognitive Neuroscience & ERP Paradigms",
+      "Autonomic Psychophysiology & Biofeedback Protocols",
+      "Decision-Making & Neuroeconomics",
+      "Emotion Regulation & Stress Resilience",
+      "Advanced Quantitative Statistics & Signal Processing"
+    ],
+    "labIntegration": "Full access to the 64-Channel EEG/ERP systems, Biopac/Nexus psychophysiological suites (HRV, GSR, EMG, EOG, Respiration, Skin Temperature), and experiment creation software.",
+    "admissionProcess": "National-level entrance / UGC-NET (including JRF) followed by research proposal presentation and departmental interview."
+  },
+  {
+    "id": "msc_psychology",
+    "title": "M.Sc. in Psychology",
+    "level": "Postgraduate Programme",
+    "duration": "2 Years (4 Semesters)",
+    "eligibility": "Bachelor’s degree in Psychology or allied discipline with minimum 50% marks from a recognized university, with admission via CUET-PG.",
+    "overview": "A comprehensive postgraduate curriculum designed to blend core foundational psychology with cutting-edge experimental and psychophysiological laboratory training. Students complete coursework, specialized electives, psychophysiology practicals, and an empirical master’s dissertation.",
+    "coreAreas": [
+      "Advanced Cognitive Psychology & Neurobiology",
+      "Psychophysiology & Physiological Psychology Lab Practicum",
+      "Research Methodology & Psychological Testing",
+      "Clinical, Organizational & Health Specializations",
+      "Empirical Research Dissertation"
+    ],
+    "labIntegration": "Hands-on laboratory modules on multi-channel physiological recording, biosignal acquisition (EEG, GSR, HRV), stimulus presentation, and data analysis.",
+    "admissionProcess": "Common University Entrance Test for Postgraduates (CUET-PG) conducted by NTA."
+  },
+  {
+    "id": "bsc_psychology",
+    "title": "B.Sc. (Hons.) in Psychology",
+    "level": "Undergraduate Programme (NEP-2020)",
+    "duration": "4 Years (8 Semesters)",
+    "eligibility": "10+2 / Higher Secondary examination passed in any stream with minimum 50% aggregate marks, with admission based on CUET-UG.",
+    "overview": "Structured under the National Education Policy (NEP-2020), this four-year honours programme provides foundational and multidisciplinary knowledge in human behaviour, mental processes, biological bases of behaviour, and basic laboratory experiments.",
+    "coreAreas": [
+      "Introduction to Psychology & Foundations of Behaviour",
+      "Biopsychology & Cognitive Processes",
+      "Experimental Psychology Practicum",
+      "Statistical Methods for Psychological Research",
+      "Undergraduate Research Project / Internship"
+    ],
+    "labIntegration": "Introductory experimental psychophysics, reaction time paradigms, sensory-motor testing, and observation of biofeedback recording sessions.",
+    "admissionProcess": "Common University Entrance Test for Undergraduates (CUET-UG) conducted by NTA."
+  },
+  {
+    "id": "biofeedback_training",
+    "title": "Hands-on Psychophysiology & Biofeedback Training",
+    "level": "Departmental Training & Workshop",
+    "duration": "Intensive Modules / Semester Workshops",
+    "eligibility": "Open to enrolled postgraduate students, doctoral researchers, and visiting academic scholars.",
+    "overview": "Specialized capacity-building workshops and technical training sessions hosted by the Biofeedback and Cognitive Neuroscience Laboratory. Participants learn the principles of biosensor application, electrode impedance reduction, physiological artifact mitigation, and clinical biofeedback self-regulation protocols.",
+    "coreAreas": [
+      "64-Channel EEG Cap Preparation & Impedance Optimization",
+      "ERP Component Extraction (P300, N200, Alpha Attenuation)",
+      "Autonomic Calibration: HRV Time/Frequency Domain & GSR Arousal",
+      "Experimental Design with Paradigm Generators",
+      "Data Export & Psychophysiological Signal Processing"
+    ],
+    "labIntegration": "Direct experiential training in the Biofeedback Lab Bay utilizing research-grade sensors and biofeedback hardware.",
+    "admissionProcess": "Departmental registration and workshop announcements via Central University of Karnataka."
+  }
+]

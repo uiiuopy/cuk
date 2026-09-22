@@ -15,6 +15,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Gallery from './components/Gallery';
 import AboutCUK from './components/AboutCUK';
+import DepartmentalProgrammes from './components/DepartmentalProgrammes';
 import { Brain, MapPin, Mail, Phone, ChevronRight, ExternalLink } from 'lucide-react';
 
 interface GazeData {
@@ -57,6 +58,8 @@ export default function App() {
     switch (activeTab) {
       case 'about':
         return <About />;
+      case 'programmes':
+        return <DepartmentalProgrammes />;
       case 'brain':
         return <ThreeBrain gaze={currentGaze} isGazeConnected={isGazeActive && isGazeConnected} />;
       case 'coordinator':
@@ -173,6 +176,11 @@ export default function App() {
                   <li>
                     <button onClick={() => setActiveTab('about')} className="hover:text-white inline-flex items-center gap-1.5 transition-colors">
                       <ChevronRight className="h-3 w-3" /> About
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => setActiveTab('programmes')} className="hover:text-white inline-flex items-center gap-1.5 transition-colors">
+                      <ChevronRight className="h-3 w-3" /> Academic Programmes
                     </button>
                   </li>
                   <li>

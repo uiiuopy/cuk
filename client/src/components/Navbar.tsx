@@ -17,7 +17,8 @@ import {
   Image as ImageIcon, 
   Mail, 
   Landmark, 
-  ChevronRight
+  ChevronRight,
+  Award
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -51,6 +52,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const navItems = [
     { id: 'dashboard', label: 'Home', icon: Home },
     { id: 'about', label: 'About Lab', icon: Info },
+    { id: 'programmes', label: 'Programmes', icon: Award },
     { id: 'coordinator', label: 'Coordinators', icon: Users },
     { id: 'students', label: 'Students', icon: GraduationCap },
     { id: 'facilities', label: 'Facilities', icon: Activity },
@@ -67,7 +69,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const categories = [
     {
       title: 'General & Overview',
-      items: ['dashboard', 'about', 'about-cuk', 'contact']
+      items: ['dashboard', 'about', 'programmes', 'about-cuk', 'contact']
     },
     {
       title: 'Our Team',

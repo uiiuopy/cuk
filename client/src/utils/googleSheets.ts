@@ -75,21 +75,52 @@ function parseCSV(csvText: string): Record<string, string>[] {
   });
 }
 
+const TAB_GIDS: Record<string, string> = {
+  'Faculty': '1353738581',
+  'Departmental Programs': '811568327',
+  'Departmental Programmes': '811568327',
+  'Students': '660622040',
+  'Equipment': '1880157920',
+  'Research': '1412980414',
+  'Projects': '999842724',
+  'Publications': '743123737',
+  'Gallery': '1271936005'
+};
+
 /**
  * Fetch data from a specific tab in the published Google Sheet.
  * @param tabName - The name of the sheet tab (e.g., 'Faculty', 'Students')
  * @returns Parsed array of row objects
  */
 export async function fetchSheetData(tabName: string): Promise<Record<string, string>[]> {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
-
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch sheet "${tabName}": ${response.status}`);
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+    const response = await fetch(url);
+    if (response.ok) {
+      const csvText = await response.text();
+      const parsed = parseCSV(csvText);
+      if (parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    // Continue to GID fallback
   }
 
-  const csvText = await response.text();
-  return parseCSV(csvText);
+  // Fallback to direct export using GID if available
+  const gid = TAB_GIDS[tabName];
+  if (gid) {
+    try {
+      const gidUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
+      const gidResponse = await fetch(gidUrl);
+      if (gidResponse.ok) {
+        const csvText = await gidResponse.text();
+        return parseCSV(csvText);
+      }
+    } catch (e) {
+      // Return empty if both fail
+    }
+  }
+
+  return [];
 }
 
 /**

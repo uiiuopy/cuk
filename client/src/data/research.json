@@ -1,22 +1,22 @@
 [
   {
-    "Theme": "Cognitive Neurodynamics & BCI",
-    "Description": "Investigating electrical oscillations of the human brain (EEG) to decode cognitive processes, attention allocation, and motor planning, aiming to develop high-performance brain-computer interfaces (BCIs).",
-    "KeyMetrics": "ERP components, Event-Related Desynchronization (ERD), Spectral Power Densities"
+    "Theme": "Personality and Autonomic Responses to Stress",
+    "Description": "Investigated associations between facets of Neuroticism, Extraversion and Openness to Experience and HRV under baseline and experimentally induced stress conditions in young adults.",
+    "KeyMetrics": "HRV; Big Five Aspects Scale (BFAS); Arithmetic Drill; Expected-Speech Stress Task"
   },
   {
-    "Theme": "Cardiorespiratory Psychophysiology & HRV",
-    "Description": "Examining the relationship between cardiac autonomic regulation and cognitive stress, utilizing Heart Rate Variability (HRV) as a primary biomarker for emotional regulation and resilience.",
-    "KeyMetrics": "RMSSD, High-Frequency Power (HF-HRV), Respiratory Sinus Arrhythmia (RSA)"
+    "Theme": "Nature-Guided Imagery & VR-Assisted Relaxation",
+    "Description": "Compared conventional Nature-Guided Imagery (NGI) with Virtual Reality-assisted NGI (VR-NGI) for inducing relaxation among university students using physiological and subjective measures.",
+    "KeyMetrics": "GSR; Virtual Reality (VR); Nature-Guided Imagery; Subjective Relaxation Assessment"
   },
   {
-    "Theme": "Oculomotor & Pupillometry Studies",
-    "Description": "Studying visual attention paths, fixation durations, saccadic movements, and pupil size dynamics to assess mental workload, fatigue, and affective reactions during human-computer interaction.",
-    "KeyMetrics": "Fixation Density, Saccadic Velocity, Index of Cognitive Activity (ICA)"
+    "Theme": "Cognitive Neurodynamics & EEG/ERP",
+    "Description": "Investigating scalp electrical oscillations and event-related potentials (P300, N200) to decode decision-making, cognitive-emotional conflict, and memory processes.",
+    "KeyMetrics": "64-Channel EEG, P300, N200, Event-Related Desynchronization (ERD)"
   },
   {
-    "Theme": "Sympathetic Arousal & EDA/GSR",
-    "Description": "Measuring skin conductance responses (SCR) and levels (SCL) to track sympathetic nervous system mobilization in response to stressors, cognitive tasks, and emotional stimuli.",
-    "KeyMetrics": "Phasic Conductance Peaks, Tonic Conductance Level, Electrodermal Recovery Rate"
+    "Theme": "Cardiorespiratory Psychophysiology & Biofeedback",
+    "Description": "Developing self-regulation training protocols utilizing continuous heart rate variability (HRV), blood volume pulse, respiration patterns, and electrodermal feedback.",
+    "KeyMetrics": "RMSSD, High-Frequency Power (HF-HRV), Respiratory Sinus Arrhythmia (RSA), Skin Conductance"
   }
 ]
