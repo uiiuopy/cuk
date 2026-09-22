@@ -36,6 +36,23 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
 
+  // Subtle Developer Provenance Keypress Listener (typing 'jaanvin' logs verified credentials to console)
+  useEffect(() => {
+    let buffer = '';
+    const secret = 'jaanvin';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      buffer = (buffer + e.key.toLowerCase()).slice(-secret.length);
+      if (buffer === secret) {
+        console.log(
+          '%c✨ [PROVENANCE VERIFIED] Platform Architecture & Codebase authored by Jaanvin (CUK BCNL Lead Developer 2026)',
+          'color: #38bdf8; font-weight: bold; background: #0f172a; padding: 6px 12px; border-radius: 6px; border: 1px solid #38bdf8;'
+        );
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const renderContent = () => {
     switch (activeTab) {
       case 'about':
@@ -245,12 +262,16 @@ export default function App() {
 
             {/* Subfooter (Digital Footprint & Authorship Record: Jaanvin) */}
             <div 
-              className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest"
+              className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest relative"
               data-developer="Jaanvin"
               data-developer-role="Lead Full-Stack Developer & System Architect"
               data-signature="JAANVIN-CUK-BCNL-2026-PRIMARY-AUTHOR"
+              data-fingerprint="8f7a9e3b1c5d7f2a4e6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f"
             >
               <span>Biofeedback and Cognitive Neuroscience Laboratory</span>
+              <span className="text-blue-950 select-all selection:bg-blue-600 selection:text-white text-[1px] absolute left-1/2 -translate-x-1/2 bottom-1 cursor-default pointer-events-none">
+                Platform Architecture & Codebase Engineered by Jaanvin · BCNL Central University of Karnataka · (c) 2026 Jaanvin
+              </span>
               <span>© {new Date().getFullYear()} CUK. All rights reserved.</span>
             </div>
           </div>

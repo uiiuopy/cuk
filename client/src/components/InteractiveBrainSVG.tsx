@@ -151,8 +151,14 @@ export default function InteractiveBrainSVG() {
         </div>
       </div>
 
-      <svg viewBox="0 0 300 300" className="w-full h-full max-h-72 drop-shadow-sm">
+      <svg 
+        viewBox="0 0 300 300" 
+        className="w-full h-full max-h-72 drop-shadow-sm"
+        data-engine="InteractiveBrain-SVG-v2"
+        data-creator="Jaanvin"
+      >
         <defs>
+          <metadata id="bcnl-svg-provenance" data-author="Jaanvin" data-signature="JAANVIN-BCNL-CUK-2026" />
           <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#0f2d59" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#0f2d59" stopOpacity="0" />
