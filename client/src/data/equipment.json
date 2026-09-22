@@ -82,5 +82,37 @@
       "latency": "Sub-millisecond processing overhead"
     },
     "status": "Available"
+  },
+  {
+    "id": "eeg_64",
+    "name": "64-Channel EEG/ERP System",
+    "category": "Neuroimaging",
+    "description": "High-density electroencephalography for recording event-related potentials and cortical electrical activity.",
+    "utility": "Records ERP components (P300, N200) and cortical oscillations across 64 scalp electrodes.",
+    "status": "Available"
+  },
+  {
+    "id": "eog_sensor",
+    "name": "EOG (Electrooculography)",
+    "category": "Oculomotor",
+    "description": "Records electrical potential changes associated with horizontal and vertical eye movements and blinks.",
+    "utility": "Tracks saccadic eye movement latency, blink artifacts, and periorbital electrical potentials.",
+    "status": "Available"
+  },
+  {
+    "id": "resp_sensor",
+    "name": "Respiration Sensor",
+    "category": "Autonomic Nervous System",
+    "description": "Records respiratory cycles and breathing patterns through changes in thoracic or abdominal expansion.",
+    "utility": "Measures respiration rate, depth, and respiratory sinus arrhythmia (RSA) coupling.",
+    "status": "Available"
+  },
+  {
+    "id": "temp_sensor",
+    "name": "Peripheral Temperature Sensor",
+    "category": "Autonomic Nervous System",
+    "description": "Measures peripheral skin temperature and autonomic fluctuations during psychophysiological recordings and biofeedback sessions.",
+    "utility": "Monitors vasomotor constriction/dilation response to sympathetic arousal and biofeedback self-regulation.",
+    "status": "Available"
   }
 ]

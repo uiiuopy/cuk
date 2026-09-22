@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings, Brain, Activity, Waves, Eye, Hammer } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, Cpu, Tag, Settings, Brain, Activity, Waves, Eye, Hammer, Wind, Thermometer, Zap } from 'lucide-react';
 import { fetchSheetData } from '../utils/googleSheets';
 import fallbackEquipment from '../data/equipment.json';
 
@@ -177,6 +177,106 @@ export default function Facilities() {
               {cat}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Laboratory Instruments & Modalities Section */}
+      <div className="mb-12 space-y-6">
+        <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
+          <div>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-blue-950 tracking-tight flex items-center gap-2.5">
+              <Zap className="h-6 w-6 text-blue-950" />
+              Laboratory Instruments & Modalities
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+              Core neuroelectrical and physiological measurement modalities supported in our research suite.
+            </p>
+          </div>
+          <span className="text-[11px] font-bold text-blue-950 bg-blue-50 border border-blue-150 px-3.5 py-1 rounded-full uppercase tracking-wider hidden sm:inline-block">
+            Key Modalities
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: 64-Channel EEG/ERP System */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-950 shrink-0">
+                  <Brain className="h-6 w-6 text-blue-950" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-950 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                  EEG / ERP
+                </span>
+              </div>
+              <h4 className="text-base font-bold text-slate-900 tracking-tight mb-2">
+                64-Channel EEG/ERP System
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-medium">
+                High-density electroencephalography for recording event-related potentials and cortical electrical activity.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 2: EOG (Electrooculography) */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-950 shrink-0">
+                  <Eye className="h-6 w-6 text-blue-950" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-950 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                  Oculomotor
+                </span>
+              </div>
+              <h4 className="text-base font-bold text-slate-900 tracking-tight mb-2">
+                EOG (Electrooculography)
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-medium">
+                Records electrical potential changes associated with horizontal and vertical eye movements and blinks.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 3: Respiration Sensor */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-950 shrink-0">
+                  <Wind className="h-6 w-6 text-blue-950" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-950 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                  Respiration
+                </span>
+              </div>
+              <h4 className="text-base font-bold text-slate-900 tracking-tight mb-2">
+                Respiration Sensor
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-medium">
+                Records respiratory cycles and breathing patterns through changes in thoracic or abdominal expansion.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 4: Peripheral Temperature Sensor */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-950 shrink-0">
+                  <Thermometer className="h-6 w-6 text-blue-950" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-950 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                  Autonomic
+                </span>
+              </div>
+              <h4 className="text-base font-bold text-slate-900 tracking-tight mb-2">
+                Peripheral Temperature Sensor
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed font-sans font-medium">
+                Measures peripheral skin temperature and autonomic fluctuations during psychophysiological recordings and biofeedback sessions.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
