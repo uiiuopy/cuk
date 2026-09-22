@@ -1,9 +1,26 @@
 import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-import { Brain, Activity, Info, Zap, Upload, FileText, Sliders, Check } from 'lucide-react';
+import { 
+  Brain, 
+  Activity, 
+  Info, 
+  Zap, 
+  Upload, 
+  Sliders, 
+  RotateCcw, 
+  Play, 
+  Pause, 
+  Eye, 
+  Check, 
+  Layers, 
+  ChevronRight,
+  Maximize2,
+  Sparkles,
+  Waves
+} from 'lucide-react';
 
 interface LobeInfo {
   name: string;
@@ -12,69 +29,89 @@ interface LobeInfo {
   signals: string;
   biosignalLink: string;
   color: string;
-  nodePosition: [number, number, number];
+  nodePosition: [number, number, number]; // MNI [X, Y, Z]
+  volumePct: string;
+  dominantWave: string;
+  channels: string;
 }
 
 const LOBES_DATA: Record<string, LobeInfo> = {
   frontal: {
     name: 'Frontal Lobe',
     subtitle: 'Executive Center & Motor Control',
-    function: 'Responsible for higher-level cognitive processes, including planning, decision making, social behavior, focus, and voluntary muscle movements.',
-    signals: 'Primary source of high-frequency EEG Beta waves (13-30 Hz) during active thinking, and slow Theta waves during cognitive fatigue. Electrodes: Fp1, Fp2, F3, F4.',
-    biosignalLink: 'EEG Beta & Theta waves (Cognitive Load)',
-    color: '#3b82f6', // Tailwind blue-500
-    nodePosition: [0, 35, 30]
+    function: 'Coordinates higher-order cognitive operations, goal-directed behavior, working memory manipulation, decision-making, and primary voluntary motor execution.',
+    signals: 'Generates frontal midline Theta (FmTheta, 4–8 Hz) during concentrated workload, and synchronized Beta oscillations (13–30 Hz) during motor planning. Primary electrodes: Fp1, Fp2, F3, F4, Fz.',
+    biosignalLink: 'Frontal EEG Beta / Theta Ratio (Cognitive Load)',
+    color: '#3b82f6', // Blue 500
+    nodePosition: [0, 38, 30],
+    volumePct: '32%',
+    dominantWave: 'Beta (13–30 Hz)',
+    channels: 'Fp1, Fp2, F3, F4, Fz'
   },
   parietal: {
     name: 'Parietal Lobe',
-    subtitle: 'Sensory Integration & Spatial Awareness',
-    function: 'Integrates sensory information from various parts of the body (somatosensory cortex), processes spatial relationships, navigation, and numbers.',
-    signals: 'Involved in sensorimotor rhythms (SMR) and alpha band attenuation during tactile attention. Electrodes: P3, P4, Pz.',
-    biosignalLink: 'EEG Mu Rhythm (Sensory Processing)',
-    color: '#a855f7', // Tailwind purple-500
-    nodePosition: [0, -45, 50]
+    subtitle: 'Somatosensory & Spatial Integration',
+    function: 'Processes multi-sensory afferents, spatial orientation, mental rotation, tactile feedback, and coordinate transformation between eye, head, and body frames.',
+    signals: 'Sensorimotor rhythm (SMR, 12–15 Hz) desynchronization during tactile exploration; Parietal P300 ERP amplitude scaling with stimulus novelty. Primary electrodes: P3, P4, Pz.',
+    biosignalLink: 'P300 Evoked Potentials (Sensory Integration)',
+    color: '#a855f7', // Purple 500
+    nodePosition: [0, -42, 52],
+    volumePct: '21%',
+    dominantWave: 'Mu Rhythm & Alpha (8–13 Hz)',
+    channels: 'P3, P4, Pz, CP1, CP2'
   },
   occipital: {
     name: 'Occipital Lobe',
-    subtitle: 'Visual Processing Core',
-    function: 'The visual processing center of the mammalian brain, containing most of the anatomical region of the visual cortex.',
-    signals: 'Strong generator of EEG Alpha waves (8-12 Hz) when eyes are closed or in resting states. Occipital alpha drops instantly upon visual attention. Electrodes: O1, O2, Oz.',
-    biosignalLink: 'EEG Alpha Coherence (Visual Processing)',
-    color: '#22c55e', // Tailwind green-500
-    nodePosition: [0, -80, 10]
+    subtitle: 'Visual Processing & Retinotopic Core',
+    function: 'Primary visual cortex (V1) through associative areas (V2–V5), decoding orientation, retinotopic maps, spatial frequency, and visual motion patterns.',
+    signals: 'Robust occipital Alpha rhythm (8–12 Hz) emerging strongly during eyes-closed states, instantly blocked upon saccadic visual fixation (Berger effect). Primary electrodes: O1, O2, Oz.',
+    biosignalLink: 'Occipital Alpha Coherence (Gaze Fixation)',
+    color: '#10b981', // Emerald 500
+    nodePosition: [0, -78, 12],
+    volumePct: '16%',
+    dominantWave: 'Alpha (8–12 Hz)',
+    channels: 'O1, O2, Oz'
   },
   temporal: {
     name: 'Temporal Lobe',
-    subtitle: 'Auditory & Memory Center',
-    function: 'Processes auditory stimuli, language comprehension, memory acquisition (via hippocampus), and emotional processing (via amygdala).',
-    signals: 'Generates localized Theta (4-7 Hz) waves and plays a key role in emotional reactivity indexing when combined with GSR. Electrodes: T3, T4, T5, T6.',
-    biosignalLink: 'EEG Theta waves (Memory & Auditory)',
-    color: '#ec4899', // Tailwind pink-500
-    nodePosition: [48, -15, -15]
+    subtitle: 'Auditory & Declarative Memory Hub',
+    function: 'Houses Heschl’s gyrus (auditory cortex), Wernicke’s language comprehension, hippocampal episodic memory encoding, and amygdaloid emotional valence appraisal.',
+    signals: 'Auditory N100 and P200 ERP complexes, localized lateralized Theta bursts during mnemonic recall tasks. Primary electrodes: T3, T4, T5, T6, TP9, TP10.',
+    biosignalLink: 'Auditory ERPs & Hippocampal Theta',
+    color: '#ec4899', // Pink 500
+    nodePosition: [48, -15, -12],
+    volumePct: '23%',
+    dominantWave: 'Theta (4–8 Hz)',
+    channels: 'T7, T8, TP9, TP10, P7, P8'
   },
   cerebellum: {
     name: 'Cerebellum',
-    subtitle: 'Motor Coordination & Timing',
-    function: 'Coordinates voluntary movements such as posture, balance, coordination, and speech, resulting in smooth and balanced muscular activity.',
-    signals: 'Mainly high-frequency sub-cortical signals. Crucial for motor learning and micro-timing paradigms.',
-    biosignalLink: 'Saccadic Eye Movement Integration',
-    color: '#eab308', // Tailwind yellow-500
-    nodePosition: [0, -55, -30]
+    subtitle: 'Motor Coordination & Micro-Timing',
+    function: 'Computes internal forward models of motor error, micro-second timing intervals, posture calibration, and eye movement smooth pursuit stabilization.',
+    signals: 'High-frequency cerebellar oscillations coordinated with pre-frontal motor commands. Integral to saccadic correction paradigms during eye-tracking experiments.',
+    biosignalLink: 'Saccadic Smooth Pursuit & Motor Calibration',
+    color: '#eab308', // Yellow 500
+    nodePosition: [0, -54, -30],
+    volumePct: '10%',
+    dominantWave: 'Gamma (>30 Hz) Modulation',
+    channels: 'Inion, Cerebellar Poles'
   },
   stem: {
     name: 'Brain Stem',
-    subtitle: 'Autonomic Control Center',
-    function: 'Controls flow of messages between the brain and the rest of the body. Governs essential survival functions like respiration, heartbeat, blood pressure, and sweating.',
-    signals: 'Primary driver of autonomic biosignals, including electrodermal activity (GSR/EDA) via the sympathetic pathway, and ECG heart rate variability via the vagus nerve.',
-    biosignalLink: 'GSR / EDA & Heart Rate (ECG)',
-    color: '#f97316', // Tailwind orange-500
-    nodePosition: [0, -15, -50]
+    subtitle: 'Autonomic & Neurovegetative Nexus',
+    function: 'Ascending Reticular Activating System (ARAS), autonomic nucleus tractus solitarius, modulating cardio-respiratory pacing, pupil diameter, and sympathetic arousal.',
+    signals: 'Direct central pacemaker driving autonomic peripheral indices: galvanic skin response (GSR / electrodermal skin conductance) and ECG vagal heart rate variability (HRV).',
+    biosignalLink: 'GSR Electrodermal Arousal & Vagal HRV',
+    color: '#f97316', // Orange 500
+    nodePosition: [0, -16, -48],
+    volumePct: '3%',
+    dominantWave: 'Autonomic Sympathetic Tone',
+    channels: 'Peripheral BVP, GSR, ECG Lead-II'
   }
 };
 
 interface BrainSceneWrapperProps {
   viewMode: 'anatomical' | 'connectome';
-  connectomePreset: 'aal90' | 'brodmann' | 'custom';
   edgeWeightThreshold: number;
   parsedNodes: any[];
   parsedEdges: any[];
@@ -82,82 +119,84 @@ interface BrainSceneWrapperProps {
   selectedLobe: string;
   setHoveredLobe: (lobe: string | null) => void;
   setSelectedLobe: (lobe: string) => void;
+  isAutoRotate: boolean;
 }
 
 function BrainSceneWrapper({
   viewMode,
-  connectomePreset,
   edgeWeightThreshold,
   parsedNodes,
   parsedEdges,
   hoveredLobe,
   selectedLobe,
   setHoveredLobe,
-  setSelectedLobe
+  setSelectedLobe,
+  isAutoRotate
 }: BrainSceneWrapperProps) {
   const obj = useLoader(OBJLoader, '/models/brain_vertex_low.obj');
 
-  const { scaleFactor, centerShift, meshVertices, clonedObj } = useMemo(() => {
-    const cloned = obj.clone();
+  // Deep clone geometry once and apply MNI-to-Three.js mapping immutably
+  const { scaleFactor, centerShift, meshVertices, clonedMesh } = useMemo(() => {
+    const cloned = obj.clone(true);
+    const coords: number[] = [];
 
-    // Swap Y and Z coordinates of the OBJ geometries to match standard Three.js axes mapping
+    // Calculate bounding box in original MNI space
+    const mniCenter = new THREE.Vector3(0, -10, 15);
+
     cloned.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
-        const posAttr = mesh.geometry.attributes.position;
+        // Deep clone geometry to prevent mutating cached loader geometry
+        const geom = mesh.geometry.clone();
+        const posAttr = geom.attributes.position;
         if (posAttr) {
           for (let i = 0; i < posAttr.count; i++) {
-            const yVal = posAttr.getY(i);
-            const zVal = posAttr.getZ(i);
-            posAttr.setY(i, zVal);
-            posAttr.setZ(i, yVal);
+            // MNI Coordinate -> Three.js Coordinate mapping:
+            // Three X = MNI X (Left/Right)
+            // Three Y = MNI Z (Inferior/Superior)
+            // Three Z = MNI Y (Posterior/Anterior)
+            const mx = posAttr.getX(i);
+            const my = posAttr.getY(i);
+            const mz = posAttr.getZ(i);
+
+            posAttr.setXYZ(i, mx, mz, my);
+            coords.push(mx, mz, my);
           }
           posAttr.needsUpdate = true;
-          mesh.geometry.computeVertexNormals();
+          geom.computeVertexNormals();
         }
+        mesh.geometry = geom;
       }
     });
 
-    const scaleFactor = 1 / 85.0; 
-    const mniCenter = [2.5, -14.0, 17.5]; 
-    
+    const scaleFactor = 1 / 82.0;
+    // Map MNI center [X, Y, Z] to Three.js space [X, Z, Y]
     const centerShift: [number, number, number] = [
-      -mniCenter[0] * scaleFactor,
-      -mniCenter[2] * scaleFactor,
-      -mniCenter[1] * scaleFactor
+      -mniCenter.x * scaleFactor,
+      -mniCenter.z * scaleFactor,
+      -mniCenter.y * scaleFactor
     ];
-
-    const coords: number[] = [];
-    cloned.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        const posAttr = mesh.geometry.attributes.position;
-        if (posAttr) {
-          for (let i = 0; i < posAttr.count; i++) {
-            coords.push(posAttr.getX(i), posAttr.getY(i), posAttr.getZ(i));
-          }
-        }
-      }
-    });
 
     return {
       scaleFactor,
       centerShift,
-      clonedObj: cloned,
+      clonedMesh: cloned,
       meshVertices: new Float32Array(coords)
     };
   }, [obj]);
 
   const groupRef = useRef<THREE.Group>(null);
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.08;
+  // Smooth, subtle automatic turntable rotation
+  useFrame((_, delta) => {
+    if (groupRef.current && isAutoRotate) {
+      groupRef.current.rotation.y += delta * 0.18;
     }
   });
 
+  // Apply materials for dual-layer futuristic neuro-aesthetic
   useEffect(() => {
-    clonedObj.traverse((child) => {
+    clonedMesh.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
         let meshColor = '#3b82f6';
@@ -167,23 +206,27 @@ function BrainSceneWrapper({
           meshColor = LOBES_DATA[selectedLobe].color;
         }
 
+        // Dual material styling: Translucent body with glowing additive wireframe
         mesh.material = new THREE.MeshBasicMaterial({
           color: meshColor,
           transparent: true,
-          opacity: viewMode === 'connectome' ? 0.03 : 0.12,
+          opacity: viewMode === 'connectome' ? 0.08 : 0.28,
           wireframe: true,
           depthWrite: false,
           blending: THREE.AdditiveBlending
         });
       }
     });
-  }, [clonedObj, viewMode, selectedLobe]);
+  }, [clonedMesh, viewMode, selectedLobe]);
 
   return (
     <group ref={groupRef}>
       <group position={centerShift} scale={[scaleFactor, scaleFactor, scaleFactor]}>
-        <primitive object={clonedObj} />
+        
+        {/* Wireframe Mesh */}
+        <primitive object={clonedMesh} />
 
+        {/* Neural Synapse Particle Points */}
         <points>
           <bufferGeometry>
             <bufferAttribute
@@ -192,16 +235,17 @@ function BrainSceneWrapper({
             />
           </bufferGeometry>
           <pointsMaterial
-            size={1.0}
-            color={viewMode === 'connectome' ? '#38bdf8' : '#3b82f6'}
+            size={1.4}
+            color={viewMode === 'connectome' ? '#38bdf8' : '#60a5fa'}
             transparent
-            opacity={viewMode === 'connectome' ? 0.1 : 0.45}
+            opacity={viewMode === 'connectome' ? 0.25 : 0.65}
             sizeAttenuation={true}
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
         </points>
 
+        {/* Anatomical Mode Elements */}
         {viewMode === 'anatomical' && (
           <>
             <InteractiveNodes
@@ -214,6 +258,7 @@ function BrainSceneWrapper({
           </>
         )}
 
+        {/* Connectome Mode Elements */}
         {viewMode === 'connectome' && parsedNodes.length > 0 && (
           <ConnectomeRenderer 
             nodes={parsedNodes} 
@@ -239,40 +284,54 @@ function InteractiveNodes({ hoveredLobe, selectedLobe, onHoverLobe, onClickLobe 
       {Object.entries(LOBES_DATA).map(([key, data]) => {
         const isActive = selectedLobe === key || hoveredLobe === key;
         const color = new THREE.Color(data.color);
-        const mappedPosition: [number, number, number] = [data.nodePosition[0], data.nodePosition[2], data.nodePosition[1]];
+        // Map MNI [X, Y, Z] to Three.js space [X, Z, Y]
+        const mappedPosition: [number, number, number] = [
+          data.nodePosition[0], 
+          data.nodePosition[2], 
+          data.nodePosition[1]
+        ];
 
+        // Bilateral placement for temporal lobe
         const positions = key === 'temporal' 
           ? [mappedPosition, [-mappedPosition[0], mappedPosition[1], mappedPosition[2]] as [number, number, number]] 
           : [mappedPosition];
 
         return positions.map((pos, idx) => (
-          <mesh
-            key={`${key}-${idx}`}
-            position={pos}
-            onPointerOver={(e) => {
-              e.stopPropagation();
-              onHoverLobe(key);
-            }}
-            onPointerOut={() => onHoverLobe(null)}
-            onClick={(e) => {
-              e.stopPropagation();
-              onClickLobe(key);
-            }}
-          >
-            <sphereGeometry args={[isActive ? 5.5 : 3.8, 16, 16]} />
-            <meshBasicMaterial
-              color={color}
-              transparent
-              opacity={isActive ? 0.95 : 0.6}
-            />
+          <group key={`${key}-${idx}`} position={pos}>
+            {/* Core Node Sphere */}
+            <mesh
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                onHoverLobe(key);
+              }}
+              onPointerOut={() => onHoverLobe(null)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickLobe(key);
+              }}
+            >
+              <sphereGeometry args={[isActive ? 5.8 : 4.0, 20, 20]} />
+              <meshBasicMaterial
+                color={color}
+                transparent
+                opacity={isActive ? 0.95 : 0.75}
+              />
+            </mesh>
+
+            {/* Glowing Halo Ring on Active State */}
             {isActive && (
-              <Html distanceFactor={0.03} position={[0, 8, 0]} center>
-                <div className="bg-slate-900/90 text-white border border-slate-700 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
-                  {data.name}
-                </div>
-              </Html>
+              <mesh>
+                <sphereGeometry args={[9.5, 16, 16]} />
+                <meshBasicMaterial
+                  color={color}
+                  transparent
+                  opacity={0.3}
+                  wireframe
+                  blending={THREE.AdditiveBlending}
+                />
+              </mesh>
             )}
-          </mesh>
+          </group>
         ));
       })}
     </group>
@@ -286,35 +345,37 @@ function NeuralImpulses() {
     const list = [];
     const lobesKeys = Object.keys(LOBES_DATA);
 
-    for (let i = 0; i < 8; i++) {
-      const startLobe = lobesKeys[Math.floor(Math.random() * lobesKeys.length)];
-      let endLobe = lobesKeys[Math.floor(Math.random() * lobesKeys.length)];
-      while (startLobe === endLobe) {
-        endLobe = lobesKeys[Math.floor(Math.random() * lobesKeys.length)];
+    // Pre-create 12 neural transmission pathways
+    for (let i = 0; i < 12; i++) {
+      const startKey = lobesKeys[i % lobesKeys.length];
+      let endKey = lobesKeys[(i + 2) % lobesKeys.length];
+      if (startKey === endKey) {
+        endKey = lobesKeys[(i + 3) % lobesKeys.length];
       }
 
-      const sLobe = LOBES_DATA[startLobe].nodePosition;
-      const eLobe = LOBES_DATA[endLobe].nodePosition;
-      const pStart = [sLobe[0], sLobe[2], sLobe[1]];
-      const pEnd = [eLobe[0], eLobe[2], eLobe[1]];
+      const s = LOBES_DATA[startKey].nodePosition;
+      const e = LOBES_DATA[endKey].nodePosition;
+      // Map to Three.js space [X, Z, Y]
+      const pStart = [s[0], s[2], s[1]];
+      const pEnd = [e[0], e[2], e[1]];
 
-      const pMiddle = [
-        (pStart[0] + pEnd[0]) / 2 + (Math.random() - 0.5) * 30,
-        (pStart[1] + pEnd[1]) / 2 + (Math.random() - 0.5) * 30,
-        (pStart[2] + pEnd[2]) / 2 + (Math.random() - 0.5) * 30,
+      const pMid = [
+        (pStart[0] + pEnd[0]) / 2 + (Math.random() - 0.5) * 20,
+        (pStart[1] + pEnd[1]) / 2 + (Math.random() - 0.5) * 20,
+        (pStart[2] + pEnd[2]) / 2 + (Math.random() - 0.5) * 20,
       ];
 
       const curve = new THREE.QuadraticBezierCurve3(
         new THREE.Vector3(...pStart),
-        new THREE.Vector3(...pMiddle),
+        new THREE.Vector3(...pMid),
         new THREE.Vector3(...pEnd)
       );
 
       list.push({
         curve,
-        speed: 0.3 + Math.random() * 0.4,
-        progress: Math.random(),
-        color: LOBES_DATA[startLobe].color
+        speed: 0.35 + (i % 4) * 0.15,
+        progress: (i * 0.08) % 1.0,
+        color: LOBES_DATA[startKey].color
       });
     }
     return list;
@@ -338,8 +399,13 @@ function NeuralImpulses() {
     <group ref={groupRef}>
       {tracks.map((track, idx) => (
         <mesh key={idx}>
-          <sphereGeometry args={[1.36, 8, 8]} />
-          <meshBasicMaterial color={new THREE.Color(track.color)} transparent opacity={0.9} />
+          <sphereGeometry args={[1.6, 8, 8]} />
+          <meshBasicMaterial 
+            color={new THREE.Color(track.color)} 
+            transparent 
+            opacity={0.9} 
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
       ))}
     </group>
@@ -357,8 +423,8 @@ function parseNodeFile(text: string) {
       const x = parseFloat(parts[0]);
       const y = parseFloat(parts[1]);
       const z = parseFloat(parts[2]);
-      const colorId = parseInt(parts[3]);
-      const size = parseFloat(parts[4]);
+      const colorId = parseInt(parts[3]) || 1;
+      const size = parseFloat(parts[4]) || 1;
       const name = parts.slice(5).join(' ').replace(/^"|"$/g, '');
       nodes.push({ x, y, z, colorId, size, name });
     }
@@ -387,9 +453,8 @@ interface ConnectomeRendererProps {
 }
 
 function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendererProps) {
-  const { nodePositions, nodeSizes, colors, linePositions, lineColors } = useMemo(() => {
+  const { nodePositions, colors, linePositions, lineColors } = useMemo(() => {
     const nodePositions: number[] = [];
-    const nodeSizes: number[] = [];
     const colors: number[] = [];
     const linePositions: number[] = [];
     const lineColors: number[] = [];
@@ -402,7 +467,6 @@ function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendere
     nodes.forEach((node) => {
       // Map MNI space [X, Y, Z] to Three.js space [X, Z, Y]
       nodePositions.push(node.x, node.z, node.y);
-      nodeSizes.push(node.size * 1.8);
 
       const colorHex = colorPalette[Math.abs(node.colorId) % colorPalette.length];
       const threeColor = new THREE.Color(colorHex);
@@ -434,7 +498,6 @@ function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendere
 
     return {
       nodePositions: new Float32Array(nodePositions),
-      nodeSizes: new Float32Array(nodeSizes),
       colors: new Float32Array(colors),
       linePositions: new Float32Array(linePositions),
       lineColors: new Float32Array(lineColors)
@@ -443,7 +506,7 @@ function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendere
 
   return (
     <group>
-      {/* Draw Connectome Node Spheres */}
+      {/* Node Spheres */}
       <points>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[nodePositions, 3]} />
@@ -460,7 +523,7 @@ function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendere
         />
       </points>
 
-      {/* Draw Connectome Edges */}
+      {/* Edge Connections */}
       {linePositions.length > 0 && (
         <lineSegments>
           <bufferGeometry>
@@ -470,12 +533,41 @@ function ConnectomeRenderer({ nodes, edgesMatrix, threshold }: ConnectomeRendere
           <lineBasicMaterial
             vertexColors
             transparent
-            opacity={0.35}
+            opacity={0.4}
             linewidth={1}
+            blending={THREE.AdditiveBlending}
           />
         </lineSegments>
       )}
     </group>
+  );
+}
+
+// Camera controller helper
+function CameraController({ resetTrigger }: { resetTrigger: number }) {
+  const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (resetTrigger > 0) {
+      camera.position.set(0, 0, 2.1);
+      camera.lookAt(0, 0, 0);
+      if (controlsRef.current) {
+        controlsRef.current.reset();
+      }
+    }
+  }, [resetTrigger, camera]);
+
+  return (
+    <OrbitControls 
+      ref={controlsRef}
+      enableZoom={true} 
+      maxDistance={3.8} 
+      minDistance={0.9}
+      enablePan={false}
+      enableDamping
+      dampingFactor={0.05}
+    />
   );
 }
 
@@ -487,13 +579,15 @@ interface ThreeBrainProps {
 export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
   const [viewMode, setViewMode] = useState<'anatomical' | 'connectome'>('anatomical'); 
   const [connectomePreset, setConnectomePreset] = useState<'aal90' | 'brodmann' | 'custom'>('aal90'); 
-  const [edgeWeightThreshold, setEdgeWeightThreshold] = useState(0.3);
+  const [edgeWeightThreshold, setEdgeWeightThreshold] = useState(0.35);
   const [parsedNodes, setParsedNodes] = useState<any[]>([]);
   const [parsedEdges, setParsedEdges] = useState<number[][]>([]);
   const [customNodeText, setCustomNodeText] = useState('');
   const [customEdgeText, setCustomEdgeText] = useState('');
   const [selectedLobe, setSelectedLobe] = useState('frontal');
   const [hoveredLobe, setHoveredLobe] = useState<string | null>(null);
+  const [isAutoRotate, setIsAutoRotate] = useState(true);
+  const [resetCameraCount, setResetCameraCount] = useState(0);
 
   const activeData = LOBES_DATA[selectedLobe];
 
@@ -523,7 +617,7 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
     }
   }, [gaze, isGazeConnected, selectedLobe, viewMode]);
 
-  // Load Preset Connectome Data
+  // Load Preset Connectome Data safely with exact file paths
   useEffect(() => {
     if (viewMode !== 'connectome') return;
     
@@ -533,7 +627,7 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
 
       if (connectomePreset === 'aal90') {
         nodeUrl = '/templates/Node_AAL90.node';
-        edgeUrl = '/templates/Edge_AAL90.edge';
+        edgeUrl = '/templates/Edge_AAL90_Weighted.edge';
       } else if (connectomePreset === 'brodmann') {
         nodeUrl = '/templates/Node_Brodmann82.node';
         edgeUrl = '/templates/Edge_Brodmann82.edge';
@@ -548,6 +642,8 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
           const edgeText = await edgeRes.text();
           setParsedNodes(parseNodeFile(nodeText));
           setParsedEdges(parseEdgeFile(edgeText));
+        } else {
+          console.warn('Failed to load connectome preset, status:', nodeRes.status, edgeRes.status);
         }
       } catch (err) {
         console.error('Failed to load connectome preset files:', err);
@@ -566,92 +662,148 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
     setConnectomePreset('custom');
   };
 
+  const activeEdgeCount = useMemo(() => {
+    if (!parsedEdges || parsedEdges.length === 0) return 0;
+    let count = 0;
+    for (let i = 0; i < parsedEdges.length; i++) {
+      for (let j = i + 1; j < parsedEdges[i].length; j++) {
+        if (parsedEdges[i][j] >= edgeWeightThreshold) count++;
+      }
+    }
+    return count;
+  }, [parsedEdges, edgeWeightThreshold]);
+
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-8">
-      {/* Upper Header Panel */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative overflow-hidden">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+      
+      {/* Upper Unified Workstation Header */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-3 text-blue-950">
             <div className="p-2 rounded-xl bg-blue-50 border border-blue-100">
               <Brain className="h-6 w-6 text-blue-950" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-              3D Brain Network Explorer
-            </h2>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
+                3D Brain Network Explorer
+              </h2>
+              <p className="text-xs text-slate-500 font-semibold">
+                Anatomical Lobe Coordinates, EEG Wave Topology & Structural Connectome
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-slate-600 font-medium max-w-2xl pl-0.5">
-            Interactive coordinate mapping of anatomical lobes, EEG sensors, and structural connectivity matrices.
-          </p>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-blue-950 border border-blue-150">
+
+        {/* Global Toolbar / Mode Switcher */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Mode Switcher Tabs */}
+          <div className="flex p-1 bg-slate-100 border border-slate-200 rounded-xl">
+            <button
+              onClick={() => setViewMode('anatomical')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                viewMode === 'anatomical'
+                  ? 'bg-blue-950 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-blue-950'
+              }`}
+            >
+              <Brain className="h-3.5 w-3.5" />
+              <span>Anatomical Lobes</span>
+            </button>
+            <button
+              onClick={() => setViewMode('connectome')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                viewMode === 'connectome'
+                  ? 'bg-blue-950 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-blue-950'
+              }`}
+            >
+              <Layers className="h-3.5 w-3.5" />
+              <span>Connectome Matrix</span>
+            </button>
+          </div>
+
+          <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-950 border border-blue-150">
             <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
             WebGL 3D Active
           </span>
         </div>
-        {/* Hidden Steganographic Copyright (White on White) */}
-        <span className="absolute bottom-1 right-2 text-[10px] text-white selection:bg-blue-950 selection:text-white select-all pointer-events-auto">
-          Copyrighted to jaanvin. Developed & Engineered by Jaanvin. All Rights Reserved.
+
+        {/* Camouflaged provenance */}
+        <span className="text-white select-all selection:bg-blue-950 selection:text-white text-[1px] absolute top-1 right-1 pointer-events-auto">
+          Copyrighted to jaanvin. Original 3D Brain Architecture & Topology Authored by Jaanvin.
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left / Center Column: 3D Render Canvas (7 cols) */}
-        <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl h-96 sm:h-120 lg:h-144 overflow-hidden relative shadow-sm">
-          <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1.5">
-            <button
-              onClick={() => setViewMode('anatomical')}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-                viewMode === 'anatomical'
-                  ? 'bg-blue-950 border-blue-900 text-white shadow-xs'
-                  : 'bg-slate-900/80 backdrop-blur-xs border-slate-700/60 text-slate-300 hover:bg-slate-800'
-              }`}
-            >
-              Anatomical Lobes
-            </button>
-            <button
-              onClick={() => setViewMode('connectome')}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-                viewMode === 'connectome'
-                  ? 'bg-blue-950 border-blue-900 text-white shadow-xs'
-                  : 'bg-slate-900/80 backdrop-blur-xs border-slate-700/60 text-slate-300 hover:bg-slate-800'
-              }`}
-            >
-              Connectome Matrix
-            </button>
-          </div>
+      {/* Aligned Workstation Grid: Both Sections Perfectly Balanced with Equal Height */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        {/* ========================================================================= */}
+        {/* Section 1 (Left): 3D Viewport Console (7 cols)                           */}
+        {/* ========================================================================= */}
+        <div className="lg:col-span-7 h-[580px] sm:h-[640px] flex flex-col rounded-3xl overflow-hidden border border-slate-800 bg-slate-950 shadow-md relative group">
+          
+          {/* Viewport Top Overlay Bar */}
+          <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between pointer-events-none">
+            
+            {/* View Mode Tag */}
+            <div className="pointer-events-auto flex items-center gap-2">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-300 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-700/60 shadow-sm flex items-center gap-2">
+                <span 
+                  className="h-2.5 w-2.5 rounded-full" 
+                  style={{ backgroundColor: viewMode === 'anatomical' ? activeData.color : '#38bdf8' }}
+                />
+                {viewMode === 'anatomical' ? activeData.name : 'Structural Matrix Graph'}
+              </span>
 
-          <div className="hidden sm:block absolute top-3 right-3 z-10 text-[10px] font-bold text-slate-400 bg-slate-950/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-slate-800/40">
-            🖱️ Drag to rotate · Scroll to zoom
-          </div>
-
-          {/* Hidden Steganographic Copyright (Black on Black in Dark Canvas) */}
-          <div className="absolute bottom-2 right-4 z-10 text-[10px] text-slate-900 selection:bg-blue-500 selection:text-white select-all pointer-events-auto">
-            Copyrighted to jaanvin. 3D Brain Engine & Coordinate System Authored by Jaanvin.
-          </div>
-
-          {/* Gaze calibration status */}
-          {isGazeConnected && gaze && (
-            <div className="absolute bottom-3 left-3 z-10 text-[10px] font-bold text-emerald-400 bg-slate-950/70 backdrop-blur-xs px-3 py-1 rounded-full border border-emerald-900/40 flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-              Gaze Track Sync active
+              {/* Gaze calibration status */}
+              {isGazeConnected && gaze && (
+                <span className="hidden sm:inline-flex text-[10px] font-bold text-emerald-400 bg-slate-900/90 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-emerald-900/50 items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  Gaze Synced
+                </span>
+              )}
             </div>
-          )}
 
-          {/* 3D Canvas rendering */}
-          <div className="w-full h-full">
+            {/* Quick View Controls: Auto-Rotate & Camera Reset */}
+            <div className="pointer-events-auto flex items-center gap-1.5">
+              <button
+                onClick={() => setIsAutoRotate(!isAutoRotate)}
+                title={isAutoRotate ? 'Pause Rotation' : 'Resume Auto-Rotate'}
+                className={`p-2 rounded-xl text-xs font-bold border backdrop-blur-md transition-all ${
+                  isAutoRotate 
+                    ? 'bg-blue-950/90 border-blue-700 text-blue-200 hover:bg-blue-900' 
+                    : 'bg-slate-900/80 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                {isAutoRotate ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+              </button>
+
+              <button
+                onClick={() => setResetCameraCount(c => c + 1)}
+                title="Reset Camera View"
+                className="p-2 rounded-xl text-xs font-bold bg-slate-900/80 border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800 backdrop-blur-md transition-all"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* 3D Canvas Rendering Body */}
+          <div className="flex-1 w-full h-full relative cursor-grab active:cursor-grabbing">
             <Suspense fallback={
-              <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs font-semibold">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-800 border-t-blue-500 mr-2" />
-                Initializing 3D Brain coordinates...
+              <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 text-xs font-semibold gap-3">
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-800 border-t-blue-500" />
+                <span>Loading High-Resolution 3D Coordinate Topology...</span>
               </div>
             }>
-              <Canvas camera={{ position: [0, 0, 1.8], fov: 60 }}>
-                <ambientLight intensity={0.6} />
-                <pointLight position={[10, 10, 10]} intensity={1.2} />
+              <Canvas camera={{ position: [0, 0, 2.1], fov: 52 }}>
+                <ambientLight intensity={0.9} />
+                <directionalLight position={[10, 10, 10]} intensity={1.5} color="#ffffff" />
+                <directionalLight position={[-10, -10, -10]} intensity={0.6} color="#38bdf8" />
+                <pointLight position={[0, 4, 4]} intensity={1.2} color="#60a5fa" />
+                
                 <BrainSceneWrapper
                   viewMode={viewMode}
-                  connectomePreset={connectomePreset}
                   edgeWeightThreshold={edgeWeightThreshold}
                   parsedNodes={parsedNodes}
                   parsedEdges={parsedEdges}
@@ -659,197 +811,267 @@ export default function ThreeBrain({ gaze, isGazeConnected }: ThreeBrainProps) {
                   selectedLobe={selectedLobe}
                   setHoveredLobe={setHoveredLobe}
                   setSelectedLobe={setSelectedLobe}
+                  isAutoRotate={isAutoRotate}
                 />
-                <OrbitControls 
-                  enableZoom={true} 
-                  maxDistance={3.5} 
-                  minDistance={1.0}
-                  enablePan={false}
-                  enableDamping
-                />
+
+                <CameraController resetTrigger={resetCameraCount} />
               </Canvas>
             </Suspense>
           </div>
+
+          {/* Viewport Bottom Overlay Bar */}
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between pointer-events-none text-[10px] font-semibold text-slate-400">
+            <span className="bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800/80 pointer-events-auto">
+              MNI Coordinate: [{activeData.nodePosition[0]}, {activeData.nodePosition[1]}, {activeData.nodePosition[2]}]
+            </span>
+
+            <span className="bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800/80 hidden sm:inline-block pointer-events-auto">
+              🖱️ Left-drag to rotate · Scroll to zoom
+            </span>
+          </div>
+
+          {/* Hidden Steganographic Copyright (Black on Black in Dark Viewport) */}
+          <div className="absolute bottom-1 right-2 z-10 text-[9px] text-slate-950 selection:bg-blue-600 selection:text-white select-all pointer-events-auto">
+            Copyrighted to jaanvin. 3D Brain Engine & Coordinate System Authored by Jaanvin.
+          </div>
         </div>
 
-        {/* Right Column: Lobe Info or Connectome Controls (5 cols) */}
-        <div className="lg:col-span-5 min-h-[380px] lg:h-144 flex flex-col">
+        {/* ========================================================================= */}
+        {/* Section 2 (Right): Diagnostics & Intelligence Console (5 cols)           */}
+        {/* ========================================================================= */}
+        <div className="lg:col-span-5 h-[580px] sm:h-[640px] flex flex-col rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xs">
+          
           {viewMode === 'anatomical' ? (
-            /* Anatomical Info Panels */
-            <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-xs flex-1 flex flex-col justify-between overflow-hidden">
+            /* ================= ANATOMICAL LOBE DETAILS ================= */
+            <div className="flex flex-col h-full">
               
-              {/* Lobe selection horizontal tab bar */}
-              <div className="flex flex-wrap gap-1.5 border-b border-slate-100 pb-3 shrink-0">
-                {Object.keys(LOBES_DATA).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setSelectedLobe(key)}
-                    className={`px-2.5 py-1 text-xs font-bold rounded-md transition-colors ${
-                      selectedLobe === key
-                        ? 'bg-blue-50 text-blue-950 border border-blue-150'
-                        : 'text-slate-500 hover:bg-slate-50'
-                    }`}
-                  >
-                    {LOBES_DATA[key].name.split(' ')[0]}
-                  </button>
-                ))}
+              {/* Lobe Selection Bar Header */}
+              <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2 px-1">
+                  Select Anatomical Region
+                </span>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {Object.keys(LOBES_DATA).map((key) => {
+                    const lobe = LOBES_DATA[key];
+                    const isSelected = selectedLobe === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => setSelectedLobe(key)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                          isSelected
+                            ? 'bg-blue-950 text-white border-blue-950 shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                        }`}
+                      >
+                        <span 
+                          className="h-2 w-2 rounded-full shrink-0" 
+                          style={{ backgroundColor: lobe.color }}
+                        />
+                        <span className="truncate">{lobe.name.split(' ')[0]}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Dynamic content info */}
-              {activeData && (
-                <div className="flex-1 py-4 overflow-y-auto space-y-5">
-                  <div>
-                    <h3 className="text-xl font-extrabold text-blue-950 tracking-tight">
+              {/* Dynamic Scrollable Lobe Content */}
+              <div className="flex-1 p-5 sm:p-6 overflow-y-auto space-y-5">
+                
+                {/* Lobe Title Banner */}
+                <div className="border-b border-slate-100 pb-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                       {activeData.name}
                     </h3>
-                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-0.5">
-                      {activeData.subtitle}
-                    </p>
+                    <span 
+                      className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full text-white shadow-3xs"
+                      style={{ backgroundColor: activeData.color }}
+                    >
+                      {activeData.dominantWave.split(' ')[0]} Band
+                    </span>
                   </div>
+                  <p className="text-xs font-bold text-blue-950 mt-1">
+                    {activeData.subtitle}
+                  </p>
+                </div>
 
-                  <div className="space-y-4 text-xs text-slate-600 leading-relaxed font-sans font-medium">
-                    <div>
-                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                        <Info className="h-3.5 w-3.5 text-blue-950" /> Functional Description
-                      </h4>
-                      <p className="leading-relaxed">
-                        {activeData.function}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                        <Zap className="h-3.5 w-3.5 text-blue-950" /> Electrophysiological Footprint
-                      </h4>
-                      <p className="leading-relaxed">
-                        {activeData.signals}
-                      </p>
-                    </div>
+                {/* Quantitative Metric Badges */}
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase text-slate-400 block">Cortical Mass</span>
+                    <span className="text-xs font-black text-slate-800">{activeData.volumePct}</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase text-slate-400 block">Primary Rhythm</span>
+                    <span className="text-xs font-black text-slate-800 truncate block">{activeData.dominantWave}</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase text-slate-400 block">EEG Sites</span>
+                    <span className="text-xs font-black text-slate-800 truncate block">{activeData.channels.split(',')[0]}</span>
                   </div>
                 </div>
-              )}
 
-              {/* Biosignal Link card at bottom */}
-              {activeData && (
-                <div className="bg-slate-50 border border-slate-200 p-3.5 rounded-xl flex items-center gap-2.5 shrink-0 mt-2">
-                  <Activity className="h-5 w-5 text-blue-950 shrink-0" />
-                  <div>
-                    <span className="text-[9px] uppercase font-bold text-slate-400 block">Biosignal Link</span>
-                    <span className="text-xs font-bold text-slate-900">{activeData.biosignalLink}</span>
+                {/* Functional Description */}
+                <div className="space-y-1.5">
+                  <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Info className="h-3.5 w-3.5 text-blue-950" /> Functional Neurobiology
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-medium bg-slate-50/60 p-3.5 rounded-xl border border-slate-100">
+                    {activeData.function}
+                  </p>
+                </div>
+
+                {/* Electrophysiological Footprint */}
+                <div className="space-y-1.5">
+                  <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Zap className="h-3.5 w-3.5 text-blue-950" /> Electrophysiological Footprint
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-medium bg-slate-50/60 p-3.5 rounded-xl border border-slate-100">
+                    {activeData.signals}
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Anchored Footer: Biosignal Modality Link */}
+              <div className="p-4 bg-slate-50 border-t border-slate-100 shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-blue-100 text-blue-950 shrink-0">
+                    <Activity className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[9px] uppercase font-bold text-slate-400 block">
+                      Biofeedback Sensor Modality
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 truncate block">
+                      {activeData.biosignalLink}
+                    </span>
                   </div>
                 </div>
-              )}
+              </div>
 
             </div>
           ) : (
-            /* Connectome Controls Panel */
-            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs flex-1 flex flex-col justify-between overflow-y-auto space-y-6 scrollbar-thin">
-              <div className="space-y-6">
-                <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                  Connectome Configurations
-                </h3>
+            /* ================= CONNECTOME MATRIX CONTROLS ================= */
+            <div className="flex flex-col h-full justify-between">
+              
+              {/* Preset Selector Header */}
+              <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2 px-1">
+                  Connectome Atlas Preset
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setConnectomePreset('aal90')}
+                    className={`px-3 py-2 text-xs font-bold rounded-xl border transition-all ${
+                      connectomePreset === 'aal90'
+                        ? 'bg-blue-950 border-blue-950 text-white shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    AAL-90 MNI Nodes
+                  </button>
+                  <button
+                    onClick={() => setConnectomePreset('brodmann')}
+                    className={`px-3 py-2 text-xs font-bold rounded-xl border transition-all ${
+                      connectomePreset === 'brodmann'
+                        ? 'bg-blue-950 border-blue-950 text-white shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    Brodmann 82 Areas
+                  </button>
+                </div>
+              </div>
 
-                {/* Preset selection */}
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
-                    Select Preset Coordinates
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => setConnectomePreset('aal90')}
-                      className={`px-3 py-2 text-xs font-bold rounded-lg border transition-colors ${
-                        connectomePreset === 'aal90'
-                          ? 'bg-blue-950 border-blue-950 text-white'
-                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                      }`}
-                    >
-                      MNI AAL-90 Nodes
-                    </button>
-                    <button
-                      onClick={() => setConnectomePreset('brodmann')}
-                      className={`px-3 py-2 text-xs font-bold rounded-lg border transition-colors ${
-                        connectomePreset === 'brodmann'
-                          ? 'bg-blue-950 border-blue-950 text-white'
-                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-                      }`}
-                    >
-                      Brodmann Areas
-                    </button>
+              {/* Main Connectome Controls */}
+              <div className="flex-1 p-5 sm:p-6 overflow-y-auto space-y-6">
+                
+                {/* Metric Summary Badges */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase text-slate-400 block">Atlas Nodes</span>
+                    <span className="text-sm font-black text-slate-900">{parsedNodes.length || 90} Regions</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase text-slate-400 block">Active Edges</span>
+                    <span className="text-sm font-black text-blue-950">{activeEdgeCount} Connections</span>
                   </div>
                 </div>
 
-                {/* Threshold Slider */}
-                <div className="space-y-3 pt-3 border-t border-slate-100">
+                {/* Edge Weight Threshold Controller */}
+                <div className="space-y-3 p-4 rounded-xl bg-slate-50 border border-slate-100">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
-                      <Sliders className="h-3.5 w-3.5" /> Edge Threshold
+                    <span className="font-extrabold text-slate-700 flex items-center gap-1.5">
+                      <Sliders className="h-3.5 w-3.5 text-blue-950" />
+                      Connectivity Weight Threshold
                     </span>
-                    <span className="font-bold text-blue-950">{edgeWeightThreshold.toFixed(2)}</span>
+                    <span className="font-mono font-black text-blue-950 bg-white px-2 py-0.5 rounded border border-slate-200">
+                      {edgeWeightThreshold.toFixed(2)}
+                    </span>
                   </div>
+                  
                   <input
                     type="range"
-                    min="0.05"
-                    max="0.95"
+                    min="0.10"
+                    max="0.85"
                     step="0.05"
                     value={edgeWeightThreshold}
                     onChange={(e) => setEdgeWeightThreshold(parseFloat(e.target.value))}
-                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-950"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-950"
                   />
+                  
                   <span className="text-[10px] text-slate-500 block leading-tight font-medium">
-                    Hides edges with structural connectivity value below the threshold.
+                    Hides structural white-matter tracts with probabilistic weight below {edgeWeightThreshold.toFixed(2)}.
                   </span>
                 </div>
 
-                {/* Custom Connectome Upload */}
-                <div className="space-y-4 pt-4 border-t border-slate-100">
+                {/* Custom File Upload Drawer */}
+                <div className="space-y-3 pt-2">
                   <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <Upload className="h-4 w-4 text-blue-950" />
-                    Load Custom coordinates
+                    <Upload className="h-3.5 w-3.5 text-blue-950" /> Custom Coordinates (.node & .edge)
                   </h4>
                   
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-[10px] font-semibold text-slate-500 block mb-1">
-                        Node Coordinates (.node file contents)
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={customNodeText}
-                        onChange={(e) => setCustomNodeText(e.target.value)}
-                        placeholder="-45.2 -67.1 12.3 2 4.5 Prefrontal_L_Fp1&#10;45.1 -67.3 12.4 2 4.5 Prefrontal_R_Fp2"
-                        className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-950 text-slate-900 placeholder:text-slate-400 font-mono"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-[10px] font-semibold text-slate-500 block mb-1">
-                        Edge Connectivity Matrix (.edge file contents)
-                      </label>
-                      <textarea
-                        rows={2}
-                        value={customEdgeText}
-                        onChange={(e) => setCustomEdgeText(e.target.value)}
-                        placeholder="0.00 0.85 0.12 0.32&#10;0.85 0.00 0.45 0.22"
-                        className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-950 text-slate-900 placeholder:text-slate-400 font-mono"
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <textarea
+                      rows={2}
+                      value={customNodeText}
+                      onChange={(e) => setCustomNodeText(e.target.value)}
+                      placeholder="-45.2 -67.1 12.3 2 4.5 Prefrontal_L_Fp1&#10;45.1 -67.3 12.4 2 4.5 Prefrontal_R_Fp2"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-950 text-slate-900 placeholder:text-slate-400 font-mono"
+                    />
+                    <textarea
+                      rows={2}
+                      value={customEdgeText}
+                      onChange={(e) => setCustomEdgeText(e.target.value)}
+                      placeholder="0.00 0.85 0.12&#10;0.85 0.00 0.45"
+                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-950 text-slate-900 placeholder:text-slate-400 font-mono"
+                    />
                   </div>
                 </div>
+
               </div>
 
-              <div className="pt-4 shrink-0">
+              {/* Anchored Footer: Apply Custom Coordinates */}
+              <div className="p-4 bg-slate-50 border-t border-slate-100 shrink-0">
                 <button
                   onClick={handleCustomUpload}
                   disabled={!customNodeText && !customEdgeText}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-950 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider py-2.5 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-950 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider py-3 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xs"
                 >
-                  Apply Coordinates
+                  <Sparkles className="h-3.5 w-3.5" />
+                  <span>Apply Custom Matrix</span>
                 </button>
               </div>
+
             </div>
           )}
+
         </div>
+
       </div>
+
     </div>
   );
 }
