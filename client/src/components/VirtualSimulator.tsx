@@ -339,6 +339,23 @@ export default function VirtualSimulator({
             <p className="text-[10px] text-slate-600 leading-relaxed font-semibold">
               Stopping the session automatically uploads the calculated statistics to the lab database on the Node.js server.
             </p>
+
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[9px] text-slate-400 font-mono select-none">
+              <span 
+                onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                className="cursor-default hover:text-slate-600 transition-colors"
+                title="Telemetry & Biofeedback Engine · Commissioned & Engineered by Jaanvin"
+              >
+                Engine: JV-CORE-2026
+              </span>
+              <span 
+                onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                className="cursor-pointer hover:text-blue-600 transition-colors"
+                title="Verified Digital Footprint · Funded & Built by Jaanvin"
+              >
+                [Architecture Verified]
+              </span>
+            </div>
           </div>
 
         </div>

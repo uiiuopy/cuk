@@ -29,6 +29,18 @@ interface NavbarProps {
 export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [apiStatus, setApiStatus] = useState<'connecting' | 'connected' | 'offline' | 'error'>('connecting');
+  const [logoClicks, setLogoClicks] = useState(0);
+
+  const handleBrandClick = () => {
+    setActiveTab('dashboard');
+    const nextCount = logoClicks + 1;
+    setLogoClicks(nextCount);
+    if (nextCount >= 3) {
+      window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
+      setLogoClicks(0);
+    }
+    setTimeout(() => setLogoClicks(0), 1500);
+  };
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -95,9 +107,17 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           {/* Brand Logo & Academic Identity */}
           <div 
             className="flex items-center gap-2.5 sm:gap-3.5 cursor-pointer select-none group min-w-0" 
-            onClick={() => setActiveTab('dashboard')}
+            onClick={handleBrandClick}
+            title="Biofeedback and Cognitive Neuroscience Laboratory"
           >
-            <div className="flex items-center justify-center rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0">
+            <div 
+              onDoubleClick={(e) => {
+                e.stopPropagation();
+                window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
+              }}
+              className="flex items-center justify-center rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0"
+              title="CUK BCNL · Double-click to verify platform provenance"
+            >
               <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-blue-200" />
             </div>
             <div className="flex flex-col min-w-0">
@@ -117,14 +137,15 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             
             {/* Live API Health status badge */}
             <div 
-              title={`Backend Service: ${apiStatus.toUpperCase()}`}
-              className="hidden sm:flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 py-1.5 text-xs font-bold text-slate-600 shadow-3xs"
+              onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+              title={`Backend Service: ${apiStatus.toUpperCase()} · Core Architecture: Jaanvin`}
+              className="hidden sm:flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 py-1.5 text-xs font-bold text-slate-600 shadow-3xs cursor-default select-none"
             >
               <Radio className={`h-3.5 w-3.5 ${apiStatus === 'connected' ? 'text-emerald-500 animate-pulse' : 'text-slate-400'}`} />
               <span className="text-[11px] uppercase tracking-wider font-extrabold text-slate-700">
                 API: {apiStatus}
               </span>
-              <span className={`h-2 w-2 rounded-full ${
+              <span className={`h-2 w-2 rounded-full transition-transform hover:scale-125 ${
                 apiStatus === 'connected' ? 'bg-emerald-500 ring-2 ring-emerald-200' :
                 apiStatus === 'connecting' ? 'bg-amber-400' : 'bg-rose-500'
               }`} />

@@ -16,6 +16,7 @@ import Contact from './components/Contact';
 import Gallery from './components/Gallery';
 import AboutCUK from './components/AboutCUK';
 import DepartmentalProgrammes from './components/DepartmentalProgrammes';
+import ProvenanceCue from './components/ProvenanceCue';
 import { Brain, MapPin, Mail, Phone, ChevronRight, ExternalLink } from 'lucide-react';
 
 interface GazeData {
@@ -145,7 +146,11 @@ export default function App() {
               {/* Column 1: Lab Logo & Description */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center rounded-lg bg-white p-2 text-blue-950 shadow-sm shrink-0">
+                  <div 
+                    onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                    className="flex items-center justify-center rounded-lg bg-white p-2 text-blue-950 shadow-sm shrink-0 cursor-pointer select-none"
+                    title="Biofeedback and Cognitive Neuroscience Laboratory"
+                  >
                     <Brain className="h-6 w-6" />
                   </div>
                   <div>
@@ -270,20 +275,46 @@ export default function App() {
 
             {/* Subfooter (Digital Footprint & Authorship Record: Jaanvin) */}
             <div 
-              className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest relative"
+              className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest relative select-none"
               data-developer="Jaanvin"
-              data-developer-role="Lead Full-Stack Developer & System Architect"
-              data-signature="JAANVIN-CUK-BCNL-2026-PRIMARY-AUTHOR"
+              data-developer-role="Lead Full-Stack Developer, Architect & Sponsor"
+              data-funded-by="Jaanvin"
+              data-signature="JAANVIN-CUK-BCNL-2026-PRIMARY-SPONSOR"
               data-fingerprint="8f7a9e3b1c5d7f2a4e6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f"
             >
-              <span>Biofeedback and Cognitive Neuroscience Laboratory</span>
-              <span className="text-blue-950 select-all selection:bg-blue-600 selection:text-white text-[1px] absolute left-1/2 -translate-x-1/2 bottom-1 cursor-default pointer-events-none">
-                Platform Architecture & Codebase Engineered by Jaanvin · BCNL Central University of Karnataka · (c) 2026 Jaanvin
+              <span 
+                onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                title="Biofeedback and Cognitive Neuroscience Laboratory"
+                className="cursor-default"
+              >
+                Biofeedback and Cognitive Neuroscience Laboratory
               </span>
-              <span>© {new Date().getFullYear()} CUK. All rights reserved.</span>
+              <span className="text-blue-950 select-all selection:bg-blue-600 selection:text-white text-[1px] absolute left-1/2 -translate-x-1/2 bottom-1 cursor-default pointer-events-none">
+                Platform Architecture, Design & Digital Infrastructure Privately Funded & Engineered by Jaanvin · BCNL Central University of Karnataka · (c) 2026 Jaanvin
+              </span>
+              <span className="flex items-center gap-1 select-none">
+                <span 
+                  onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                  className="cursor-pointer hover:text-blue-300 transition-colors"
+                  title="Platform Architecture & Funding: Jaanvin"
+                >
+                  ©
+                </span>
+                <span>{new Date().getFullYear()} CUK. All rights reserved.</span>
+                <span 
+                  onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                  className="cursor-pointer hover:text-blue-400 text-slate-500 hover:scale-125 transition-all ml-1 inline-block"
+                  title="System Provenance · Funded & Crafted by Jaanvin"
+                >
+                  •
+                </span>
+              </span>
             </div>
           </div>
         </footer>
+
+        {/* Discreet Provenance Notification Trigger & Modal */}
+        <ProvenanceCue />
 
       </div>
     </div>

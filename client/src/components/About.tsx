@@ -59,6 +59,17 @@ export default function About() {
             <p className="text-base leading-relaxed text-slate-700 font-sans">
               Today, the Biofeedback Lab supports faculty and doctoral research, postgraduate dissertations, hands-on student training, and interdisciplinary research exploring the relationships among brain, behaviour, cognition, emotion, and physiological processes.
             </p>
+
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 select-none">
+              <span className="font-medium">Laboratory Facility & Computing Matrix</span>
+              <span 
+                onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                className="cursor-default hover:text-slate-600 transition-colors"
+                title="Department of Psychology · Platform Architecture & Sponsorship: Jaanvin"
+              >
+                CUK BCNL · Est. 2015–2025
+              </span>
+            </div>
           </div>
 
           {/* Sequential Stack: Vision, Mission, Objectives */}
