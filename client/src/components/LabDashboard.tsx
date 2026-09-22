@@ -112,7 +112,7 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
         {/* Hero Left Content */}
         <div className="lg:col-span-7 space-y-6">
           <span className="text-xs uppercase font-extrabold tracking-widest text-blue-950 bg-blue-50 px-3.5 py-1 rounded-full border border-blue-100">
-            ✨ Department of Psychology · CUK
+            Department of Psychology, Central University of Karnataka
           </span>
           
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -195,7 +195,7 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
             </div>
             <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-2">Objectives</h3>
             <p className="text-xs leading-relaxed text-slate-600 font-medium">
-              Foster interdisciplinary research, train next-generation scientists, and produce open, reproducible findings.
+              To facilitate interdisciplinary research, provide hands-on training in psychophysiological methods, and support high-quality student and faculty research.
             </p>
           </div>
         </div>

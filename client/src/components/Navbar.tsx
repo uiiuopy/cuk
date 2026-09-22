@@ -47,17 +47,22 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md transition-all duration-300">
-      <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all duration-300">
+      <div className="mx-auto flex max-w-7xl min-h-[4.5rem] py-2 items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
         
         {/* Brand Logo & Name */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
-          <div className="flex items-center justify-center rounded-lg bg-blue-950 p-2 text-white shadow-sm transition-transform hover:scale-105">
+        <div className="flex items-center gap-3 cursor-pointer select-none shrink-0" onClick={() => setActiveTab('dashboard')}>
+          <div className="flex items-center justify-center rounded-xl bg-blue-950 p-2.5 text-white shadow-sm transition-transform hover:scale-105 shrink-0">
             <Brain className="h-6 w-6" />
           </div>
-          <span className="font-sans text-xl font-extrabold tracking-wider text-blue-950">
-            BCNL
-          </span>
+          <div className="flex flex-col">
+            <span className="font-sans text-xs sm:text-sm md:text-base font-extrabold tracking-tight text-blue-950 leading-snug">
+              Biofeedback and Cognitive Neuroscience Laboratory
+            </span>
+            <span className="text-[10px] sm:text-xs font-semibold text-slate-500 leading-tight">
+              Department of Psychology, Central University of Karnataka
+            </span>
+          </div>
         </div>
 
         {/* Desktop Navigation Links */}

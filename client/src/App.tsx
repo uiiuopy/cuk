@@ -125,15 +125,20 @@ export default function App() {
               {/* Column 1: Lab Logo & Description */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center rounded-lg bg-white p-1.5 text-blue-950 shadow-sm">
+                  <div className="flex items-center justify-center rounded-lg bg-white p-2 text-blue-950 shadow-sm shrink-0">
                     <Brain className="h-6 w-6" />
                   </div>
-                  <span className="font-sans text-lg font-extrabold tracking-wider">
-                    BCNL CUK
-                  </span>
+                  <div>
+                    <span className="font-sans text-sm font-extrabold tracking-tight text-white block">
+                      Biofeedback and Cognitive Neuroscience Laboratory
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-300 block">
+                      Department of Psychology, Central University of Karnataka
+                    </span>
+                  </div>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed font-semibold">
-                  The Biofeedback and Cognitive Neuroscience Laboratory at the Central University of Karnataka is dedicated to translational psychophysiological research and training.
+                  To facilitate interdisciplinary research, provide hands-on training in psychophysiological methods, and support high-quality student and faculty research.
                 </p>
               </div>
 

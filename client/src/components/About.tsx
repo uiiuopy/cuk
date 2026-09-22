@@ -23,10 +23,10 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/50 to-transparent" />
         <div className="relative z-10 text-center px-4 max-w-4xl">
           <span className="text-xs uppercase tracking-widest text-slate-300 font-bold mb-3 block">
-            ✨ Department of Psychology · CUK
+            Department of Psychology, Central University of Karnataka
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-md">
-            About the Laboratory
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-md">
+            Biofeedback and Cognitive Neuroscience Laboratory
           </h1>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">Objectives</h3>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Foster interdisciplinary research, train next-generation scientists, and produce open, reproducible findings.
+                  To facilitate interdisciplinary research, provide hands-on training in psychophysiological methods, and support high-quality student and faculty research.
                 </p>
               </div>
             </div>
