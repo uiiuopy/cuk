@@ -17,7 +17,6 @@ import {
   Image as ImageIcon, 
   Mail, 
   Landmark, 
-  Sparkles,
   ChevronRight
 } from 'lucide-react';
 
@@ -58,7 +57,6 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { id: 'research', label: 'Research', icon: BookOpen },
     { id: 'projects', label: 'Projects', icon: Layers },
     { id: 'publications', label: 'Publications', icon: FileText },
-    { id: 'brain', label: '3D Brain', icon: Brain, badge: '3D' },
     { id: 'simulator', label: 'Simulator', icon: Sliders, badge: 'Live' },
     { id: 'gaze', label: 'Eye Tracking', icon: Eye, badge: 'Live' },
     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
@@ -81,7 +79,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     },
     {
       title: 'Interactive Tools & Media',
-      items: ['brain', 'simulator', 'gaze', 'gallery']
+      items: ['simulator', 'gaze', 'gallery']
     }
   ];
 
@@ -129,15 +127,6 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
                 apiStatus === 'connecting' ? 'bg-amber-400' : 'bg-rose-500'
               }`} />
             </div>
-
-            {/* Quick 3D Interactive Tool CTA */}
-            <button
-              onClick={() => setActiveTab('brain')}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-950 hover:bg-blue-100 text-xs font-extrabold border border-blue-200 shadow-3xs transition-all"
-            >
-              <Sparkles className="h-3.5 w-3.5 text-blue-700" />
-              <span>3D Brain</span>
-            </button>
 
             {/* Mobile / Tablet Menu Button */}
             <button
