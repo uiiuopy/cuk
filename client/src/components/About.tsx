@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Target, BookOpen, Brain, Activity, Shield, Users, Compass, Cpu } from 'lucide-react';
+import { Eye, Target, BookOpen, Brain, Activity, Shield, Users, Compass, Cpu, Landmark } from 'lucide-react';
 
 export default function About() {
   const subDisciplines = [
@@ -35,16 +35,29 @@ export default function About() {
         {/* Core Introductory Stack */}
         <div className="space-y-12">
           
-          {/* Main Lab Overview */}
-          <div className="prose max-w-none">
-            <h2 className="text-2xl font-extrabold text-blue-950 mb-4 tracking-tight border-b border-slate-200 pb-2">
+          {/* Main Lab Overview / Our Foundations */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-xs space-y-6">
+            <h2 className="text-2xl font-extrabold text-blue-950 tracking-tight border-b border-slate-200 pb-3 flex items-center gap-3">
+              <Landmark className="h-6 w-6 text-blue-950" />
               Our Foundations
             </h2>
-            <p className="text-lg leading-relaxed text-slate-700">
-              The Biofeedback and Cognitive Neuroscience Laboratory (BCNL) is dedicated to research, teaching, and training in cognitive neuroscience, psychophysiology, and biofeedback. The laboratory supports interdisciplinary research using state-of-the-art physiological recording systems for understanding human cognition, emotion, and behaviour.
+            
+            <p className="text-base leading-relaxed text-slate-700 font-sans">
+              The Biofeedback Lab, Department of Psychology, Central University of Karnataka, has evolved from the Department's long-standing emphasis on psychophysiological research and training. Its foundations can be traced to 2015–16, when the University initiated the procurement and installation of a multi-channel biofeedback system for the Psychophysiological Laboratory.
             </p>
-            <p className="text-slate-600 mt-4">
-              Equipped with high-fidelity signal acquisition clusters and high-density EEG, BCNL acts as an experimental hub at the Central University of Karnataka, fostering collaborative endeavors across clinical psychology, cognitive science, and human factors engineering.
+
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-slate-800 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-950 mb-1">
+                <span className="h-2 w-2 rounded-full bg-blue-950" />
+                Key Milestone · Formal Inauguration
+              </div>
+              <p className="text-sm sm:text-base leading-relaxed text-slate-700">
+                A significant milestone in this journey was the formal inauguration of the Biofeedback Lab on <strong>21 February 2025</strong> by the Hon’ble Vice-Chancellor of the Central University of Karnataka, <strong>Prof. Battu Satyanarayana</strong>. The expanded facility strengthened the Department's capacity for advanced psychophysiological and neuroelectrical research, with facilities for 64-channel EEG/ERP and physiological measures including GSR/EDA, HRV, EMG, EOG, BVP, respiration, and peripheral temperature.
+              </p>
+            </div>
+
+            <p className="text-base leading-relaxed text-slate-700 font-sans">
+              Today, the Biofeedback Lab supports faculty and doctoral research, postgraduate dissertations, hands-on student training, and interdisciplinary research exploring the relationships among brain, behaviour, cognition, emotion, and physiological processes.
             </p>
           </div>
 
