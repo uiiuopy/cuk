@@ -21,12 +21,17 @@ export default function Contact() {
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Page Header */}
       <div className="mb-10 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
+        <span className="text-xs uppercase font-extrabold tracking-widest text-blue-950 bg-blue-50 px-3.5 py-1 rounded-full border border-blue-100 inline-block mb-3">
+          Department of Psychology, Central University of Karnataka
+        </span>
         <div className="flex items-center gap-3 text-blue-950 mb-2">
           <MessageSquare className="h-6 w-6" />
-          <h2 className="text-2xl font-extrabold tracking-tight">Get in touch</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight">
+            Biofeedback and Cognitive Neuroscience Laboratory
+          </h2>
         </div>
         <p className="text-sm text-slate-600">
-          Contact the Biofeedback & Cognitive Neuroscience Laboratory at the Central University of Karnataka.
+          Get in touch with the Biofeedback and Cognitive Neuroscience Laboratory at the Central University of Karnataka.
         </p>
       </div>
 
@@ -49,6 +54,7 @@ export default function Contact() {
                 <div>
                   <strong className="text-slate-900 block font-semibold">Address</strong>
                   <span className="leading-relaxed">
+                    Biofeedback and Cognitive Neuroscience Laboratory,<br />
                     Department of Psychology,<br />
                     Central University of Karnataka (CUK),<br />
                     Aland Road, Kadaganchi, Kalaburagi,<br />

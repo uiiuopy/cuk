@@ -4,17 +4,27 @@
     "Designation": "Professor & Head of Department",
     "Specialization": "Organizational Psychology",
     "Email": "Virjup@gmail.com",
-    "Photo URL": "",
+    "Photo URL": "/photos/pandey.png",
     "Scholar": "https://scholar.google.com/citations?user=Sla4s00AAAAJ&hl=en",
-    "ORCID": "",
+    "ORCID": "https://orcid.org/0000-0002-7155-5543",
     "Bio": "Prof. Vijyendra Pandey is Professor and Head of the Department of Psychology at the Central University of Karnataka. His vision and sustained leadership were instrumental in establishing the Biofeedback & Cognitive Neuroscience Laboratory within the department. Over nearly a decade of persistent effort, planning, and resource mobilization, he worked to develop a state-of-the-art research facility that supports scientific investigations in psychology and neuroscience."
+  },
+  {
+    "Name": "Prof. Jeyavel S.",
+    "Designation": "Professor",
+    "Specialization": "Biopsychology",
+    "Email": "sjeyavel@cuk.ac.in",
+    "Photo URL": "/photos/jeyavel.jpg",
+    "Scholar": "",
+    "ORCID": "https://orcid.org/0000-0002-7431-7268",
+    "Bio": "Prof. Jeyavel Sundaramoorthy (also known as Dr S. Jeyavel) is an esteemed academician in psychology, specialising in educational psychology, self-regulated learning, and counselling. He serves as a Professor in the Department of Psychology at Central University of Karnataka (CUK) in Kalaburagi, where he has been a key faculty member since February 2012. He holds a PhD in Psychology from VMS University, an M.Phil. in Psychology from Annamalai University, and an M.Sc. and B.A. in Psychology from the University of Madras. His doctoral work centred on promoting self-regulated learning among adolescents through activity-based modules. Key interests include adolescent learning and motivation, stress coping skills, goal orientation, and stress mindset interventions. He has been involved in various sponsored projects. He is a member of the American Psychological Association and the National Academy of Psychology. He is also an Editor in the prestigious Springer Nature Group of Journals."
   },
   {
     "Name": "Dr. Astha Arora",
     "Designation": "Assistant Professor & Lab Coordinator",
     "Specialization": "Cognitive Neuropsychology",
     "Email": "asthapsychology@cuk.ac.in",
-    "Photo URL": "",
+    "Photo URL": "/photos/astha.png",
     "Scholar": "https://scholar.google.com/citations?user=FSA3Mp0AAAAJ&hl=en",
     "ORCID": "https://orcid.org/0000-0002-1507-3777",
     "Bio": "As the Lab Coordinator of the Biofeedback & Cognitive Neuroscience Laboratory, Dr. Astha leads research initiatives integrating psychology, neuroscience, and psychophysiology. Her work emphasizes understanding the neural and physiological mechanisms underlying cognition, emotion, stress, and behaviour through advanced neurophysiological assessment techniques. She is passionate about developing innovative research, mentoring emerging scholars, and building national and international collaborations in cognitive neuroscience and mental health research."

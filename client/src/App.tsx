@@ -146,15 +146,20 @@ export default function App() {
               {/* Column 1: Lab Logo & Description */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
+                  {/* Department / University Logo Container */}
+                  <div className="flex items-center justify-center rounded-lg bg-white p-1 shadow-sm shrink-0 h-10 w-10">
+                    <img src="/cuk_logo.svg" alt="Central University of Karnataka" className="h-full w-full object-contain" />
+                  </div>
+                  {/* Lab Logo Container */}
                   <div 
                     onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                    className="flex items-center justify-center rounded-lg bg-white p-2 text-blue-950 shadow-sm shrink-0 cursor-pointer select-none"
+                    className="flex items-center justify-center rounded-lg bg-blue-900 border border-blue-800 p-2 text-white shadow-sm shrink-0 cursor-pointer select-none h-10 w-10"
                     title="Biofeedback and Cognitive Neuroscience Laboratory"
                   >
-                    <Brain className="h-6 w-6" />
+                    <Brain className="h-5 w-5 text-blue-200" />
                   </div>
                   <div>
-                    <span className="font-sans text-sm font-extrabold tracking-tight text-white block">
+                    <span className="font-sans text-xs sm:text-sm font-extrabold tracking-tight text-white block">
                       Biofeedback and Cognitive Neuroscience Laboratory
                     </span>
                     <span className="text-[11px] font-semibold text-slate-300 block">
@@ -238,7 +243,7 @@ export default function App() {
                 <div className="space-y-2 text-[11px] font-semibold text-slate-300 leading-relaxed">
                   <div className="flex gap-2">
                     <MapPin className="h-4 w-4 shrink-0 text-blue-300 mt-0.5" />
-                    <span>Psychophysiology Lab, Dept of Psychology, Central University of Karnataka, Aland Road, Kadaganchi, Kalaburagi, 585311</span>
+                    <span>Biofeedback and Cognitive Neuroscience Laboratory, Dept of Psychology, Central University of Karnataka, Aland Road, Kadaganchi, Kalaburagi, 585311</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Mail className="h-4 w-4 shrink-0 text-blue-300 mt-0.5" />

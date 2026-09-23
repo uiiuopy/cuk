@@ -30,6 +30,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [apiStatus, setApiStatus] = useState<'connecting' | 'connected' | 'offline' | 'error'>('connecting');
   const [logoClicks, setLogoClicks] = useState(0);
+  const [cukLogoError, setCukLogoError] = useState(false);
 
   const handleBrandClick = () => {
     setActiveTab('dashboard');
@@ -69,7 +70,8 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { id: 'students', label: 'Students', icon: GraduationCap },
     { id: 'facilities', label: 'Facilities', icon: Activity },
     { id: 'research', label: 'Research', icon: BookOpen },
-    { id: 'projects', label: 'Projects', icon: Layers },
+    // Dormant for now (will work on it later):
+    // { id: 'projects', label: 'Projects', icon: Layers },
     { id: 'publications', label: 'Publications', icon: FileText },
     { id: 'simulator', label: 'Simulator', icon: Sliders, badge: 'Live' },
     { id: 'gaze', label: 'Eye Tracking', icon: Eye, badge: 'Live' },
@@ -89,7 +91,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     },
     {
       title: 'Research & Infrastructure',
-      items: ['facilities', 'research', 'projects', 'publications']
+      items: ['facilities', 'research', 'publications']
     },
     {
       title: 'Interactive Tools & Media',
@@ -106,28 +108,54 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           
           {/* Brand Logo & Academic Identity */}
           <div 
-            className="flex items-center gap-2.5 sm:gap-3.5 cursor-pointer select-none group min-w-0" 
+            className="flex items-center gap-3 sm:gap-4 md:gap-4.5 cursor-pointer select-none group min-w-0" 
             onClick={handleBrandClick}
-            title="Biofeedback and Cognitive Neuroscience Laboratory"
+            title="Biofeedback and Cognitive Neuroscience Laboratory · Department of Psychology, Central University of Karnataka"
           >
-            <div 
-              onDoubleClick={(e) => {
-                e.stopPropagation();
-                window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
-              }}
-              className="flex items-center justify-center rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0"
-              title="CUK BCNL · Double-click to verify platform provenance"
-            >
-              <Brain className="h-5 w-5 sm:h-6 sm:w-6 text-blue-200" />
+            {/* Logos Container: Separate University/Department Emblem & Laboratory Emblem */}
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+              {/* Department / University Logo Container */}
+              <div 
+                className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-13 md:w-13 rounded-xl bg-white border border-slate-200/90 p-1 sm:p-1.5 shadow-2xs transition-all duration-300 group-hover:scale-105 group-hover:border-slate-300 shrink-0"
+                title="Central University of Karnataka"
+              >
+                {!cukLogoError ? (
+                  <img 
+                    src="/cuk_logo.svg" 
+                    alt="Central University of Karnataka Emblem" 
+                    className="h-full w-full object-contain"
+                    onError={() => setCukLogoError(true)} 
+                  />
+                ) : (
+                  <Landmark className="h-5 w-5 sm:h-6 sm:w-6 text-blue-950" />
+                )}
+              </div>
+
+              {/* Lab Logo Container */}
+              <div 
+                onDoubleClick={(e) => {
+                  e.stopPropagation();
+                  window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
+                }}
+                className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-13 md:w-13 rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0"
+                title="Biofeedback and Cognitive Neuroscience Laboratory (BCNL) · Double-click to verify platform provenance"
+              >
+                <Brain className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-blue-200" />
+              </div>
             </div>
-            <div className="flex flex-col min-w-0">
-              <h1 className="font-sans text-xs sm:text-base md:text-lg font-black tracking-tight text-slate-900 group-hover:text-blue-950 transition-colors leading-tight sm:leading-snug">
+
+            {/* Subtle Vertical Divider */}
+            <div className="hidden sm:block h-8 sm:h-9 w-px bg-slate-200/90 shrink-0" aria-hidden="true" />
+
+            {/* Academic Title & Affiliation Heading Block */}
+            <div className="flex flex-col min-w-0 justify-center">
+              <h1 className="font-sans text-xs sm:text-base md:text-lg lg:text-xl font-black tracking-tight text-slate-900 group-hover:text-blue-950 transition-colors leading-tight sm:leading-snug">
                 Biofeedback and Cognitive Neuroscience Laboratory
               </h1>
-              <p className="text-[9.5px] sm:text-xs font-semibold text-slate-500 tracking-wide leading-tight flex flex-wrap items-center gap-1 sm:gap-1.5 mt-0.5">
+              <p className="text-[9.5px] sm:text-xs font-bold text-slate-500 tracking-wide leading-tight flex flex-wrap items-center gap-1 sm:gap-1.5 mt-0.5 sm:mt-1">
                 <span>Department of Psychology</span>
-                <span className="text-slate-300">·</span>
-                <span className="text-blue-950 font-bold">Central University of Karnataka</span>
+                <span className="text-slate-300" aria-hidden="true">·</span>
+                <span className="text-blue-950 font-extrabold">Central University of Karnataka</span>
               </p>
             </div>
           </div>

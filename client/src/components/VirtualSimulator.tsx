@@ -161,7 +161,7 @@ export default function VirtualSimulator({
 
   const handleDownloadJSONReport = () => {
     const reportData = {
-      labName: "CUK Psychophysiology Research Center",
+      labName: "Biofeedback and Cognitive Neuroscience Laboratory, Central University of Karnataka",
       reportTimestamp: new Date().toISOString(),
       subject: participantName,
       activeStimulus: config.stimulusName,

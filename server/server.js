@@ -34,7 +34,7 @@ if (!fs.existsSync(sessionsFilePath)) {
 
 // Routes
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Psychophysiology Lab API is running', timestamp: new Date() });
+  res.json({ status: 'ok', message: 'Biofeedback and Cognitive Neuroscience Laboratory API is running', timestamp: new Date() });
 });
 
 app.get('/api/equipment', (req, res) => {

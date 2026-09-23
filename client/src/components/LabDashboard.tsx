@@ -26,22 +26,18 @@ export default function LabDashboard({ setActiveTab }: LabDashboardProps) {
   const [gallery, setGallery] = useState<GalleryImage[]>([]);
 
   const defaultGalleryImages: GalleryImage[] = [
-    { id: 'p1', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.33 PM.jpeg', label: 'Photo 1', left: '50px', top: '40px' },
-    { id: 'p2', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.52 PM.jpeg', label: 'Photo 2', left: '440px', top: '100px' },
-    { id: 'p3', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.20.52 PMn.jpeg', label: 'Photo 3', left: '120px', top: '300px' },
-    { id: 'p4', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.21 PMpp.jpeg', label: 'Photo 4', left: '520px', top: '350px' },
-    { id: 'p5', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PM.jpeg', label: 'Photo 5', left: '850px', top: '50px' },
-    { id: 'p6', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PMnn.jpeg', label: 'Photo 6', left: '900px', top: '260px' },
-    { id: 'p7', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.22 PMnnn.jpeg', label: 'Photo 7', left: '1250px', top: '150px' },
-    { id: 'p8', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.23 PMmmmm.jpeg', label: 'Photo 8', left: '1300px', top: '400px' },
-    { id: 'p9', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.24 PMmmmm.jpeg', label: 'Photo 9', left: '1600px', top: '80px' },
-    { id: 'p10', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.24 PMmmmmmm.jpeg', label: 'Photo 10', left: '1700px', top: '300px' },
-    { id: 'p11', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.25 PM.jpeg', label: 'Photo 11', left: '2000px', top: '150px' },
-    { id: 'p12', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.25 PMmmmmmm.jpeg', label: 'Photo 12', left: '2050px', top: '450px' },
-    { id: 'p13', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PM.jpeg', label: 'Photo 13', left: '2400px', top: '100px' },
-    { id: 'p14', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PMnnnnn.jpeg', label: 'Photo 14', left: '2450px', top: '350px' },
-    { id: 'p15', path: '/photos/carousel/WhatsApp Image 2026-08-16 at 10.21.26 PMuu.jpeg', label: 'Photo 15', left: '2800px', top: '200px' },
-    { id: 'p16', path: '/photos/carousel/nnn.jpeg', label: 'Photo 16', left: '2850px', top: '450px' }
+    { id: 'p1', path: '/photos/lab-gallery-1.jpg', label: 'Inaugural Plaque', left: '50px', top: '40px' },
+    { id: 'p2', path: '/photos/lab-gallery-2.jpg', label: 'Sensor Calibration', left: '440px', top: '100px' },
+    { id: 'p3', path: '/photos/lab-gallery-3.jpg', label: 'Laboratory Demonstration', left: '120px', top: '300px' },
+    { id: 'p4', path: '/photos/lab-gallery-4.jpg', label: 'VR Neurofeedback', left: '520px', top: '350px' },
+    { id: 'p5', path: '/photos/lab-gallery-5.jpg', label: 'Student Practicum', left: '850px', top: '50px' },
+    { id: 'p6', path: '/photos/lab-gallery-6.jpg', label: 'Active EEG Setup', left: '900px', top: '260px' },
+    { id: 'p7', path: '/photos/lab-gallery-7.jpg', label: 'Testing Bay', left: '1250px', top: '150px' },
+    { id: 'p8', path: '/photos/lab-gallery-8.jpg', label: 'Biosignal Telemetry', left: '1300px', top: '400px' },
+    { id: 'p9', path: '/photos/lab-gallery-9.jpg', label: 'Participant Briefing', left: '1600px', top: '80px' },
+    { id: 'p10', path: '/photos/lab-gallery-10.jpg', label: 'Spectral EEG Analysis', left: '1700px', top: '300px' },
+    { id: 'p11', path: '/photos/lab-gallery-11.jpg', label: 'HRV Biofeedback', left: '2000px', top: '150px' },
+    { id: 'p12', path: '/photos/lab-gallery-12.jpg', label: 'Signal Processing Suite', left: '2050px', top: '450px' }
   ];
 
   const equipmentList: EquipmentItem[] = [
