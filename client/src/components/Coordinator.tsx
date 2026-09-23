@@ -1,9 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, BookOpen, Award, ExternalLink, GraduationCap, X, Heart, Sparkles, Lock, ShieldAlert, EyeOff, Eye, Camera, CameraOff, AlertTriangle, ShieldCheck, Timer } from 'lucide-react';
-import * as cocoSsd from '@tensorflow-models/coco-ssd';
-import '@tensorflow/tfjs';
 import { fetchSheetData, getDirectDriveUrl } from '../utils/googleSheets';
 import fallbackFaculty from '../data/faculty.json';
+
+interface DetectedObject {
+  bbox: [number, number, number, number];
+  class: string;
+  score: number;
+}
+
+interface CocoModelInstance {
+  detect: (img: HTMLVideoElement | HTMLCanvasElement, maxNumBoxes?: number, minScore?: number) => Promise<DetectedObject[]>;
+}
+
+function loadScript(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function getOrLoadCocoSsd(): Promise<any> {
+  const win = window as any;
+  if (win.cocoSsd) return win.cocoSsd;
+  if (!win.tf) {
+    await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js');
+  }
+  if (!win.cocoSsd) {
+    await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js');
+  }
+  return win.cocoSsd;
+}
 
 interface FacultyPerson {
   Name: string;
@@ -54,7 +89,7 @@ export default function Coordinator() {
   const analysisCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const previousFrameBrightnessRef = useRef<number | null>(null);
   const threatTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const cocoModelRef = useRef<cocoSsd.ObjectDetection | null>(null);
+  const cocoModelRef = useRef<CocoModelInstance | null>(null);
   const isDetectingRef = useRef(false);
 
   // Preload and initialize TensorFlow COCO-SSD Neural Detector on mount
@@ -63,11 +98,14 @@ export default function Coordinator() {
     const preloadModel = async () => {
       try {
         setIsModelLoading(true);
-        const model = await cocoSsd.load({ base: 'lite_mobilenet_v2' });
-        if (isMounted) {
-          cocoModelRef.current = model;
-          setIsModelReady(true);
-          console.log('🛡️ AI Optical Guardian: COCO-SSD loaded and ready');
+        const coco = await getOrLoadCocoSsd();
+        if (coco && isMounted) {
+          const model = await coco.load({ base: 'lite_mobilenet_v2' });
+          if (isMounted) {
+            cocoModelRef.current = model;
+            setIsModelReady(true);
+            console.log('🛡️ AI Optical Guardian: COCO-SSD Neural Model active');
+          }
         }
       } catch (err) {
         console.warn('COCO-SSD model preload warning:', err);
