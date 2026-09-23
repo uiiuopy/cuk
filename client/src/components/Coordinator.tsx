@@ -492,7 +492,7 @@ export default function Coordinator() {
 
   // 10-Second Strict Ephemeral Session Countdown
   useEffect(() => {
-    if (!showRomateModal || !cameraActive) {
+    if (!showRomateModal) {
       setSessionTimeLeft(10);
       return;
     }
@@ -513,7 +513,16 @@ export default function Coordinator() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [showRomateModal, cameraActive]);
+  }, [showRomateModal]);
+
+  // 10-Second Auto-Close for Student Inscription if opened
+  useEffect(() => {
+    if (!showStudentInscription) return;
+    const timer = setTimeout(() => {
+      setShowStudentInscription(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [showStudentInscription]);
 
   // Lock body scroll when tribute modal is open
   useEffect(() => {
@@ -915,16 +924,14 @@ export default function Coordinator() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* 10-Second Auto-Expire Progress Bar */}
-            {cameraActive && (
-              <div className="w-full h-1 bg-slate-100 overflow-hidden shrink-0 z-30">
-                <div 
-                  className={`h-full transition-all duration-1000 ease-linear ${
-                    sessionTimeLeft <= 3 ? 'bg-red-500 animate-pulse' : 'bg-amber-500'
-                  }`}
-                  style={{ width: `${(sessionTimeLeft / 10) * 100}%` }}
-                />
-              </div>
-            )}
+            <div className="w-full h-1 bg-slate-100 overflow-hidden shrink-0 z-30">
+              <div 
+                className={`h-full transition-all duration-1000 ease-linear ${
+                  sessionTimeLeft <= 3 ? 'bg-red-500 animate-pulse' : 'bg-amber-500'
+                }`}
+                style={{ width: `${(sessionTimeLeft / 10) * 100}%` }}
+              />
+            </div>
 
             {/* Pinned Sticky Header (Mobile Optimized Two-Tier Layout) */}
             <div className="sticky top-0 z-30 bg-white/98 backdrop-blur-md border-b border-slate-200/80 px-3 py-2.5 sm:px-6 sm:py-3 shrink-0 shadow-xs">
@@ -937,19 +944,21 @@ export default function Coordinator() {
                   </span>
 
                   {/* Desktop Status Badges (Hidden on mobile, shown on sm+) */}
-                  {cameraActive && (
-                    <div className="hidden sm:flex items-center gap-1.5 shrink-0">
-                      {facePresent ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 animate-pulse">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                          Face Verified
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300">
-                          Searching Face...
-                        </span>
-                      )}
+                  <div className="hidden sm:flex items-center gap-1.5 shrink-0">
+                    {cameraActive && facePresent && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        Face Verified
+                      </span>
+                    )}
 
+                    {cameraActive && !facePresent && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300">
+                        Searching Face...
+                      </span>
+                    )}
+
+                    {cameraActive && (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold border transition-colors ${
                         isModelReady 
                           ? 'bg-blue-50 text-blue-800 border-blue-200' 
@@ -958,17 +967,17 @@ export default function Coordinator() {
                         <ShieldCheck className="h-3 w-3 text-blue-600" />
                         <span>{isModelReady ? 'AI Object Shield ON' : 'AI Shield Loading...'}</span>
                       </span>
+                    )}
 
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black border transition-colors ${
-                        sessionTimeLeft <= 3 
-                          ? 'bg-red-100 text-red-700 border-red-300 animate-bounce' 
-                          : 'bg-amber-100 text-amber-900 border-amber-300'
-                      }`}>
-                        <Timer className="h-3 w-3" />
-                        <span>{sessionTimeLeft}s</span>
-                      </span>
-                    </div>
-                  )}
+                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black border transition-colors ${
+                      sessionTimeLeft <= 3 
+                        ? 'bg-red-100 text-red-700 border-red-300 animate-bounce' 
+                        : 'bg-amber-100 text-amber-900 border-amber-300'
+                    }`}>
+                      <Timer className="h-3 w-3" />
+                      <span>{sessionTimeLeft}s</span>
+                    </span>
+                  </div>
                 </div>
 
                 {/* Right Action Cluster: Mini-HUD + Prominent Close Button */}
@@ -1017,38 +1026,39 @@ export default function Coordinator() {
               </div>
 
               {/* Mobile-Only Status Sub-Row (Visible only on < sm screens) */}
-              {cameraActive && (
-                <div className="flex sm:hidden items-center justify-between gap-1.5 pt-2 mt-1.5 border-t border-slate-100 text-[10px]">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    {facePresent ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        Verified
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold bg-amber-50 text-amber-800 border border-amber-300">
-                        Searching...
-                      </span>
-                    )}
+              <div className="flex sm:hidden items-center justify-between gap-1.5 pt-2 mt-1.5 border-t border-slate-100 text-[10px]">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {cameraActive && facePresent && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Verified
+                    </span>
+                  )}
+                  {cameraActive && !facePresent && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold bg-amber-50 text-amber-800 border border-amber-300">
+                      Searching...
+                    </span>
+                  )}
 
+                  {cameraActive && (
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold border ${
                       isModelReady ? 'bg-blue-50 text-blue-800 border-blue-200' : 'bg-slate-100 text-slate-600 border-slate-200'
                     }`}>
                       <ShieldCheck className="h-3 w-3 text-blue-600" />
                       <span>{isModelReady ? 'AI Guard ON' : 'Loading...'}</span>
                     </span>
-                  </div>
-
-                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-mono font-black border shrink-0 ${
-                    sessionTimeLeft <= 3 
-                      ? 'bg-red-100 text-red-700 border-red-300 animate-bounce' 
-                      : 'bg-amber-100 text-amber-900 border-amber-300'
-                  }`}>
-                    <Timer className="h-3 w-3" />
-                    <span>{sessionTimeLeft}s</span>
-                  </span>
+                  )}
                 </div>
-              )}
+
+                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-mono font-black border shrink-0 ${
+                  sessionTimeLeft <= 3 
+                    ? 'bg-red-100 text-red-700 border-red-300 animate-bounce' 
+                    : 'bg-amber-100 text-amber-900 border-amber-300'
+                }`}>
+                  <Timer className="h-3 w-3" />
+                  <span>{sessionTimeLeft}s</span>
+                </span>
+              </div>
             </div>
 
             {/* Scrollable Content Body */}

@@ -5,6 +5,7 @@ import { DEVELOPER_FOOTPRINT } from '../utils/developerMeta';
 export default function ProvenanceCue() {
   const [visible, setVisible] = useState(false);
   const [pulseAnimation, setPulseAnimation] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10);
 
   useEffect(() => {
     // 1. Keypress listener: typing 'jaanvin' or pressing Ctrl+Alt+J
@@ -43,24 +44,51 @@ export default function ProvenanceCue() {
   }, []);
 
   const triggerCue = () => {
+    setTimeLeft(10);
     setVisible(true);
     setPulseAnimation(true);
     setTimeout(() => setPulseAnimation(false), 800);
   };
 
+  // Strict 10-second countdown & auto-close
   useEffect(() => {
-    if (!visible) return;
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 6000);
-    return () => clearTimeout(timer);
+    if (!visible) {
+      setTimeLeft(10);
+      return;
+    }
+
+    setTimeLeft(10);
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setVisible(false);
+          return 10;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [visible]);
 
   if (!visible) return null;
 
   return (
     <div className="fixed bottom-5 right-5 z-[9999] max-w-sm w-full mx-4 sm:mx-0 animate-in fade-in slide-in-from-bottom-4 duration-300">
-      <div className={`relative overflow-hidden rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-blue-500/40 p-5 shadow-2xl text-white ${pulseAnimation ? 'ring-2 ring-blue-400 ring-offset-2 ring-offset-slate-950' : ''}`}>
+      <div className={`relative overflow-hidden rounded-2xl bg-slate-950/98 backdrop-blur-xl border border-blue-500/40 shadow-2xl text-white ${pulseAnimation ? 'ring-2 ring-blue-400 ring-offset-2 ring-offset-slate-950' : ''}`}>
+        
+        {/* 10-Second Auto-Close Progress Bar */}
+        <div className="w-full h-1 bg-slate-900 overflow-hidden shrink-0">
+          <div 
+            className={`h-full transition-all duration-1000 ease-linear ${
+              timeLeft <= 3 ? 'bg-red-500 animate-pulse' : 'bg-cyan-400'
+            }`}
+            style={{ width: `${(timeLeft / 10) * 100}%` }}
+          />
+        </div>
+
+        <div className="p-5">
         
         {/* Subtle decorative background gradient */}
         <div className="absolute -top-12 -right-12 w-36 h-36 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
@@ -81,13 +109,18 @@ export default function ProvenanceCue() {
               </h4>
             </div>
           </div>
-          <button 
-            onClick={() => setVisible(false)}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800/60 transition-colors"
-            aria-label="Dismiss"
-          >
-            <X className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-blue-950 border border-blue-700/60 text-blue-300">
+              {timeLeft}s
+            </span>
+            <button 
+              onClick={() => setVisible(false)}
+              className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800/60 transition-colors"
+              aria-label="Dismiss"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         {/* Narrative / Context */}
@@ -106,6 +139,8 @@ export default function ProvenanceCue() {
           <span className="text-[9px] px-2 py-0.5 rounded-full bg-blue-950/80 border border-blue-800/50 text-blue-300">
             CUK · 2026
           </span>
+        </div>
+
         </div>
 
       </div>
