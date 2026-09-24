@@ -17,6 +17,8 @@ import Gallery from './components/Gallery';
 import AboutCUK from './components/AboutCUK';
 import DepartmentalProgrammes from './components/DepartmentalProgrammes';
 import ProvenanceCue from './components/ProvenanceCue';
+import UpsideDownPortal from './components/upsideDown/UpsideDownPortal';
+import { verifyCheatCode, MAX_TRIGGER_WINDOW } from './utils/upsideDownCrypto';
 import { Brain, MapPin, Mail, Phone, ChevronRight, ExternalLink } from 'lucide-react';
 
 interface GazeData {
@@ -32,11 +34,82 @@ export default function App() {
   const [currentGaze, setCurrentGaze] = useState<GazeData | null>(null);
   const [isGazeActive, setIsGazeActive] = useState(false);
   const [isGazeConnected, setIsGazeConnected] = useState(false);
+  const [isUpsideDownActive, setIsUpsideDownActive] = useState(false);
 
   // Sync scroll to top on tab change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
+
+  // GTA-style Case-Sensitive Cheat Code Activation Listener for "This Was Made By 23PPSYC011"
+  useEffect(() => {
+    let keyBuffer = '';
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const checkAndTrigger = (str: string) => {
+      if (verifyCheatCode(str)) {
+        setIsUpsideDownActive(true);
+        keyBuffer = '';
+        console.log(
+          '%c🚪 [THE UPSIDE DOWN ACTIVATED] Reality Inversion Protocol Engaged by 23PPSYC011',
+          'color: #f87171; font-weight: bold; background: #1c1917; padding: 6px 12px; border-radius: 6px; border: 1px solid #dc2626;'
+        );
+        return true;
+      }
+      return false;
+    };
+
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // If user pressed Escape, reset buffer
+      if (e.key === 'Escape') {
+        keyBuffer = '';
+        return;
+      }
+
+      // If user pressed Backspace, erase previous character
+      if (e.key === 'Backspace') {
+        keyBuffer = keyBuffer.slice(0, -1);
+        return;
+      }
+
+      // Ignore modifier keys alone (Shift, Control, Alt, Meta, CapsLock, Tab, Enter)
+      if (e.key.length !== 1) return;
+
+      // Reset buffer after 15 seconds of silence
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        keyBuffer = '';
+      }, 15000);
+
+      // Append character to rolling buffer
+      keyBuffer = (keyBuffer + e.key).slice(-MAX_TRIGGER_WINDOW);
+
+      // Check if code matches any signature
+      checkAndTrigger(keyBuffer);
+    };
+
+    // Also support pasting the cheat code directly (Ctrl+V)
+    const handlePaste = (e: ClipboardEvent) => {
+      const pasted = e.clipboardData?.getData('text') || '';
+      if (pasted) {
+        checkAndTrigger(pasted);
+      }
+    };
+
+    // Global developer helper functions accessible via DevTools console
+    (window as any).activateUpsideDown = () => {
+      setIsUpsideDownActive(true);
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown, true);
+    window.addEventListener('paste', handlePaste, true);
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      window.removeEventListener('keydown', handleGlobalKeyDown, true);
+      window.removeEventListener('paste', handlePaste, true);
+    };
+  }, []);
 
   // Subtle Developer Provenance Keypress Listener (typing 'jaanvin' logs verified credentials to console)
   useEffect(() => {
@@ -327,6 +400,12 @@ export default function App() {
 
         {/* Discreet Provenance Notification Trigger & Modal */}
         <ProvenanceCue />
+
+        {/* Upside Down Dark Academia Secret Archive Portal */}
+        <UpsideDownPortal 
+          isOpen={isUpsideDownActive} 
+          onClose={() => setIsUpsideDownActive(false)} 
+        />
 
       </div>
     </div>
