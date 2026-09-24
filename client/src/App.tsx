@@ -143,20 +143,16 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-blue-900">
               
-              {/* Column 1: Lab Logo & Description */}
+              {/* Column 1: Lab Logo & Description (Biofeedback Lab Logo on this side) */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  {/* Department / University Logo Container */}
-                  <div className="flex items-center justify-center rounded-lg bg-white p-1 shadow-sm shrink-0 h-10 w-10">
-                    <img src="/cuk_logo.svg" alt="Central University of Karnataka" className="h-full w-full object-contain" />
-                  </div>
-                  {/* Lab Logo Container */}
+                  {/* Biofeedback Lab Logo Container */}
                   <div 
                     onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                    className="flex items-center justify-center rounded-lg bg-blue-900 border border-blue-800 p-2 text-white shadow-sm shrink-0 cursor-pointer select-none h-10 w-10"
+                    className="flex items-center justify-center rounded-xl bg-blue-900 border border-blue-800 p-2 text-white shadow-sm shrink-0 cursor-pointer select-none h-11 w-11"
                     title="Biofeedback and Cognitive Neuroscience Laboratory"
                   >
-                    <Brain className="h-5 w-5 text-blue-200" />
+                    <Brain className="h-6 w-6 text-blue-200" />
                   </div>
                   <div>
                     <span className="font-sans text-xs sm:text-sm font-extrabold tracking-tight text-white block">
@@ -297,23 +293,34 @@ export default function App() {
               <span className="text-blue-950 select-all selection:bg-blue-600 selection:text-white text-[1px] absolute left-1/2 -translate-x-1/2 bottom-1 cursor-default pointer-events-none">
                 Platform Architecture, Design & Digital Infrastructure Privately Funded & Engineered by Jaanvin · BCNL Central University of Karnataka · (c) 2026 Jaanvin
               </span>
-              <span className="flex items-center gap-1 select-none">
-                <span 
-                  onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                  className="cursor-pointer hover:text-blue-300 transition-colors"
-                  title="Platform Architecture & Funding: Jaanvin"
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => setActiveTab('about-cuk')}
+                  className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  title="Central University of Karnataka"
                 >
-                  ©
+                  <img src="/cuk_logo.svg" alt="Central University of Karnataka" className="h-4 w-4 object-contain rounded-xs bg-white/10 p-0.5" />
+                  <span className="hidden sm:inline">CUK Kalaburagi</span>
+                </button>
+                <span className="hidden sm:inline text-slate-600">·</span>
+                <span className="flex items-center gap-1 select-none">
+                  <span 
+                    onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                    className="cursor-pointer hover:text-blue-300 transition-colors"
+                    title="Platform Architecture & Funding: Jaanvin"
+                  >
+                    ©
+                  </span>
+                  <span>{new Date().getFullYear()} CUK. All rights reserved.</span>
+                  <span 
+                    onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
+                    className="cursor-pointer hover:text-blue-400 text-slate-500 hover:scale-125 transition-all ml-1 inline-block"
+                    title="System Provenance · Funded & Crafted by Jaanvin"
+                  >
+                    •
+                  </span>
                 </span>
-                <span>{new Date().getFullYear()} CUK. All rights reserved.</span>
-                <span 
-                  onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                  className="cursor-pointer hover:text-blue-400 text-slate-500 hover:scale-125 transition-all ml-1 inline-block"
-                  title="System Provenance · Funded & Crafted by Jaanvin"
-                >
-                  •
-                </span>
-              </span>
+              </div>
             </div>
           </div>
         </footer>

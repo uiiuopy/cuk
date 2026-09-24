@@ -106,46 +106,23 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
       <div className="border-b border-slate-100">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5 gap-4">
           
-          {/* Brand Logo & Academic Identity */}
+          {/* Brand Logo & Academic Identity (Biofeedback Lab Logo on the Left Side) */}
           <div 
-            className="flex items-center gap-3 sm:gap-4 md:gap-4.5 cursor-pointer select-none group min-w-0" 
+            className="flex items-center gap-2.5 sm:gap-3.5 cursor-pointer select-none group min-w-0" 
             onClick={handleBrandClick}
             title="Biofeedback and Cognitive Neuroscience Laboratory · Department of Psychology, Central University of Karnataka"
           >
-            {/* Logos Container: Separate University/Department Emblem & Laboratory Emblem */}
-            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-              {/* Department / University Logo Container */}
-              <div 
-                className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-13 md:w-13 rounded-xl bg-white border border-slate-200/90 p-1 sm:p-1.5 shadow-2xs transition-all duration-300 group-hover:scale-105 group-hover:border-slate-300 shrink-0"
-                title="Central University of Karnataka"
-              >
-                {!cukLogoError ? (
-                  <img 
-                    src="/cuk_logo.svg" 
-                    alt="Central University of Karnataka Emblem" 
-                    className="h-full w-full object-contain"
-                    onError={() => setCukLogoError(true)} 
-                  />
-                ) : (
-                  <Landmark className="h-5 w-5 sm:h-6 sm:w-6 text-blue-950" />
-                )}
-              </div>
-
-              {/* Lab Logo Container */}
-              <div 
-                onDoubleClick={(e) => {
-                  e.stopPropagation();
-                  window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
-                }}
-                className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-13 md:w-13 rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0"
-                title="Biofeedback and Cognitive Neuroscience Laboratory (BCNL) · Double-click to verify platform provenance"
-              >
-                <Brain className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-blue-200" />
-              </div>
+            {/* Biofeedback Lab Logo Container */}
+            <div 
+              onDoubleClick={(e) => {
+                e.stopPropagation();
+                window.dispatchEvent(new CustomEvent('trigger-provenance-cue'));
+              }}
+              className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-13 md:w-13 rounded-xl bg-blue-950 p-2 sm:p-2.5 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-900 shrink-0"
+              title="Biofeedback and Cognitive Neuroscience Laboratory (BCNL) · Double-click to verify platform provenance"
+            >
+              <Brain className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-blue-200" />
             </div>
-
-            {/* Subtle Vertical Divider */}
-            <div className="hidden sm:block h-8 sm:h-9 w-px bg-slate-200/90 shrink-0" aria-hidden="true" />
 
             {/* Academic Title & Affiliation Heading Block */}
             <div className="flex flex-col min-w-0 justify-center">
@@ -160,9 +137,37 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             </div>
           </div>
 
-          {/* Right Header Status & Action Area */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Right Header Area: CUK University Logo on the other side, API Status & Menu Button */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
+            {/* Central University of Karnataka (CUK) Logo on the other side */}
+            <div 
+              onClick={() => setActiveTab('about-cuk')}
+              className="flex items-center gap-2 sm:gap-2.5 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-2xs transition-all cursor-pointer group/cuk select-none"
+              title="Central University of Karnataka · Click to view university profile"
+            >
+              <div className="flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-lg p-0.5 shrink-0">
+                {!cukLogoError ? (
+                  <img 
+                    src="/cuk_logo.svg" 
+                    alt="Central University of Karnataka Emblem" 
+                    className="h-full w-full object-contain group-hover/cuk:scale-105 transition-transform"
+                    onError={() => setCukLogoError(true)} 
+                  />
+                ) : (
+                  <Landmark className="h-5 w-5 sm:h-6 sm:w-6 text-blue-950" />
+                )}
+              </div>
+              <div className="hidden lg:flex flex-col text-left">
+                <span className="text-[11px] font-black tracking-tight text-slate-900 leading-tight group-hover/cuk:text-blue-950">
+                  Central University of Karnataka
+                </span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  CUK Kalaburagi
+                </span>
+              </div>
+            </div>
+
             {/* Live API Health status badge */}
             <div 
               onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
