@@ -3,6 +3,9 @@ import { Sparkles, ShieldCheck, X, Code2, Award, Heart } from 'lucide-react';
 import { DEVELOPER_FOOTPRINT } from '../utils/developerMeta';
 
 export default function ProvenanceCue() {
+  const ENABLE_HIDDEN = false;
+  if (!ENABLE_HIDDEN) return null;
+
   const [visible, setVisible] = useState(false);
   const [pulseAnimation, setPulseAnimation] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10);

@@ -36,6 +36,9 @@ export default function App() {
   const [isGazeConnected, setIsGazeConnected] = useState(false);
   const [isUpsideDownActive, setIsUpsideDownActive] = useState(false);
 
+  // Master toggle: disable all hidden functions
+  const ENABLE_HIDDEN_FUNCTIONS = false;
+
   // Sync scroll to top on tab change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,6 +46,8 @@ export default function App() {
 
   // GTA-style Case-Sensitive Cheat Code Activation Listener for "This Was Made By 23PPSYC011"
   useEffect(() => {
+    if (!ENABLE_HIDDEN_FUNCTIONS) return;
+
     let keyBuffer = '';
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -113,6 +118,8 @@ export default function App() {
 
   // Subtle Developer Provenance Keypress Listener (typing 'jaanvin' logs verified credentials to console)
   useEffect(() => {
+    if (!ENABLE_HIDDEN_FUNCTIONS) return;
+
     let buffer = '';
     const secret = 'jaanvin';
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -377,35 +384,24 @@ export default function App() {
                 </button>
                 <span className="hidden sm:inline text-slate-600">·</span>
                 <span className="flex items-center gap-1 select-none">
-                  <span 
-                    onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                    className="cursor-pointer hover:text-blue-300 transition-colors"
-                    title="Platform Architecture & Funding: Jaanvin"
-                  >
-                    ©
-                  </span>
+                  <span>©</span>
                   <span>{new Date().getFullYear()} CUK. All rights reserved.</span>
-                  <span 
-                    onClick={() => window.dispatchEvent(new CustomEvent('trigger-provenance-cue'))}
-                    className="cursor-pointer hover:text-blue-400 text-slate-500 hover:scale-125 transition-all ml-1 inline-block"
-                    title="System Provenance · Funded & Crafted by Jaanvin"
-                  >
-                    •
-                  </span>
                 </span>
               </div>
             </div>
           </div>
         </footer>
 
-        {/* Discreet Provenance Notification Trigger & Modal */}
-        <ProvenanceCue />
+        {/* Discreet Provenance Notification Trigger & Modal (Disabled for now) */}
+        {ENABLE_HIDDEN_FUNCTIONS && <ProvenanceCue />}
 
-        {/* Upside Down Dark Academia Secret Archive Portal */}
-        <UpsideDownPortal 
-          isOpen={isUpsideDownActive} 
-          onClose={() => setIsUpsideDownActive(false)} 
-        />
+        {/* Upside Down Dark Academia Secret Archive Portal (Disabled for now) */}
+        {ENABLE_HIDDEN_FUNCTIONS && (
+          <UpsideDownPortal 
+            isOpen={isUpsideDownActive} 
+            onClose={() => setIsUpsideDownActive(false)} 
+          />
+        )}
 
       </div>
     </div>

@@ -169,8 +169,13 @@ export default function Coordinator() {
     }
   };
 
-  // Strictly require 5 deliberate clicks to open Prof. Romate John section
+  // Master flag: disabled hidden functions for now
+  const ENABLE_HIDDEN_TRIBUTE = false;
+
+  // Strictly require 5 deliberate clicks to open Prof. Romate John section (Disabled for now)
   const handleFiveClicks = () => {
+    if (!ENABLE_HIDDEN_TRIBUTE) return;
+
     if (clickTimerRef.current) {
       clearTimeout(clickTimerRef.current);
     }
